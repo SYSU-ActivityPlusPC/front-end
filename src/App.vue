@@ -1,14 +1,19 @@
 <template>
   <div id="app">
+    <Spin />
     <img src="./assets/logo.png">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import { Spin } from 'iview';
 export default {
-  name: 'app'
-}
+  name: 'app',
+  components: {
+    Spin
+  }
+};
 </script>
 
 <style>
