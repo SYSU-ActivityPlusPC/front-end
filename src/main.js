@@ -4,6 +4,8 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import 'iview/dist/styles/iview.css';
+import '@/style/reset.css';
+import '@/style/common.css';
 
 Vue.config.productionTip = false;
 

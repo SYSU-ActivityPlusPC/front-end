@@ -1,28 +1,32 @@
 <template>
   <div id="app">
-    <Spin />
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+    <iRow type="flex" class="row-height">
+      <iCol span="4">
+        <navMenu />
+      </iCol>
+    </iRow>
   </div>
 </template>
 
 <script>
-import { Spin } from 'iview';
+import navMenu from '@/components/navMenu';
+import { Row, Col } from 'iview';
+
 export default {
   name: 'app',
   components: {
-    Spin
+    navMenu,
+    iRow: Row,
+    iCol: Col
   }
 };
 </script>
 
-<style>
+<style scoped>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+}
+.row-height {
+  height: 100%;
 }
 </style>
