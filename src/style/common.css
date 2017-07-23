@@ -1,5 +1,6 @@
 html, body {
   height: 100%;
+  min-width: 1000px;
   background-color: #fafafa;
 }
 
@@ -11,4 +12,10 @@ html, body {
 
 #app {
   height: 100%;
+}
+
+.ivu-input-large {
+  font-size: 14px;
+  padding: 6px 7px;
+  height: 40px !important;
 }

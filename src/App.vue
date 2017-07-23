@@ -1,14 +1,15 @@
 <template>
   <div id="app">
-    <span>122222222321313</span>
+    <login />
   </div>
 </template>
 
 <script>
-
+import login from '@/page/login';
 export default {
   name: 'app',
   components: {
+    login
   }
 };
 </script>
