@@ -1,5 +1,6 @@
 <template>
 <div class="wrapper">
+  <TopBar></TopBar>
   <Card dis-hover :style="cardStyle">
     <div class="logo-wrapper">
       <img src="../../assets/logo.png" class="logo">
@@ -11,7 +12,7 @@
     <form class="form">
       <div class="form-input">
         <iInput :style="inputStyle" size="large" placeholder="用户名" type="text"></iInput>
-        <a href="javascript:void(0)" style="margin-left: 20px;">校外社团登录</a>
+        <a href="javascript:void(0)" style="margin-left: 20px;">校外社团登录 ></a>
       </div>
       <div class="form-input">
         <iInput :style="inputStyle" size="large" placeholder="密码" type="password"></iInput>
@@ -26,11 +27,12 @@
 <script>
 import { Card, Row, Col, Input } from 'iview';
 import Button from '@/components/button';
+import Header from '@/components/header';
 export default {
   data () {
     return {
       cardStyle: `padding: 8px 20px;
-                  width: 434px; 
+                  width: 438px; 
                   position: absolute; 
                   right: 50px; 
                   top: 100px`,
@@ -42,7 +44,8 @@ export default {
     iRow: Row,
     iCol: Col,
     iInput: Input,
-    iButton: Button
+    iButton: Button,
+    TopBar: Header
   },
   methods: {
     login () {
@@ -54,10 +57,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  background-image: url("../../assets/bg.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  height: 100%;
+
 }
 
 .logo-wrapper {

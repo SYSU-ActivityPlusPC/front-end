@@ -1,19 +1,17 @@
 <template>
   <div id="app">
     <div id="app-firstChild">
-      <login />
+      <router-view></router-view>
     </div>
     <bottomBar />
   </div>
 </template>
 
 <script>
-import login from '@/pages/login';
 import footer from '@/components/footer';
 export default {
   name: 'app',
   components: {
-    login,
     bottomBar: footer
   }
 };
