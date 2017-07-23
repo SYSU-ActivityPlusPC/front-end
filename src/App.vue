@@ -1,15 +1,20 @@
 <template>
   <div id="app">
-    <login />
+    <div id="app-firstChild">
+      <login />
+    </div>
+    <bottomBar />
   </div>
 </template>
 
 <script>
-import login from '@/page/login';
+import login from '@/pages/login';
+import footer from '@/components/footer';
 export default {
   name: 'app',
   components: {
-    login
+    login,
+    bottomBar: footer
   }
 };
 </script>
@@ -17,6 +22,11 @@ export default {
 <style scoped>
 #app {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#app-firstChild {
+  flex: 1;
 }
 .row-height {
   height: 100%;

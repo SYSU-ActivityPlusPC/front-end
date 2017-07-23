@@ -1,5 +1,5 @@
 <template>
-<iButton :style="style" :type="type" :disabled="disabled" size="large" @click="onClick">
+<iButton :style="style" :type="type" :disabled="disabled" size="large">
   <span style="color: white"><slot></slot></span>
 </iButton>  
 </template>
