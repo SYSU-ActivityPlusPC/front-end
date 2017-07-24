@@ -10,6 +10,9 @@ const touristHome = resolve => require(['../pages/tourist/children/home'], resol
 const admin = resolve => require(['../pages/admin/index'], resolve);
 const adminHome = resolve => require(['../pages/admin/children/home'], resolve);
 
+const community = resolve => require(['../pages/community/index'], resolve);
+const communityHome = resolve => require(['../pages/community/children/home'], resolve);
+
 const routes = [
   {
     path: '/',
@@ -32,6 +35,16 @@ const routes = [
       {
         path: '',
         component: adminHome
+      }
+    ]
+  },
+  {
+    path: '/community',
+    component: community,
+    children: [
+      {
+        path: '',
+        component: communityHome
       }
     ]
   }

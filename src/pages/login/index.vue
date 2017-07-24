@@ -59,7 +59,7 @@ export default {
 .wrapper {
   background-image: url("../../assets/bg.png");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 100% 100%;
   height: 100%;
 }
 
