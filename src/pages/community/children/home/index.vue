@@ -17,6 +17,7 @@
             <span class="message-status">{{message.status}}</span>
           </div>
         </template>
+        <Page />
       </div>
       <div>
       </div>
@@ -37,6 +38,7 @@
 
 <script>
 import myCard from '@/components/bigCard';
+import Page from './page';
 import { Card } from 'iview';
 export default {
   data () {
@@ -73,7 +75,8 @@ export default {
   },
   components: {
     myCard,
-    Card
+    Card,
+    Page
   },
   filters: {
     shortTitle (value) {
@@ -127,7 +130,7 @@ export default {
 }
 
 .message-title {
-  margin: 0 5px;
+  margin: 0 10px;
 }
 
 .message-status {
