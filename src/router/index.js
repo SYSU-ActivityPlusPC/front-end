@@ -8,6 +8,7 @@ const tourist = resolve => require(['../pages/tourist/index'], resolve);
 const touristHome = resolve => require(['../pages/tourist/children/home'], resolve);
 
 const admin = resolve => require(['../pages/admin/index'], resolve);
+const adminHome = resolve => require(['../pages/admin/children/home'], resolve);
 
 const routes = [
   {
@@ -26,7 +27,13 @@ const routes = [
   },
   {
     path: '/admin',
-    component: admin
+    component: admin,
+    children: [
+      {
+        path: '',
+        component: adminHome
+      }
+    ]
   }
 ];
 

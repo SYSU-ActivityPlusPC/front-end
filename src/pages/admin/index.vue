@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
-  <TopBar showExit="true" />
-  <router-view class="router-view" />
+  <TopBar :showExit="true" />
+  <router-view />
 </div>
 </template>
 
@@ -19,6 +19,6 @@ export default {
   height: 100%;
 }
 .router-view {
-  margin-top: 60px;
+  padding-top: 60px;
 }
 </style>

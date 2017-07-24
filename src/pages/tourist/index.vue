@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
   <TopBar />
-  <router-view class="router-view" />
+  <router-view />
 </div>
 </template>
 
@@ -17,8 +17,5 @@ export default {
 <style scoped>
 .wrapper {
   height: 100%;
-}
-.router-view {
-  margin-top: 60px;
 }
 </style>
