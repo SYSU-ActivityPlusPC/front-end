@@ -15,7 +15,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  padding: 20px 0;
+  padding: 10px 0;
   display: flex;
   justify-content: center;
 }

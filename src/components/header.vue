@@ -20,15 +20,15 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: false
     },
     avatar: {
       type: String,
-      required: true
+      required: false
     },
     showExit: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   components: {
@@ -51,7 +51,8 @@ export default {
   height: 60px;
   width: 100%;
   background-color: #2d8cf0;
-  box-shadow: 0 2px 1px #666666;
+  box-shadow: 0 1px 1px #666666;
+  z-index: 666;
 }
 .logo-wrapper {
   display: inline-block;
