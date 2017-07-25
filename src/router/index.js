@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 const Login = resolve => require(['../pages/login'], resolve);
 const tourist = resolve => require(['../pages/tourist/index'], resolve);
 const touristHome = resolve => require(['../pages/tourist/children/home'], resolve);
-const touristPublish = resolve => require(['../pages/tourist/children/publish'], resolve);
+const touristPublish = resolve => require(['../pages/tourist/children/publish/index'], resolve);
 
 const admin = resolve => require(['../pages/admin/index'], resolve);
 const adminHome = resolve => require(['../pages/admin/children/home'], resolve);

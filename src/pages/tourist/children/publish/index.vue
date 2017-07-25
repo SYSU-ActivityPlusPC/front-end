@@ -2,7 +2,8 @@
 <div class="publish-wrapper">
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" :current="currentStep" class="steps"/>
-  <publishForm />
+  <publishForm v-if="currentStep === 0"/>
+  <publishSubmit v-else/>
 </div>
 </template>
 
@@ -10,12 +11,14 @@
 import BreadcrumbNav from '@/components/breadcrumbNav';
 import Steps from '@/components/steps';
 import publishForm from '@/components/publishForm';
+import publishSubmit from './publishSubmit';
 
 export default {
   components: {
     BreadcrumbNav,
     Steps,
-    publishForm
+    publishForm,
+    publishSubmit
   },
   data () {
     return {
