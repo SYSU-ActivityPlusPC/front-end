@@ -1,5 +1,5 @@
 <template>
-<div class="wrapper">
+<div class="footer">
   <ul>
     <li>了解平台</li>
     <li>了解我们</li>
@@ -14,14 +14,17 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-  padding: 10px 0;
+.footer {
+  height: 40px;
   display: flex;
   justify-content: center;
 }
 ul {
+  height: inherit;
   list-style: none;
   counter-reset: count;
+  display: flex;
+  align-items: center;
 }
 
 

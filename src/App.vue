@@ -26,7 +26,4 @@ export default {
 #app-firstChild {
   flex: 1;
 }
-.row-height {
-  height: 100%;
-}
 </style>

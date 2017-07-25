@@ -1,5 +1,6 @@
 <template>
-<div class="wrapper" @click="onClick">
+<div class="card-wrapper" @click="onClick" @mouseover="onHover" @mouseleave="onLeave">
+  <slot name="floatingLayer"></slot>
   <slot name="image"></slot>
   <slot name="text"></slot>
 </div>  
@@ -10,17 +11,25 @@ export default {
   methods: {
     onClick () {
       this.$emit('click');
+    },
+    onHover () {
+      this.$emit('mouseover');
+    },
+    onLeave () {
+      this.$emit('mouseleave');
     }
   }
 };
 </script>
 
 <style scoped>
-.wrapper {
+.card-wrapper {
+  position: relative;
   padding: 16px;
   width: 320px;
   height: 240px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
 }
 img {
   height: 158px;

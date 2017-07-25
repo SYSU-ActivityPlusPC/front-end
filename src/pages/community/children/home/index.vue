@@ -32,11 +32,26 @@
     </Card>
   </div>
   <div class="card">
-    <myCard style="display: inline-block;">
-      <span slot="text">发布活动</span>
-      <img slot="image" alt="发布活动" src="../../../../assets/publish.png"/>
+    <myCard style="display: inline-block;" @mouseover="floatingLayerShow = true" @mouseleave="floatingLayerShow = false">
+      <transition enter-active-class="animated fadeInDown"
+                  leave-active-class="animated fadeOutUp"
+                  slot="floatingLayer"
+      >
+        <div class="floatingLayer" v-show="floatingLayerShow">
+          <ul>
+            <li class="li" id="li-1">1个活动审核中</li>
+            <li class="li" id="li-2">2个活动进行中</li>
+          </ul>
+        </div>
+      </transition>      
+      <span slot="text" 
+            style="position: absolute; top: 181px; width: 100%; margin: 10px -16px;">发布活动</span>
+      <img slot="image" 
+           alt="发布活动" 
+           src="../../../../assets/publish.png" 
+           style="position: absolute; top: 16px; left: 16px;"/>
     </myCard>
-    <myCard style="display: inline-block;">
+    <myCard style="display: inline-block; margin-right: 2px;">
       <span slot="text">社团管理</span>
       <img slot="image" alt="社团管理" src="../../../../assets/manage.png" />
     </myCard>
@@ -53,6 +68,7 @@ export default {
     return {
       hoverIndex: -1,
       current: 1,
+      floatingLayerShow: false,
       messages: [
         {
           time: '刚刚',
@@ -162,7 +178,7 @@ export default {
 }
 
 .card {
-  margin: 30px 0 0 0;
+  padding: 30px 0 20px 0;
   width: 720px;
   display: flex;
   justify-content: space-between;
@@ -184,5 +200,35 @@ export default {
 
 .message-content-title>:first-child {
   font-weight: bold;
+}
+
+.floatingLayer {
+  position: relative;
+  margin: -16px;
+  height: 80px;
+  width: 320px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.li {
+  color: white;
+}
+
+#li-1::before {
+  content: "\02022";
+  color: #5074d7;
+  font-size: 22px;
+  margin-right: 5px;
+}
+
+#li-2::before {
+  content: "\02022";
+  color: rgb(136, 136, 136);
+  font-size: 22px;
+  margin-right: 5px;
 }
 </style>
