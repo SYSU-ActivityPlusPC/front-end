@@ -18,7 +18,7 @@
         <a href="javascript:void(0)" style="margin-left: 20px;">忘记密码</a>
       </div>
       <div>
-        <iButton width="240px" @click="login">登录</iButton>
+        <iButton width="240" @click="login">登录</iButton>
         <a href="javascript:void(0)" style="margin-left: 20px;">注册</a>
       </div>
     </form>
