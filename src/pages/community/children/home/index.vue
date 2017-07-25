@@ -6,20 +6,28 @@
       <span>2条未读</span>
     </div>
     <Card :padding="0" style="padding: 8px 0 16px 0;">
-      <div class="messagesList">
-        <template v-for="(message, index) in messages">
-          <div class="messages-item" 
-               :class="{'messages-item-hover': hoverIndex === index}"
-               @mouseover="hoverIndex = index"
-               @mouseleave="hoverIndex = -1">
-            <span class="message-time">{{message.time}}</span>
-            <span class="message-title">{{message.title | shortTitle}}</span>
-            <span class="message-status">{{message.status}}</span>
+      <div class="messages-wrapper">
+        <div class="messagesList">
+          <template v-for="(message, index) in messages">
+            <div class="messages-item" 
+                :class="{'messages-item-hover': hoverIndex === index}"
+                @mouseover="hoverIndex = index"
+                @mouseleave="hoverIndex = -1"
+                @click="curMessage=message">
+              <span class="message-time">{{message.time}}</span>
+              <span class="message-title">{{message.title | shortTitle}}</span>
+              <span class="message-status">{{message.status}}</span>
+            </div>
+          </template>
+          <Page :current="current" :total="16" @pageChange="pageChange" />
+        </div>
+        <div class="message-content">
+          <div class="message-content-title">
+            <span>{{curMessage.title}}</span>
+            <span class="message-time">{{curMessage.time}}</span>
           </div>
-        </template>
-        <Page />
-      </div>
-      <div>
+          <p>{{curMessage.content}}</p>
+        </div>
       </div>
     </Card>
   </div>
@@ -44,11 +52,13 @@ export default {
   data () {
     return {
       hoverIndex: -1,
+      current: 1,
       messages: [
         {
           time: '刚刚',
           title: '功能暂停功能暂停功能暂停',
-          status: '未读'
+          status: '未读',
+          content: '大奖赛的卡就大家打的卡就大家打的卡就大家打的卡就的的卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就的卡就大家的卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就打的卡就的卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就的卡就大家打的卡就大家打的卡就大家打的卡就大家打架啊打开撒娇的话卡死'
         },
         {
           time: '30分钟前',
@@ -70,7 +80,8 @@ export default {
           title: '功能暂停功能暂停功能暂停功能暂停',
           status: '已读'
         }
-      ]
+      ],
+      curMessage: {}
     };
   },
   components: {
@@ -81,6 +92,11 @@ export default {
   filters: {
     shortTitle (value) {
       return value.length > 14 ? value.slice(0, 14) + '...' : value;
+    }
+  },
+  methods: {
+    pageChange (newPage) {
+      console.log(newPage);
     }
   }
 };
@@ -107,10 +123,17 @@ export default {
   font-size: 12px;
   color: #f91c6f;
 }
+
+.messages-wrapper {
+  display: flex;
+}
+
 .messagesList {
   width: 359px;
   border-right: 1px solid #f2f2f2;
 }
+
+
 .messages-item {
   display: flex;
   align-items: center;
@@ -145,5 +168,21 @@ export default {
   justify-content: space-between;
 }
 
+.message-content {
+  width: 359px;
+  height: 209px;
+  border-left: 1px solid #f2f2f2;
+  padding: 0 20px;
+  overflow: auto;
+}
 
+.message-content-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.message-content-title>:first-child {
+  font-weight: bold;
+}
 </style>

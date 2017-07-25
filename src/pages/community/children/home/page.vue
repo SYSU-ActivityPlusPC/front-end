@@ -1,10 +1,10 @@
 <template>
   <div class="page-wrapper">
-    <iButton type="text" :disabled="cur === 1" style="padding: 0 15px 0 0;">
+    <iButton type="text" :disabled="cur === 1" style="padding: 0 15px 0 0;" @click="pre">
       <Icon type="arrow-left-b" :size="20" color="#5074d7"></Icon>
     </iButton>
     <span class="rate">{{cur}} / {{all}}</span>
-    <iButton type="text" :disabled="cur === all" style="padding: 0 0 0 15px;">
+    <iButton type="text" :disabled="cur === all" style="padding: 0 0 0 15px;" @click="next">
       <Icon type="arrow-right-b" :size="20" color="#5074d7"></Icon>
     </iButton>
   </div>
@@ -21,7 +21,7 @@ export default {
     },
     total: {
       type: Number,
-      default: 1,
+      default: 10,
       required: true
     }
   },
@@ -29,12 +29,29 @@ export default {
     iButton: Button,
     Icon
   },
+  data () {
+    return {
+      cur: -1
+    };
+  },
+  created () {
+    this.cur = this.current;
+  },
   computed: {
     all () {
-      return Math.floor(this.total / 5) + 1;
+      let mod = this.total % 5;
+      let num = this.total / 5;
+      return mod === 0 ? num : Math.floor(num) + 1;
+    }
+  },
+  methods: {
+    next () {
+      this.cur++;
+      this.$emit('pageChange', this.cur);
     },
-    cur () {
-      return this.current;
+    pre () {
+      this.cur--;
+      this.$emit('pageChange', this.cur);
     }
   }
 };
