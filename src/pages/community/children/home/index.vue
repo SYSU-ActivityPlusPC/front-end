@@ -1,19 +1,24 @@
 <template>
 <div class="wrapper">
   <div class="messages">
-    <div class="title">
-      <span>系统消息</span>
-      <span>2条未读</span>
+    <div class="messages-firstRow">
+      <div class="title">
+        <span>系统消息</span>
+        <span>2条未读</span>
+      </div>
+      <iButton type="text" style="padding: 0 5px 0 0;" :disabled="clickIndex === -1">
+        <img src="../../../../assets/delete.png" alt="删除" class="delete"/>
+      </iButton>
     </div>
     <Card :padding="0" style="padding: 8px 0 16px 0;">
       <div class="messages-wrapper">
         <div class="messagesList">
           <template v-for="(message, index) in messages">
             <div class="messages-item" 
-                :class="{'messages-item-hover': hoverIndex === index}"
+                :class="{'messages-item-hover': hoverIndex === index || clickIndex === index}"
                 @mouseover="hoverIndex = index"
                 @mouseleave="hoverIndex = -1"
-                @click="curMessage=message">
+                @click="clickMessageItem(index)">
               <span class="message-time">{{message.time}}</span>
               <span class="message-title">{{message.title | shortTitle}}</span>
               <span class="message-status">{{message.status}}</span>
@@ -62,11 +67,12 @@
 <script>
 import myCard from '@/components/bigCard';
 import Page from './page';
-import { Card } from 'iview';
+import { Card, iButton } from 'iview';
 export default {
   data () {
     return {
       hoverIndex: -1,
+      clickIndex: -1,
       current: 1,
       floatingLayerShow: false,
       messages: [
@@ -103,7 +109,8 @@ export default {
   components: {
     myCard,
     Card,
-    Page
+    Page,
+    iButton
   },
   filters: {
     shortTitle (value) {
@@ -113,6 +120,10 @@ export default {
   methods: {
     pageChange (newPage) {
       console.log(newPage);
+    },
+    clickMessageItem (index) {
+      this.clickIndex = index;
+      this.curMessage = this.messages[index];
     }
   }
 };
@@ -128,9 +139,7 @@ export default {
 .messages {
   width: 720px;
 }
-.title {
-  margin-bottom: 12px;
-}
+
 .title>:first-child {
   font-size: 16px;
   color: #5074d7;
@@ -230,5 +239,17 @@ export default {
   color: rgb(136, 136, 136);
   font-size: 22px;
   margin-right: 5px;
+}
+
+.delete {
+  height: 20px;
+  width: 20px;
+}
+
+.messages-firstRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
 </style>
