@@ -19,3 +19,9 @@ html, body {
   padding: 6px 7px;
   height: 40px !important;
 }
+
+.ivu-form-item-label {
+  font-size: 14px !important;
+  color: #666666 !important;
+  margin-right: 26px !important;
+}

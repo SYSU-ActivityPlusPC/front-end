@@ -2,17 +2,20 @@
 <div class="publish-wrapper">
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" :current="currentStep" class="steps"/>
+  <publishForm />
 </div>
 </template>
 
 <script>
 import BreadcrumbNav from '@/components/breadcrumbNav';
 import Steps from '@/components/steps';
+import publishForm from '@/components/publishForm';
 
 export default {
   components: {
     BreadcrumbNav,
-    Steps
+    Steps,
+    publishForm
   },
   data () {
     return {
@@ -28,7 +31,6 @@ export default {
       ],
       stepsConfig: [
         '填写活动信息',
-        '选择报名信息',
         '等待审核'
       ],
       currentStep: 1
