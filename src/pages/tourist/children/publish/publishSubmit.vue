@@ -4,7 +4,7 @@
   <div class="right-wrapper">
     <div class="text-1">活动提交成功！</div>
     <div class="text-2">请等待管理员审核，审核结果将发送到您的联系邮箱</div>
-    <myButton width="120" class="button">继续发布活动</myButton>
+    <myButton width="120" class="button" @click="onClick">继续发布活动</myButton>
   </div>
 </div>  
 </template>
@@ -16,6 +16,11 @@ export default {
   components: {
     Icon,
     myButton
+  },
+  methods: {
+    onClick () {
+      this.$emit('continute');
+    }
   }
 };
 </script>

@@ -10,7 +10,7 @@
         <img src="../../../../assets/delete.png" alt="删除" class="delete"/>
       </iButton>
     </div>
-    <Card :padding="0" style="padding: 8px 0 16px 0;">
+    <Card :padding="0" style="padding: 8px 0;">
       <div class="messages-wrapper">
         <div class="messagesList">
           <template v-for="(message, index) in messages">
@@ -49,12 +49,8 @@
           </ul>
         </div>
       </transition>      
-      <span slot="text" 
-            style="position: absolute; top: 181px; width: 100%; margin: 10px -16px;">发布活动</span>
-      <img slot="image" 
-           alt="发布活动" 
-           src="../../../../assets/publish.png" 
-           style="position: absolute; top: 16px; left: 16px;"/>
+      <span slot="text" >发布活动</span>
+      <img slot="image" alt="发布活动" src="../../../../assets/publish.png"/>
     </myCard>
     <myCard style="display: inline-block; margin-right: 2px;">
       <span slot="text">社团管理</span>
@@ -131,7 +127,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  padding-top: 96px;
+  padding-top: 2.647%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -187,7 +183,7 @@ export default {
 }
 
 .card {
-  padding: 30px 0 20px 0;
+  padding: 28px 0 20px 0;
   width: 720px;
   display: flex;
   justify-content: space-between;
@@ -213,9 +209,8 @@ export default {
 
 .floatingLayer {
   position: relative;
-  margin: -16px;
   height: 80px;
-  width: 320px;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;

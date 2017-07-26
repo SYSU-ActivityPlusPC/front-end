@@ -10,7 +10,7 @@
       <img slot="image" alt="发布活动" src="../../../assets/publish.png"/>
     </Card>
     <br/>
-    <Card style="display: inline-block; margin: 18px 0 0 0;">
+    <Card style="display: inline-block; margin: 18px 0 0 0;" @click="$router.push('/admin/community')">
       <span slot="text">社团管理</span>
       <img slot="image" alt="社团管理" src="../../../assets/manage.png" />
     </Card>
@@ -29,7 +29,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  padding: 84px 0 10px 0;
+  padding: 1.764% 0 10px 0;
   height: 100%;
   display: flex;
   justify-content: center;

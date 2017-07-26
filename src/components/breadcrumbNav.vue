@@ -25,5 +25,5 @@ export default {
 <style scoped>
 .breadcrumb-separator {
   color: #333333;
-}  
+}
 </style>

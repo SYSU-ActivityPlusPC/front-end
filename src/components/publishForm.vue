@@ -36,13 +36,13 @@
         <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
       </FormItem>
       <FormItem label="活动详情">
-        <iInput class="input-size" type="textarea" :rows="4" placeholder="请输入活动详情，让大家更了解活动吧!"/>
+        <iInput class="textarea-size" type="textarea" :rows="6" placeholder="请输入活动详情，让大家更了解活动吧!"/>
       </FormItem>
       <FormItem label="邮箱">
         <iInput class="input-size" placeholder="活动审核结果将会发送到此邮箱!"/>
       </FormItem>
       <FormItem>
-        <myButton width="200" class="submit">下一步</myButton>
+        <myButton width="200" class="submit" @click="next">下一步</myButton>
       </FormItem>
     </iForm>
   </div>
@@ -78,7 +78,7 @@
         </Upload>
       </FormItem>
       <FormItem>
-        <myButton width="200" class="submit">下一步</myButton>
+        <myButton width="200" class="submit" @click="next">下一步</myButton>
       </FormItem>
     </iForm>
   </div>
@@ -107,6 +107,11 @@ export default {
       areas: ['东校区', '南校区', '珠海校区', '北校区'],
       currentTab: 'must'
     };
+  },
+  methods: {
+    next () {
+      this.$emit('next');
+    }
   }
 };
 </script>
@@ -115,6 +120,7 @@ export default {
 .form-wrapper {
   display: flex;
   justify-content: flex-start;
+  width: 742px;
 }
 
 .left-wrapper {
@@ -149,7 +155,7 @@ export default {
 }
 
 .right-wrapper {
-  width: 640px;
+  width: 91.3%;
   border: 2px solid #2d8cf0;
   border-left: transparent;
   border-radius: 3px;
@@ -157,6 +163,9 @@ export default {
 }
 .input-size {
   width: 300px;
+}
+.textarea-size {
+  width: 500px;
 }
 .select {
   width: 100px;

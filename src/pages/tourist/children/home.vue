@@ -23,13 +23,15 @@ export default {
   methods: {
     onClick () {
     }
+  },
+  mounted () {
   }
 };
 </script>
 
 <style scoped>
 .wrapper {
-  padding: 80px 100px;
+  padding: 2.647% 7.32% 20px 7.32%;
   height: 100%;
   width: 100%;
 }

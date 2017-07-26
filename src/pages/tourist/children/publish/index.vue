@@ -2,8 +2,8 @@
 <div class="publish-wrapper">
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" :current="currentStep" class="steps"/>
-  <publishForm v-if="currentStep === 0"/>
-  <publishSubmit v-else/>
+  <publishForm v-if="currentStep === 0" @next="currentStep = 1" />
+  <publishSubmit v-else @continute="currentStep = 0" />
 </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
 
 <style scoped>
 .publish-wrapper {
-  padding: 96px 0 0 100px;
+  padding: 20px 7.32%;
 }
 .steps {
   margin: 20px 0;

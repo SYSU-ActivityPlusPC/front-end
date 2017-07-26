@@ -1,14 +1,16 @@
 <template>
 <iRow class-name="wrapper">
-  <iCol class-name="col" span="18">
+  <iCol class-name="col" span="21">
     <div class="logo-wrapper">
       <img src="../assets/logo.png" class="logo" alt="中大活动LOGO" />
     </div>
     <span class="title">活动PLUS管理平台</span>
   </iCol>
-  <iCol class-name="col" span="6">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLDuMzNb49vsxj0jZvYrJnJz8zk3pebawHiwBh7SzV7G_fTpDRwg" class="avatar" alt="你的头像" />
-    <span class="name">社团</span>
+  <iCol class-name="col" span="3">
+    <avatar labelColor="#f2f2f2" 
+            name="fish" 
+            avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk1PG-_WjPvp6EIlu24xTzgQ-W3dNj9NooaAGTJQ3zZa3_KGVp"
+            :size="size" />
     <a href="javascript:void(0)" v-if="showExit" @click="exit">退出</a>
   </iCol>
 </iRow>
@@ -16,6 +18,7 @@
 
 <script>
 import { Row, Col } from 'iview';
+import avatar from '@/components/avatar';
 export default {
   props: {
     name: {
@@ -33,12 +36,23 @@ export default {
   },
   components: {
     iRow: Row,
-    iCol: Col
+    iCol: Col,
+    avatar
   },
   methods: {
     exit () {
       this.$emit('logout');
     }
+  },
+  data () {
+    return {
+      size: 0
+    };
+  },
+  mounted () {
+    const height = document.getElementsByTagName('html')[0].clientHeight;
+    // 相应分辨率，对avatar大小做下改变
+    this.size = height * 0.09 * 48 / 60;
   }
 };
 </script>
@@ -48,22 +62,24 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  height: 60px;
+  height: 9.1%;
   width: 100%;
-  background-color: #2d8cf0;
+  background-color: #5074d7;
   box-shadow: 0 1px 1px #666666;
   z-index: 666;
 }
+
+
 .logo-wrapper {
   display: inline-block;
   text-align: center;
   background-color: white;
-  width: 100px;
-  height: 60px;
+  width: 8.37%;
+  height: inherit;
 }
 .logo {
   height: inherit;
-  width: 60px;
+  width: 60%;
 }
 .title {
   color: white;
@@ -73,20 +89,9 @@ export default {
 .col {
   display: flex;
   align-items: center;
-  height: inherit;
-}
-.avatar {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
+  height: 100%;
 }
 
-
-.name {
-  margin-left: 12px;
-  color: white;
-  font-size: 16px;
-}
 
 a {
   margin-left: 20px;
