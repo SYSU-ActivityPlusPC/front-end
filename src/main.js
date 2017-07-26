@@ -3,9 +3,9 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import 'iview/dist/styles/iview.css';
-import '@/style/animate.css';
-import '@/style/common.css';
+import 'iview/dist/styles/iview';
+import '@/style/animate';
+import '@/style/common';
 
 Vue.config.productionTip = false;
 

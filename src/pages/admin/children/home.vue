@@ -3,24 +3,34 @@
   <div class="card-wrapper">
     <Card style="margin: 0 48px 0 0; display: inline-block;">
       <span slot="text">数据管理</span>
-      <img slot="image" alt="数据管理" src="../../../assets/data.png" />
+      <img slot="image" alt="数据管理" :src="data" />
     </Card>
     <Card style="display: inline-block;">
       <span slot="text">发布活动</span>
-      <img slot="image" alt="发布活动" src="../../../assets/publish.png"/>
+      <img slot="image" alt="发布活动" :src="publish"/>
     </Card>
     <br/>
     <Card style="display: inline-block; margin: 18px 0 0 0;" @click="$router.push('/admin/community')">
       <span slot="text">社团管理</span>
-      <img slot="image" alt="社团管理" src="../../../assets/manage.png" />
+      <img slot="image" alt="社团管理" :src="manage" />
     </Card>
   </div>
 </div>  
 </template>
 
 <script>
+import data from '@/assets/data';
+import publish from '@/assets/publish';
+import manage from '@/assets/manage';
 import Card from '@/components/bigCard';
 export default {
+  data () {
+    return {
+      data,
+      publish,
+      manage
+    };
+  },
   components: {
     Card
   }

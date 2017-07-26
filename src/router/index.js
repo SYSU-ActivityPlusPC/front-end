@@ -11,6 +11,7 @@ const touristPublish = resolve => require(['../pages/tourist/children/publish/in
 const admin = resolve => require(['../pages/admin/index'], resolve);
 const adminHome = resolve => require(['../pages/admin/children/home'], resolve);
 const adminCommunityManage = resolve => require(['../pages/admin/children/communityManage/index'], resolve);
+const adminCommunityManageDefault = resolve => require(['../pages/admin/children/communityManage/children/default'], resolve);
 const adminCommunityManageNotice = resolve => require(['../pages/admin/children/communityManage/children/notice'], resolve);
 const adminCommunityManageApplication = resolve => require(['../pages/admin/children/communityManage/children/application'], resolve);
 const adminCommunityManageDetail = resolve => require(['../pages/admin/children/communityManage/children/detail'], resolve);
@@ -29,10 +30,16 @@ const routes = [
     children: [
       {
         path: '',
+        meta: {
+          name: '/首页'
+        },
         component: touristHome
       },
       {
         path: 'publish',
+        meta: {
+          name: '/首页/发布活动'
+        },
         component: touristPublish
       }
     ]
@@ -43,6 +50,9 @@ const routes = [
     children: [
       {
         path: '',
+        meta: {
+          name: '/首页'
+        },
         component: adminHome
       },
       {
@@ -50,15 +60,31 @@ const routes = [
         component: adminCommunityManage,
         children: [
           {
+            path: '',
+            meta: {
+              name: '/首页/社团管理'
+            },
+            component: adminCommunityManageDefault
+          },
+          {
             path: 'notice',
+            meta: {
+              name: '/首页/社团管理/通知社团'
+            },
             component: adminCommunityManageNotice
           },
           {
             path: 'application',
+            meta: {
+              name: '/首页/社团管理/注册申请'
+            },
             component: adminCommunityManageApplication
           },
           {
             path: 'detail',
+            meta: {
+              name: '/首页/社团管理/社团信息'
+            },
             component: adminCommunityManageDetail
           }
         ]
@@ -71,6 +97,9 @@ const routes = [
     children: [
       {
         path: '',
+        meta: {
+          name: '/首页'
+        },
         component: communityHome
       }
     ]
