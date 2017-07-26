@@ -24,7 +24,7 @@
 
 <script>
 import { Form, FormItem, Input } from 'iview';
-import SmallCard from '@/components/smallCard';
+import { SmallCard } from '@/components';
 import sent from '@/assets/sent';
 export default {
   components: {
@@ -56,7 +56,7 @@ export default {
 }
 
 .input {
-  width: 600px;
+  width: 85.714%;
   margin-left: -8px;
 }
 

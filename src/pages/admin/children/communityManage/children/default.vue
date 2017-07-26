@@ -24,8 +24,7 @@
 <script>
 import notice from '@/assets/notice';
 import application from '@/assets/application';
-import Avatar from '@/components/avatar';
-import SmallCard from '@/components/smallCard';
+import { Avatar, SmallCard } from '@/components';
 export default {
   components: {
     Avatar,

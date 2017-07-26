@@ -1,19 +1,19 @@
 <template>
 <div class="wrapper">
   <div class="card-wrapper">
-    <Card style="margin: 0 48px 0 0; display: inline-block;">
+    <BigCard style="margin: 0 48px 0 0; display: inline-block;">
       <span slot="text">数据管理</span>
       <img slot="image" alt="数据管理" :src="data" />
-    </Card>
-    <Card style="display: inline-block;">
+    </BigCard>
+    <BigCard style="display: inline-block;">
       <span slot="text">发布活动</span>
       <img slot="image" alt="发布活动" :src="publish"/>
-    </Card>
+    </BigCard>
     <br/>
-    <Card style="display: inline-block; margin: 18px 0 0 0;" @click="$router.push('/admin/community')">
+    <BigCard style="display: inline-block; margin: 18px 0 0 0;" @click="$router.push('/admin/community')">
       <span slot="text">社团管理</span>
       <img slot="image" alt="社团管理" :src="manage" />
-    </Card>
+    </BigCard>
   </div>
 </div>  
 </template>
@@ -22,7 +22,7 @@
 import data from '@/assets/data';
 import publish from '@/assets/publish';
 import manage from '@/assets/manage';
-import Card from '@/components/bigCard';
+import { BigCard } from '@/components';
 export default {
   data () {
     return {
@@ -32,7 +32,7 @@ export default {
     };
   },
   components: {
-    Card
+    BigCard
   }
 };
 </script>

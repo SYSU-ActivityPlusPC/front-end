@@ -7,18 +7,18 @@
       <span class="warn-text-2">发布活动后两天内审核结果将以邮件通知你，请及时查看邮箱<br />感谢你的支持！</span>
     </div>
   </div>
-  <Card @click="onClick" style="margin: 20px 0 0 56px;">
+  <BigCard @click="onClick" style="margin: 20px 0 0 56px;">
     <img src="../../../assets/publish.png" alt='发布活动' slot="image"/>
     <span slot="text">发布活动</span>
-  </Card>
+  </BigCard>
 </div>  
 </template>
 
 <script>
-import Card from '@/components/bigCard';
+import { BigCard } from '@/components';
 export default {
   components: {
-    Card
+    BigCard
   },
   methods: {
     onClick () {

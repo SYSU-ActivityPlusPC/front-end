@@ -4,18 +4,18 @@
   <div class="right-wrapper">
     <div class="text-1">活动提交成功！</div>
     <div class="text-2">请等待管理员审核，审核结果将发送到您的联系邮箱</div>
-    <myButton width="120" class="button" @click="onClick">继续发布活动</myButton>
+    <MyButton width="120" class="button" @click="onClick">继续发布活动</MyButton>
   </div>
 </div>  
 </template>
 
 <script>
 import { Icon } from 'iview';
-import myButton from '@/components/button';
+import { MyButton } from '@/components';
 export default {
   components: {
     Icon,
-    myButton
+    MyButton
   },
   methods: {
     onClick () {

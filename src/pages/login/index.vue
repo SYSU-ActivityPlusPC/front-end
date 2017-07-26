@@ -28,7 +28,7 @@
 
 <script>
 import { Card, Row, Col, Input } from 'iview';
-import Button from '@/components/button';
+import { MyButton } from '@/components';
 export default {
   data () {
     return {
@@ -45,7 +45,7 @@ export default {
     iRow: Row,
     iCol: Col,
     iInput: Input,
-    iButton: Button
+    iButton: MyButton
   },
   methods: {
     login () {
