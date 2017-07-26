@@ -11,6 +11,9 @@
       <FormItem label="正文">
         <iInput size="large" class="input" placeholder="请输入通知正文" type="textarea" :rows="12"/>
       </FormItem>
+      <FormItem>
+        <MyButton width="200" class="button">发送</MyButton>
+      </FormItem>
     </iForm>
   </div>
   <div class="right-box">
@@ -24,14 +27,15 @@
 
 <script>
 import { Form, FormItem, Input } from 'iview';
-import { SmallCard } from '@/components';
+import { SmallCard, MyButton } from '@/components';
 import sent from '@/assets/sent';
 export default {
   components: {
     iForm: Form,
     FormItem,
     iInput: Input,
-    SmallCard
+    SmallCard,
+    MyButton
   },
   data () {
     return {
@@ -62,5 +66,8 @@ export default {
 
 .small-card {
   width: 120px !important;
+}
+.button {
+  margin-left: 16px;
 }
 </style>
