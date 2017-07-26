@@ -78,7 +78,6 @@ export default {
 }
 .left-box {
   width: 51.72%;
-  margin-top: 1.471%;
 }
 
 .time {
@@ -97,8 +96,7 @@ export default {
 }
 .right-box {
   flex: 1;
-  margin-left: 70px;
-  margin-top: 1.471%;
+  margin-left: 6.034%;
   display: flex;
 }
 

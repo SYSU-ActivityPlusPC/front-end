@@ -49,7 +49,6 @@ export default {
 <style scoped>
 .detail-wrapper {
   height: 100%;
-  margin-top: 1.471%;
 }
 
 .item {
@@ -61,5 +60,9 @@ export default {
   width: 110px;
   text-align: right;
   margin-right: 40px;
+}
+
+p, span {
+  color: #666666;
 }
 </style>

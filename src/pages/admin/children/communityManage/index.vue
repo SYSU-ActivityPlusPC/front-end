@@ -1,6 +1,6 @@
 <template>
 <div class="wrapper">
-  <BreadcrumbNav :config="breadcrumbNavConfig" />
+  <BreadcrumbNav :config="breadcrumbNavConfig" class="nav" />
   <router-view></router-view>
 </div>
 </template>
@@ -32,5 +32,7 @@ export default {
 .wrapper {
   padding: 2.647% 7.32% 10px 7.32%;
 }
-
+.nav {
+  margin-bottom: 1.471%;
+}
 </style>
