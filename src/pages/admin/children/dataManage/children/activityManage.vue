@@ -15,7 +15,7 @@
   </div>
   <div class="lists">
     <template>
-      <ListItem>
+      <ListItem @click="open=true">
         <div slot="left">
           <p class="title">三月义卖</p>
           <p class="font-small">2017.3.3提交</p>
@@ -37,7 +37,7 @@
       </ListItem>
     </template>
   </div>
-  <Modal :open="open" />
+  <Modal :open="open" @close="open=false"/>
 </div>
 </template>
 
@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       remove,
-      open: true,
+      open: false,
       selectCampus: '东',
       campus: [
         '东',

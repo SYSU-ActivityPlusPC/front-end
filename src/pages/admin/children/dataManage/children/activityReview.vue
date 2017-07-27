@@ -8,7 +8,7 @@
   </div>
   <div class="lists">
     <template>
-      <ListItem>
+      <ListItem @click="open=true">
         <div slot="left">
           <p class="title">三月义卖</p>
           <p class="font-small">2017.3.3提交</p>
@@ -30,21 +30,25 @@
       </ListItem>
     </template>
   </div>
+  <Modal :open="open" @close="open=false"/>
 </div>
 </template>
 
 <script>
 import { ListItem } from '@/components';
 import { Button } from 'iview';
+import Modal from './children/modal';
 import remove from '@/assets/delete';
 export default {
   components: {
     ListItem,
-    IButton: Button
+    IButton: Button,
+    Modal
   },
   data () {
     return {
-      remove
+      remove,
+      open: false
     };
   }
 };
