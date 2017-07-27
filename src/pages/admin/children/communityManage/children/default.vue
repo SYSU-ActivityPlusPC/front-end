@@ -2,10 +2,10 @@
 <div class="box">
   <div class="left-box">
     <template v-for="(item, index) in mock">
-      <div class="list-item" :key="index" @click="$router.push('/admin/community/detail')">
-        <Avatar :avatar="item.avatar" :name="item.name" />
-        <span class="time">{{item.time}}</span>
-      </div>
+      <ListItem class="list-item" :key="index" @click="$router.push('/admin/community/detail')">
+        <Avatar :avatar="item.avatar" :name="item.name" slot="left" />
+        <span class="time" slot="right">{{item.time}}</span>
+      </ListItem>
     </template>
   </div>
   <div class="right-box">
@@ -24,11 +24,12 @@
 <script>
 import notice from '@/assets/notice';
 import application from '@/assets/application';
-import { Avatar, SmallCard } from '@/components';
+import { Avatar, SmallCard, ListItem } from '@/components';
 export default {
   components: {
     Avatar,
-    SmallCard
+    SmallCard,
+    ListItem
   },
   data () {
     return {
@@ -82,17 +83,7 @@ export default {
 .time {
   color: #666666;
 }
-.list-item {
-  padding: 0 20px;
-  height: 68px;
-  margin: 0 0 12px 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  border-radius: 2px;
-}
+
 .right-box {
   flex: 1;
   margin-left: 6.034%;

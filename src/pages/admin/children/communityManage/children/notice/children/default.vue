@@ -17,7 +17,7 @@
     </iForm>
   </div>
   <div class="right-box">
-    <SmallCard class="small-card" backgroundColor="#5074d7" @click="$router.push('/admin/community/application')">
+    <SmallCard class="small-card" backgroundColor="#5074d7" @click="$router.push('/admin/community/notice/sent')">
       <img :src="sent" alt="注册申请" name="icon" />
       已发送(99)
     </SmallCard>
