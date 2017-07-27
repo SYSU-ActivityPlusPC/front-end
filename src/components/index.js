@@ -8,6 +8,7 @@ import PublishForm from './publishForm';
 import SmallCard from './smallCard';
 import Steps from './steps';
 import ListItem from './ListItem';
+// import Remove from './remove';
 
 export {
   Avatar,
@@ -20,4 +21,5 @@ export {
   Steps,
   BreadcrumbNav,
   ListItem
+// Remove
 };

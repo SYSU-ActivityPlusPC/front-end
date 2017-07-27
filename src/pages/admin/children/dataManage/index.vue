@@ -5,12 +5,19 @@
     <div class="tab" :class="{'tab-select': curTab === '活动管理'}" @click="toggleCurTab">活动管理</div>
     <div class="tab" :class="{'tab-select': curTab === '活动审核'}" @click="toggleCurTab">活动审核</div>
   </div>
+  <div class="router-view">
+    <Manage v-if ="curTab === '活动管理'" />
+    <Review v-else />
+  </div>
 </div>  
 </template>
 
 <script>
 import { BreadcrumbNav } from '@/components';
 import { setConfig } from '@/utils';
+import Manage from './children/activityManage';
+import Review from './children/activityReview';
+
 export default {
   data () {
     return {
@@ -19,7 +26,9 @@ export default {
     };
   },
   components: {
-    BreadcrumbNav
+    BreadcrumbNav,
+    Manage,
+    Review
   },
   created () {
     this.config = setConfig.bind(this)();
@@ -40,7 +49,7 @@ export default {
 .tabs {
   width: 24.14%;
   height: 42px;
-  margin-top: 2.069%;
+  margin: 2.069% 0;
   border: 1px solid #5074d7;
   display: flex;
 }
@@ -57,5 +66,8 @@ export default {
 .tab-select {
   background-color: #5074d7;
   color: #f2f2f2;
+}
+.router-view {
+  width: 51.72%;
 }
 </style>

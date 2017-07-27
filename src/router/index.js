@@ -23,7 +23,7 @@ const adminCommunityManageApplicationDefault = resolve => require(['../pages/adm
 const adminCommunityManageApplicationDetail = resolve => require(['../pages/admin/children/communityManage/children/application/children/detail'], resolve);
 const adminCommunityManageDetail = resolve => require(['../pages/admin/children/communityManage/children/detail'], resolve);
 
-const adminDataManage = resolve => require(['../pages/admin/children/dataManage'], resolve);
+const adminDataManage = resolve => require(['../pages/admin/children/dataManage/index'], resolve);
 
 const community = resolve => require(['../pages/community/index'], resolve);
 const communityHome = resolve => require(['../pages/community/children/home'], resolve);
