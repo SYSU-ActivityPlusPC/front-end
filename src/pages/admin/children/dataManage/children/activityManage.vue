@@ -88,7 +88,7 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2.647%;
+  margin-bottom: 0.647%;
 }
 .row1-right {
   align-self: flex-end;
@@ -124,6 +124,6 @@ li {
 }
 
 .down {
-  color: #f9176f;
+  color: #5074d7;
 }
 </style>

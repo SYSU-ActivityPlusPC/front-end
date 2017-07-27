@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
   <div class="row1">
-    <span class="num">共3个</span>
+    <span class="num">共3个</span>    
     <iButton type="text" style="padding: 0 5px 0 0;">
       <img :src="remove" alt="删除" class="delete"/>
     </iButton>
@@ -23,8 +23,8 @@
             <p style="color: #666666;">中山大学在校生</p>
           </div>
           <div class="right-item">
-            <a href="javascript:void(0)" class="up">上移</a>
-            <a href="javascript:void(0)" class="down">下移</a>
+            <a href="javascript:void(0)" class="accept">通过</a>
+            <a href="javascript:void(0)" class="reject">拒绝</a>
           </div>
         </div>
       </ListItem>
@@ -45,11 +45,48 @@ export default {
   data () {
     return {
       remove
-    }
+    };
   }
 };
 </script>
 
-<style>
-  
+<style scoped>
+.row1 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right {
+  display: flex;
+}
+
+.right-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 40px;
+}
+
+.accept {
+  color: #28bf96;
+}
+
+.reject {
+  color: #f91c6f;
+}
+
+.num {
+  margin-right: 15px;
+  color: #666666;
+}
+
+.title {
+  font-size: 16px;
+  color: #666666;
+}
+
+.font-small {
+  color: #999999;
+  font-size: 10px;
+}
 </style>
