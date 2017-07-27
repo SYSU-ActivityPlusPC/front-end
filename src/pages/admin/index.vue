@@ -1,6 +1,6 @@
 <template>
 <div class="wrapper">
-  <TopBar />
+  <TopBar :showExit="true" />
   <div :style="style">
     <router-view />
   </div>

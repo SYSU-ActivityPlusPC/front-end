@@ -1,7 +1,13 @@
 <template>
-<iButton :style="style" :type="type" :disabled="disabled" size="large" @click="onClick">
-  <span style="color: white"><slot></slot></span>
-</iButton>  
+<div :style="style" @mouseover="onHover" @mouseleave="onLeave" class="parent" @click="onClick">
+  <iButton long 
+          :style="buttonStyle"
+          :type="type" 
+          :disabled="disabled" 
+          size="large">
+    <span :style="textStyle" class="text"><slot></slot></span>
+  </iButton>
+</div>
 </template>
 
 <script>
@@ -13,34 +19,63 @@ export default {
       default: 'primary'
     },
     height: {
-      type: String,
-      default: '40px'
+      type: Number,
+      default: 40
     },
     width: {
-      type: String,
-      default: '100%'
+      type: Number,
+      default: 100
     },
     disabled: {
       type: Boolean,
       default: false
     }
   },
+  data () {
+    return {
+      hover: false
+    };
+  },
   components: {
     iButton: Button
   },
   computed: {
     style () {
-      return `width: ${this.width}px; height: ${this.height}px;`;
+      return `width: ${this.width}px; height: ${this.height}px; display: inline-block;`;
+    },
+    buttonStyle () {
+      return `height: ${this.height}px;`;
+    },
+    textStyle () {
+      return this.hover ? 'color: white; font-size: 16px;' : 'color: white;';
     }
   },
   methods: {
     onClick () {
+      if (this.disabled) return;
       this.$emit('click');
+    },
+    onHover () {
+      if (this.disabled) return;
+      this.hover = true;
+    },
+    onLeave () {
+      if (this.disabled) return;
+      this.hover = false;
     }
   }
 };
 </script>
 
-<style>
-  
+<style scoped>
+.text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.parent {
+  position: relative;
+}
 </style>

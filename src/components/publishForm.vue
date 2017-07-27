@@ -78,7 +78,7 @@
         </Upload>
       </FormItem>
       <FormItem>
-        <myButton width="200" class="submit" @click="next">下一步</myButton>
+        <myButton :width="200" class="submit" @click="next">下一步</myButton>
       </FormItem>
     </iForm>
   </div>

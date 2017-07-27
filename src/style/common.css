@@ -29,3 +29,18 @@ html, body {
   color: #666666 !important;
   margin-right: 26px !important;
 }
+
+a:hover,
+a:active {
+  text-decoration: underline;
+  color: #5074d7 !important;
+}
+
+.ivu-btn-primary[disabled],
+.ivu-btn-primary[disabled]:hover {
+  background-color: #a2b6ea;
+}
+
+.ivu-btn-primary:active {
+  background-color: #2747ab;
+}

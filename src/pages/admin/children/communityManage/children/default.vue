@@ -2,7 +2,7 @@
 <div class="box">
   <div class="left-box">
     <template v-for="(item, index) in mock">
-      <ListItem class="list-item" :key="index" @click="$router.push('/admin/community/detail')">
+      <ListItem class="list-item" :key="index" @click="$router.push(`/admin/community/detail/${index}`)">
         <Avatar :avatar="item.avatar" :name="item.name" slot="left" />
         <span class="time" slot="right">{{item.time}}</span>
       </ListItem>

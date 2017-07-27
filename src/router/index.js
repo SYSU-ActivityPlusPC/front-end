@@ -4,6 +4,7 @@ import Vue from 'vue';
 Vue.use(VueRouter);
 
 const Login = resolve => require(['../pages/login'], resolve);
+
 const tourist = resolve => require(['../pages/tourist/index'], resolve);
 const touristHome = resolve => require(['../pages/tourist/children/home'], resolve);
 const touristPublish = resolve => require(['../pages/tourist/children/publish/index'], resolve);
@@ -20,8 +21,9 @@ const adminCommunityManageNoticeSent = resolve => require(['../pages/admin/child
 const adminCommunityManageApplication = resolve => require(['../pages/admin/children/communityManage/children/application/index'], resolve);
 const adminCommunityManageApplicationDefault = resolve => require(['../pages/admin/children/communityManage/children/application/children/default'], resolve);
 const adminCommunityManageApplicationDetail = resolve => require(['../pages/admin/children/communityManage/children/application/children/detail'], resolve);
-
 const adminCommunityManageDetail = resolve => require(['../pages/admin/children/communityManage/children/detail'], resolve);
+
+const adminDataManage = resolve => require(['../pages/admin/children/dataManage'], resolve);
 
 const community = resolve => require(['../pages/community/index'], resolve);
 const communityHome = resolve => require(['../pages/community/children/home'], resolve);
@@ -61,6 +63,13 @@ const routes = [
           name: '/首页'
         },
         component: adminHome
+      },
+      {
+        path: 'data',
+        meta: {
+          name: '/首页/数据管理'
+        },
+        component: adminDataManage
       },
       {
         path: 'community',
@@ -105,7 +114,7 @@ const routes = [
                 component: adminCommunityManageApplicationDefault
               },
               {
-                path: 'detail',
+                path: 'detail/:id',
                 meta: {
                   name: '/首页/社团管理/注册申请/注册详情'
                 },
@@ -114,7 +123,7 @@ const routes = [
             ]
           },
           {
-            path: 'detail',
+            path: 'detail/:id',
             meta: {
               name: '/首页/社团管理/社团信息'
             },

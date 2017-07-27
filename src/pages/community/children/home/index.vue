@@ -37,7 +37,7 @@
     </Card>
   </div>
   <div class="card">
-    <myCard style="display: inline-block;" @mouseover="floatingLayerShow = true" @mouseleave="floatingLayerShow = false">
+    <BigCard style="display: inline-block;" @mouseover="floatingLayerShow = true" @mouseleave="floatingLayerShow = false">
       <transition enter-active-class="animated fadeInDown"
                   leave-active-class="animated fadeOutUp"
                   slot="floatingLayer"
@@ -51,17 +51,17 @@
       </transition>      
       <span slot="text" >发布活动</span>
       <img slot="image" alt="发布活动" src="../../../../assets/publish.png"/>
-    </myCard>
-    <myCard style="display: inline-block; margin-right: 2px;">
+    </BigCard>
+    <BigCard style="display: inline-block; margin-right: 2px;">
       <span slot="text">社团管理</span>
       <img slot="image" alt="社团管理" src="../../../../assets/manage.png" />
-    </myCard>
+    </BigCard>
   </div>
 </div>
 </template>
 
 <script>
-import myCard from '@/components/bigCard';
+import { BigCard } from '@/components';
 import Page from './page';
 import { Card, iButton } from 'iview';
 export default {
@@ -103,7 +103,7 @@ export default {
     };
   },
   components: {
-    myCard,
+    BigCard,
     Card,
     Page,
     iButton

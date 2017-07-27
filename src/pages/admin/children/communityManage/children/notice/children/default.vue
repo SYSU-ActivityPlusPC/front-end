@@ -12,7 +12,7 @@
         <iInput size="large" class="input" placeholder="请输入通知正文" type="textarea" :rows="12"/>
       </FormItem>
       <FormItem>
-        <MyButton width="200" class="button">发送</MyButton>
+        <MyButton :width="200" class="button">发送</MyButton>
       </FormItem>
     </iForm>
   </div>

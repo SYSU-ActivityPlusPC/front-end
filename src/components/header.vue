@@ -98,5 +98,8 @@ a {
   font-size: 12px;
   color: #e4e4e4;
 }
-
+a:hover,
+a:active {
+  color: #e4e4e4 !important;
+}
 </style>

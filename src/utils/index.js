@@ -25,10 +25,12 @@ export function setConfig () {
     return last;
   }, '');
 
-  for (let i = 0; i < hrefs.length; i++) {
+  const textsLength = texts.length;
+  const hrefsLength = hrefs.length;
+  for (let i = 0; i < textsLength; i++) {
     arr.push({
       text: texts[i],
-      href: hrefs[i]
+      href: hrefsLength > textsLength && i === textsLength - 1 ? hrefs[i + 1] : hrefs[i]
     });
   }
 

@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
   <div class="card-wrapper">
-    <BigCard style="margin: 0 48px 0 0; display: inline-block;">
+    <BigCard style="margin: 0 48px 0 0; display: inline-block;" @click="$router.push('/admin/data')">
       <span slot="text">数据管理</span>
       <img slot="image" alt="数据管理" :src="data" />
     </BigCard>

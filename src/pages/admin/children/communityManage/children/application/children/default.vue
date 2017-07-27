@@ -11,7 +11,7 @@
         <img class="icon" :src="reviewing">
         <span class="text-reviewing">待审核</span>
       </div>
-      <ListItem class="list-item" @click="$router.push('/admin/community/application/detail')">
+      <ListItem class="list-item" @click="$router.push(`/admin/community/application/detail/${index}`)">
         <Avatar slot="left" :avatar="item.avatar" :name="item.name" />
         <span slot="right" class="time">{{item.time}}申请</span>
       </ListItem>
