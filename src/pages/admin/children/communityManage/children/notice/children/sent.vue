@@ -2,7 +2,7 @@
 <div class="sent-wrapper">
   <div class="row-1">
     <span class="messagesNum">2条信息</span>
-    <iButton type="text" style="padding: 0 5px 0 0;" :disabled="clickIndex === -1">
+    <iButton type="text" style="padding: 0 5px 0 0;">
       <img :src="remove" alt="删除" class="delete"/>
     </iButton>
   </div>

@@ -12,11 +12,15 @@ const admin = resolve => require(['../pages/admin/index'], resolve);
 const adminHome = resolve => require(['../pages/admin/children/home'], resolve);
 const adminCommunityManage = resolve => require(['../pages/admin/children/communityManage/index'], resolve);
 const adminCommunityManageDefault = resolve => require(['../pages/admin/children/communityManage/children/default'], resolve);
+
 const adminCommunityManageNotice = resolve => require(['../pages/admin/children/communityManage/children/notice/index'], resolve);
-const adminCommunityManageApplication = resolve => require(['../pages/admin/children/communityManage/children/application'], resolve);
-const adminCommunityManageDetail = resolve => require(['../pages/admin/children/communityManage/children/detail'], resolve);
-const adminCommunityManageNoticeSent = resolve => require(['../pages/admin/children/communityManage/children/notice/children/sent'], resolve);
 const adminCommunityManageNoticeDefault = resolve => require(['../pages/admin/children/communityManage/children/notice/children/default'], resolve);
+const adminCommunityManageNoticeSent = resolve => require(['../pages/admin/children/communityManage/children/notice/children/sent'], resolve);
+
+const adminCommunityManageApplication = resolve => require(['../pages/admin/children/communityManage/children/application/index'], resolve);
+const adminCommunityManageApplicationDefault = resolve => require(['../pages/admin/children/communityManage/children/application/children/default'], resolve);
+
+const adminCommunityManageDetail = resolve => require(['../pages/admin/children/communityManage/children/detail'], resolve);
 
 const community = resolve => require(['../pages/community/index'], resolve);
 const communityHome = resolve => require(['../pages/community/children/home'], resolve);
@@ -90,10 +94,16 @@ const routes = [
           },
           {
             path: 'application',
-            meta: {
-              name: '/首页/社团管理/注册申请'
-            },
-            component: adminCommunityManageApplication
+            component: adminCommunityManageApplication,
+            children: [
+              {
+                path: '',
+                meta: {
+                  name: '/首页/社团管理/注册申请'
+                },
+                component: adminCommunityManageApplicationDefault
+              }
+            ]
           },
           {
             path: 'detail',
