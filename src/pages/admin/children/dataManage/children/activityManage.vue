@@ -37,6 +37,7 @@
       </ListItem>
     </template>
   </div>
+  <Modal :open="open" />
 </div>
 </template>
 
@@ -44,14 +45,17 @@
 import { ListItem } from '@/components';
 import { Button } from 'iview';
 import remove from '@/assets/delete';
+import Modal from './children/modal';
 export default {
   components: {
     ListItem,
-    IButton: Button
+    IButton: Button,
+    Modal
   },
   data () {
     return {
       remove,
+      open: true,
       selectCampus: '东',
       campus: [
         '东',

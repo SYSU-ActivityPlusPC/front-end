@@ -44,3 +44,16 @@ a:active {
 .ivu-btn-primary:active {
   background-color: #2747ab;
 }
+
+.ivu-modal-header {
+  border-bottom: transparent;
+}
+
+.ivu-modal-footer {
+  border-top: transparent;
+}
+
+.ivu-modal-mask {
+  background-color: #333333;
+  opacity: 0.4;
+}

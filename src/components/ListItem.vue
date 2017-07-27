@@ -26,5 +26,6 @@ export default {
   justify-content: space-between;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   border-radius: 2px;
+  cursor: pointer;
 }  
 </style>
