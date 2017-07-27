@@ -19,6 +19,7 @@ const adminCommunityManageNoticeSent = resolve => require(['../pages/admin/child
 
 const adminCommunityManageApplication = resolve => require(['../pages/admin/children/communityManage/children/application/index'], resolve);
 const adminCommunityManageApplicationDefault = resolve => require(['../pages/admin/children/communityManage/children/application/children/default'], resolve);
+const adminCommunityManageApplicationDetail = resolve => require(['../pages/admin/children/communityManage/children/application/children/detail'], resolve);
 
 const adminCommunityManageDetail = resolve => require(['../pages/admin/children/communityManage/children/detail'], resolve);
 
@@ -102,6 +103,13 @@ const routes = [
                   name: '/首页/社团管理/注册申请'
                 },
                 component: adminCommunityManageApplicationDefault
+              },
+              {
+                path: 'detail',
+                meta: {
+                  name: '/首页/社团管理/注册申请/注册详情'
+                },
+                component: adminCommunityManageApplicationDetail
               }
             ]
           },
