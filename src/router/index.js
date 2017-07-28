@@ -30,6 +30,7 @@ const communityHome = resolve => require(['../pages/community/children/home'], r
 const communityActivityManage = resolve => require(['../pages/community/children/activityMange/index'], resolve);
 const communityActivityManageDefault = resolve => require(['../pages/community/children/activityMange/children/default'], resolve);
 const communityActivityManageSignup = resolve => require(['../pages/community/children/activityMange/children/signup'], resolve);
+const communityActivityManageDetail = resolve => require(['../pages/community/children/activityMange/children/detail'], resolve);
 
 const routes = [
   {
@@ -163,6 +164,13 @@ const routes = [
             component: communityActivityManageSignup,
             meta: {
               name: '/首页/活动管理/报名管理'
+            }
+          },
+          {
+            path: 'detail',
+            component: communityActivityManageDetail,
+            meta: {
+              name: '/首页/活动管理/活动详情'
             }
           }
         ]
