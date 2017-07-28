@@ -19,7 +19,7 @@
       </div>
       <div>
         <iButton :width="240" @click="login">登录</iButton>
-        <a href="javascript:void(0)" style="margin-left: 20px;">注册</a>
+        <a href="javascript:void(0)" style="margin-left: 20px;" @click="$router.push('/regist')">注册</a>
       </div>
     </form>
   </Card>

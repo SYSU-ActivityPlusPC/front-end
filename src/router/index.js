@@ -4,6 +4,7 @@ import Vue from 'vue';
 Vue.use(VueRouter);
 
 const Login = resolve => require(['../pages/login'], resolve);
+const Regist = resolve => require(['../pages/regist'], resolve);
 
 const tourist = resolve => require(['../pages/tourist/index'], resolve);
 const touristHome = resolve => require(['../pages/tourist/children/home'], resolve);
@@ -36,6 +37,10 @@ const routes = [
   {
     path: '/',
     component: Login
+  },
+  {
+    path: '/regist',
+    component: Regist
   },
   {
     path: '/tourist',

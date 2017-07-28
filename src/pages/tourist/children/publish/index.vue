@@ -2,20 +2,21 @@
 <div class="publish-wrapper">
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" :current="currentStep" class="steps"/>
-  <PublishForm v-if="currentStep === 0" @next="currentStep = 1" />
+  <SelectForm v-if="currentStep === 0" @next="currentStep = 1" />
   <publishSubmit v-else @continute="currentStep = 0" />
 </div>
 </template>
 
 <script>
 import publishSubmit from './publishSubmit';
-import { BreadcrumbNav, Steps, PublishForm } from '@/components';
+import { BreadcrumbNav, Steps, /* PublishForm, */ SelectForm } from '@/components';
 
 export default {
   components: {
     BreadcrumbNav,
     Steps,
-    PublishForm,
+    // PublishForm,
+    SelectForm,
     publishSubmit
   },
   data () {
