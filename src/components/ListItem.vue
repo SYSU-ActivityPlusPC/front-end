@@ -19,7 +19,7 @@ export default {
 .list-item {
   padding: 0 20px;
   height: 68px;
-  margin: 0 0 12px 0;
+  /*margin: 0 0 12px 0;*/
   width: 100%;
   display: flex;
   align-items: center;

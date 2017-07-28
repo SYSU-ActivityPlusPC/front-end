@@ -93,5 +93,9 @@ export default {
 
 .small-card-2 {
   margin-left: 50px;
-}  
+}
+
+.list-item {
+  margin-bottom: 2%
+}
 </style>

@@ -8,6 +8,7 @@ import PublishForm from './publishForm';
 import SmallCard from './smallCard';
 import Steps from './steps';
 import ListItem from './ListItem';
+import Status from './status';
 // import Remove from './remove';
 
 export {
@@ -20,6 +21,7 @@ export {
   PublishForm,
   Steps,
   BreadcrumbNav,
-  ListItem
+  ListItem,
+  Status
 // Remove
 };

@@ -9,7 +9,7 @@
     <Manage v-if ="curTab === '活动管理'" />
     <Review v-else />
   </div>
-</div>  
+</div>
 </template>
 
 <script>

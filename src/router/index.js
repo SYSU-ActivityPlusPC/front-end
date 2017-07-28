@@ -27,6 +27,8 @@ const adminDataManage = resolve => require(['../pages/admin/children/dataManage/
 
 const community = resolve => require(['../pages/community/index'], resolve);
 const communityHome = resolve => require(['../pages/community/children/home'], resolve);
+const communityActivityManage = resolve => require(['../pages/community/children/activityMange/index'], resolve);
+const communityActivityManageDefault = resolve => require(['../pages/community/children/activityMange/children/default'], resolve);
 
 const routes = [
   {
@@ -143,6 +145,19 @@ const routes = [
           name: '/首页'
         },
         component: communityHome
+      },
+      {
+        path: 'activity',
+        component: communityActivityManage,
+        children: [
+          {
+            path: '',
+            component: communityActivityManageDefault,
+            meta: {
+              name: '/首页/活动管理'
+            }
+          }
+        ]
       }
     ]
   }
