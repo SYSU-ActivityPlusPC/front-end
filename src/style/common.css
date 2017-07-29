@@ -45,6 +45,10 @@ a:active {
   background-color: #2747ab;
 }
 
+.ivu-btn-ghost {
+  border: 1px solid #5074d7;
+}
+
 .ivu-modal-header {
   border-bottom: transparent;
 }

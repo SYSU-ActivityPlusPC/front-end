@@ -2,21 +2,20 @@
 <div class="publish-wrapper">
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" :current="currentStep" class="steps"/>
-  <SelectForm v-if="currentStep === 0" @next="currentStep = 1" />
+  <PublishForm v-if="currentStep === 0" @next="currentStep = 1" />
   <publishSubmit v-else @continute="currentStep = 0" />
 </div>
 </template>
 
 <script>
 import publishSubmit from './publishSubmit';
-import { BreadcrumbNav, Steps, /* PublishForm, */ SelectForm } from '@/components';
+import { BreadcrumbNav, Steps, PublishForm } from '@/components';
 
 export default {
   components: {
     BreadcrumbNav,
     Steps,
-    // PublishForm,
-    SelectForm,
+    PublishForm,
     publishSubmit
   },
   data () {
@@ -35,7 +34,7 @@ export default {
         '填写活动信息',
         '等待审核'
       ],
-      currentStep: 1
+      currentStep: 0
     };
   }
 };
@@ -46,6 +45,6 @@ export default {
   padding: 20px 7.32%;
 }
 .steps {
-  margin: 20px 0;
+  margin: 1.886% 0;
 }
 </style>

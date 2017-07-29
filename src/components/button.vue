@@ -1,11 +1,16 @@
 <template>
-<div :style="style" @mouseover="onHover" @mouseleave="onLeave" class="parent" @click="onClick">
+<div :style="style" class="parent" @click="onClick">
   <iButton long 
           :style="buttonStyle"
           :type="type" 
           :disabled="disabled" 
-          size="large">
-    <span :style="textStyle" class="text"><slot></slot></span>
+          :size="size">
+    <div class="button-innerbox">
+      <slot name="icon"></slot>
+      <span class="text" :class="{'text-ghost': type === 'ghost', 'text-primary': type === 'primary'}">
+        <slot></slot>
+      </span>
+    </div>
   </iButton>
 </div>
 </template>
@@ -29,12 +34,11 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    size: {
+      type: String,
+      default: 'large'
     }
-  },
-  data () {
-    return {
-      hover: false
-    };
   },
   components: {
     iButton: Button
@@ -45,23 +49,12 @@ export default {
     },
     buttonStyle () {
       return `height: ${this.height}px;`;
-    },
-    textStyle () {
-      return this.hover ? 'color: white; font-size: 16px;' : 'color: white;';
     }
   },
   methods: {
     onClick () {
       if (this.disabled) return;
       this.$emit('click');
-    },
-    onHover () {
-      if (this.disabled) return;
-      this.hover = true;
-    },
-    onLeave () {
-      if (this.disabled) return;
-      this.hover = false;
     }
   }
 };
@@ -69,13 +62,39 @@ export default {
 
 <style scoped>
 .text {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .5s;
+}
+
+.button-innerbox {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .parent {
   position: relative;
 }
+
+.parent:hover .text-primary,
+.parent:hover .text-ghost {
+  font-size: 16px;
+  transition: all .4s;
+}
+
+
+.parent:active .text-ghost {
+  font-weight: bold;
+}
+
+.text-ghost {
+  color: #5074d7;
+}
+
+.text-primary {
+  color: white;
+}
+
 </style>

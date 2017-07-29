@@ -15,23 +15,64 @@
       <Checkbox class="checkbox" label="学号" />
     </CheckboxGroup>
   </div>
-  <iButton type="ghost">添加其他报名信息</iButton>
+  <div class="addMessageItem">
+    <MyButton type="ghost" :width="180">
+      <img :src="add" slot="icon" class="icon-add" alt="添加">
+      添加其他报名信息
+    </MyButton>
+    <img :src="why" alt="问号" class="why" />
+    <span>如果需要其他报名信息，请点击左边的按钮进行自定义添加</span>
+  </div>
+  <div class="setLimit">
+    <iSwitch v-model="limit" size="small" />
+    <span class="switch-label">开启人数报名限制</span>
+    <div v-show="limit" class="input-limit-wrapper">
+      最多<iInput class="input-limit" />人报名
+    </div>
+  </div>
+  <MyButton type="ghost" :width="150">
+    <img :src="eye" slot="icon" class="icon-eye" alt="添加">
+    预览报名表
+  </MyButton>
+  <div class="button-group">
+    <a href="javascript:void(0)" @click="pre">上一步</a>
+    <MyButton :width="200" class="button-submit" @click="next">提交活动</MyButton>
+  </div>
 </div>
 </template>
 
 <script>
-import { Checkbox, CheckboxGroup, Button } from 'iview';
-import warning from '@/assets/warning-1.png';
+import { Checkbox, CheckboxGroup, iSwitch, iInput } from 'iview';
+import MyButton from './button';
+import warning from '@/assets/warning-1';
+import add from '@/assets/add';
+import why from '@/assets/why';
+import eye from '@/assets/eye';
+
 export default {
   components: {
     Checkbox,
     CheckboxGroup,
-    iButton: Button
+    MyButton,
+    iSwitch,
+    iInput
   },
   data () {
     return {
-      warning
+      warning,
+      add,
+      why,
+      eye,
+      limit: false
     };
+  },
+  methods: {
+    pre () {
+      this.$emit('pre');
+    },
+    next () {
+      this.$emit('next');
+    }
   }
 };
 </script>
@@ -66,5 +107,40 @@ export default {
 .checkbox {
   margin-bottom: 1.132%;
   margin-right: 5%;
+}
+
+.addMessageItem {
+  display: flex;
+  align-items: center;
+}
+
+.why {
+  margin: 0 1% 0 2.452%;
+}
+
+.setLimit {
+  margin: 1.8867% 0;
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+.input-limit-wrapper {
+  flex: 1;
+}
+.input-limit {
+  width: 60px;
+  margin: 0 0.471%;
+}
+
+.switch-label {
+  margin-right: 5.66%;
+}
+
+.button-group {
+  margin-top: 3.4%;
+}
+
+.button-submit {
+  margin-left: 3.77%;
 }
 </style>
