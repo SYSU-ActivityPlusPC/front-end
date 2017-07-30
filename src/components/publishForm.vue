@@ -38,11 +38,11 @@
       <FormItem label="活动详情">
         <iInput class="textarea-size" type="textarea" :rows="6" placeholder="请输入活动详情，让大家更了解活动吧!"/>
       </FormItem>
-      <FormItem label="邮箱">
+      <FormItem label="邮箱" v-if="authority === 'tourist'">
         <iInput class="input-size" placeholder="活动审核结果将会发送到此邮箱!"/>
       </FormItem>
       <FormItem>
-        <MyButton :width="200" class="submit" @click="next">下一步</MyButton>
+        <MyButton :width="200" class="submit" @click="next">{{authority !== 'tourist' ? '下一步' : '提交活动'}}</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -80,7 +80,7 @@
         </Upload>
       </FormItem>
       <FormItem>
-        <MyButton :width="200" class="submit" @click="next">下一步</MyButton>
+        <MyButton :width="200" class="submit" @click="next">{{authority !== 'tourist' ? '下一步' : '提交活动'}}</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -98,6 +98,12 @@ import Icon from 'iview/src/components/icon';
 import Upload from 'iview/src/components/upload';
 import MyButton from './button';
 export default {
+  props: {
+    authority: {
+      type: String,
+      required: true
+    }
+  },
   components: {
     iInput,
     iForm,

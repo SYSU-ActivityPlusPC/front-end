@@ -2,7 +2,7 @@
 <div class="publish-wrapper">
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" :current="currentStep" class="steps"/>
-  <PublishForm v-if="currentStep === 0" @next="currentStep = 1" />
+  <PublishForm v-if="currentStep === 0" @next="currentStep = 1" authority="tourist" />
   <publishSubmit v-else @continute="currentStep = 0" authority="tourist" />
 </div>
 </template>

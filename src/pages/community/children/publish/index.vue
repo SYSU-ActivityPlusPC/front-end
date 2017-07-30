@@ -2,7 +2,7 @@
 <div class="publish-wrapper">
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" class="steps" :current="curStep"/>
-  <PublishForm  v-show="curStep === 0" />
+  <PublishForm  v-show="curStep === 0" :authority="community" />
   <SelectForm v-show="curStep === 1" />
   <PublishSubmit authority="community" v-show="curStep === 2" @continute="onContinute" @manage="onManage"/>
 </div>
