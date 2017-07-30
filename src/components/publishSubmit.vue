@@ -6,7 +6,7 @@
     <br />
     <span class="text-2">{{authority === 'tourist' ? '请等待管理员审核，审核结果将发送到您的联系邮箱' : '请等待管理员审核，审核通过后活动会在PLUS平台上发布'}}</span>
     <div>
-      <a href="javascript:void(0)" v-if="authority !== 'tourist'" @click="$emit('continute')">继续发布活动</a>
+      <a href="javascript:void(0)" v-if="authority !== 'tourist'" @click="$emit('continute')" class="a">继续发布活动</a>
       <MyButton :width="120" class="button" @click="onClick">{{authority === 'tourist' ? '继续发布活动' : '活动管理'}}</MyButton>
     </div>
   </div>
@@ -55,6 +55,9 @@ export default {
   font-size: 16px;
 }
 .button {
-  margin: 30px 0 0 40px;
+  margin: 30px 0 0 0;
+}
+.a {
+  margin: 0 40px 0 0; 
 }
 </style>
