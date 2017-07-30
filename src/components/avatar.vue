@@ -1,6 +1,6 @@
 <template>
 <div class="avatar-wrapper">
-  <img :src="avatar" class="avatar" alt="你的头像" :style="imgStyle" />
+  <img v-lazy="avatar" class="avatar" alt="你的头像" :style="imgStyle" />
   <span class="name" :style="spanStyle">{{name}}</span>
 </div>  
 </template>
@@ -53,7 +53,6 @@ export default {
 .avatar {
   border-radius: 50%;
 }
-
 
 .name {
   margin-left: 12px;
