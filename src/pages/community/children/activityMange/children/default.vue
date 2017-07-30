@@ -3,7 +3,7 @@
   <template v-for="(item, index) in mock">
     <div class="list-wrapper" :key="index">
       <Status :status="getStatus(item.status)" />
-      <ListItem class="list-item">
+      <ListItem class="list-item" @click="$router.push('/community/activity/detail')">
         <div slot="left" class="left-wrapper">
           <span class="name">{{item.name}}</span>
           <span class="time">{{item.time}}发布</span>
@@ -13,7 +13,7 @@
           <span class="view">{{item.view}}</span>
         </div>
       </ListItem>
-      <SmallCard class="small-card">
+      <SmallCard class="small-card" @click="$router.push('/community/activity/signup')">
         <div class="card-content">
           <span class="card-num" v-if="item.num">{{item.num}}</span>
           <span class="card-num" style="font-weight: bold;" v-else>—</span>

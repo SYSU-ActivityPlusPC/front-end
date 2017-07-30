@@ -9,7 +9,6 @@
 
 <script>
 import publishSubmit from './publishSubmit';
-// import { BreadcrumbNav, Steps, PublishForm } from '@/components';
 import BreadcrumbNav from '@/components/breadcrumbNav';
 import Steps from '@/components/steps';
 import PublishForm from '@/components/publishForm';

@@ -5,7 +5,7 @@
       <span slot="text">数据管理</span>
       <img slot="image" alt="数据管理" :src="data" />
     </BigCard>
-    <BigCard style="display: inline-block;">
+    <BigCard style="display: inline-block;" @click="$router.push('/admin/publish')">
       <span slot="text">发布活动</span>
       <img slot="image" alt="发布活动" :src="publish"/>
     </BigCard>

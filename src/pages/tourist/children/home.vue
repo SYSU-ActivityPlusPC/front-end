@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
   <div class="warn">
-    <img class="warn-icon" src="../../../assets/warning.png" />
+    <img class="warn-icon" :src="warning" />
     <div class="warn-text">
       <span class="warn-text-1">你当前为游客状态, 只有发布活动的权限</span>
       <span class="warn-text-2">发布活动后两天内审核结果将以邮件通知你，请及时查看邮箱<br />感谢你的支持！</span>
@@ -16,14 +16,17 @@
 
 <script>
 import BigCard from '@/components/bigCard';
-
+import warning from '@/assets/warning';
+import publish from '@/assets/publish';
 export default {
   components: {
     BigCard
   },
-  methods: {
-  },
-  mounted () {
+  data () {
+    return {
+      warning,
+      publish
+    };
   }
 };
 </script>

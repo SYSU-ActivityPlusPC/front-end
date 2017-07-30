@@ -37,7 +37,10 @@
     </Card>
   </div>
   <div class="card">
-    <BigCard style="display: inline-block;" @mouseover="floatingLayerShow = true" @mouseleave="floatingLayerShow = false">
+    <BigCard style="display: inline-block;" 
+             @mouseover="onHover" 
+             @mouseleave="onLeave"
+             @click="$router.push('/community/activity')">
       <transition enter-active-class="animated fadeInDown"
                   leave-active-class="animated fadeOutUp"
                   slot="floatingLayer"
@@ -49,12 +52,13 @@
           </ul>
         </div>
       </transition>      
-      <span slot="text" >发布活动</span>
-      <img slot="image" alt="发布活动" src="../../../../assets/publish.png"/>
+      <span slot="text" >活动管理</span>
+      <img slot="image" alt="活动管理" :src="manage"/>
     </BigCard>
-    <BigCard style="display: inline-block; margin-right: 2px;">
-      <span slot="text">社团管理</span>
-      <img slot="image" alt="社团管理" src="../../../../assets/manage.png" />
+    <BigCard style="display: inline-block; margin-right: 2px;"
+             @click="$router.push('/community/publish')">
+      <span slot="text">发布活动</span>
+      <img slot="image" alt="发布活动" :src="publish" />
     </BigCard>
   </div>
 </div>
@@ -62,13 +66,18 @@
 
 <script>
 import BigCard from '@/components/bigCard';
+import publish from '@/assets/publish';
+import manage from '@/assets/manage';
 import Page from './page';
-// import { Card, iButton } from 'iview';
 import Card from 'iview/src/components/card';
 import iButton from 'iview/src/components/button';
+import { throttle } from '@/utils';
+
 export default {
   data () {
     return {
+      publish,
+      manage,
       hoverIndex: -1,
       clickIndex: -1,
       current: 1,
@@ -122,6 +131,12 @@ export default {
     clickMessageItem (index) {
       this.clickIndex = index;
       this.curMessage = this.messages[index];
+    },
+    onHover: throttle(function () {
+      this.floatingLayerShow = true;
+    }, 500),
+    onLeave () {
+      this.floatingLayerShow = false;
     }
   }
 };

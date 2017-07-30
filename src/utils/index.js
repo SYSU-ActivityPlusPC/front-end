@@ -36,3 +36,31 @@ export function setConfig () {
 
   return arr;
 }
+
+/**
+ * 希望有机会用到
+ *
+ * @export
+ * @param {any} fn 需要被节流的函数
+ * @param {any} interval 多久执行一次
+ * @returns 节流函数
+ */
+export function throttle (fn, interval) {
+  let last;
+  return function () {
+    const args = arguments;
+    const context = this;
+    let cur = +new Date();
+    if (last && cur - last > interval) {
+      last = cur;
+      fn.apply(context, ...args);
+      return;
+    }
+
+    if (!last) {
+      last = cur;
+      fn.apply(context, ...args);
+      return;
+    }
+  };
+}

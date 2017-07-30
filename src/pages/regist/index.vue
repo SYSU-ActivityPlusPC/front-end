@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import { TopBar, MyButton } from '@/components';
+import TopBar from '@/components/header';
+import MyButton from '@/components/button';
 import upload from '@/assets/upload';
 import why from '@/assets/why';
 import iInput from 'iview/src/components/input';
