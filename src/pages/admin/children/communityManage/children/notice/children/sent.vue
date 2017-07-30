@@ -7,7 +7,7 @@
     </iButton>
   </div>
   <template v-for="(item, index) in mock">
-    <ListItem :key="index">
+    <ListItem :key="index" class="list-item">
       <div slot="left" class="titleAndTime">
         <p class="title">{{item.title}}</p>
         <p class="font">{{item.time}}发布</p>
@@ -22,9 +22,10 @@
 </template>
 
 <script>
-import { ListItem } from '@/components';
+import ListItem from '@/components/listItem';
+import Icon from 'iview/src/components/icon';
+import iButton from 'iview/src/components/button';
 import remove from '@/assets/delete';
-import { Icon, Button } from 'iview';
 export default {
   data () {
     return {
@@ -56,7 +57,7 @@ export default {
   components: {
     ListItem,
     Icon,
-    iButton: Button
+    iButton
   }
 };
 </script>
@@ -88,5 +89,9 @@ export default {
 }
 .title {
   font-size: 16px;
+}
+
+.list-item {
+  margin-bottom: 3.389%;
 }
 </style>

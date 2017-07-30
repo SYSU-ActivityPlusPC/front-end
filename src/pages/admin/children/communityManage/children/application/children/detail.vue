@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { MyButton } from '@/components';
+import MyButton from '@/components/button';
 export default {
   components: {
     MyButton

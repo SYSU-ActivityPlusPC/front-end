@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Button from 'iview/src/components/button';
+import iButton from 'iview/src/components/button';
 export default {
   props: {
     type: {
@@ -41,7 +41,7 @@ export default {
     }
   },
   components: {
-    iButton: Button
+    iButton
   },
   computed: {
     style () {

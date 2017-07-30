@@ -31,7 +31,7 @@
 import { Row, Col } from 'iview/src/components/grid';
 import iInput from 'iview/src/components/input';
 import Card from 'iview/src/components/card';
-import { MyButton } from '@/components';
+import MyButton from '@/components/button';
 export default {
   data () {
     return {

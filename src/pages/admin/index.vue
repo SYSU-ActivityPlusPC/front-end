@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { TopBar } from '@/components';
+import TopBar from '@/components/header';
 export default {
   components: {
     TopBar

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { BreadcrumbNav } from '@/components';
+import BreadcrumbNav from '@/components/breadcrumbNav';
 import { setConfig } from '@/utils';
 import Manage from './children/activityManage';
 import Review from './children/activityReview';

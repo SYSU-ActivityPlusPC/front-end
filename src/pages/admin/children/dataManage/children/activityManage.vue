@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ListItem } from '@/components';
+import ListItem from '@/components/listItem';
 import iButton from 'iview/src/components/button';
 import Modal from './children/modal';
 import remove from '@/assets/delete';

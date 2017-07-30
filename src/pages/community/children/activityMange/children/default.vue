@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import { ListItem, Status, SmallCard } from '@/components';
+import ListItem from '@/components/listItem';
+import Status from '@/components/status';
+import SmallCard from '@/components/smallCard';
 export default {
   methods: {
     getStatus (status) {

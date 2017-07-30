@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import { BigCard } from '@/components';
+import BigCard from '@/components/bigCard';
+
 export default {
   components: {
     BigCard

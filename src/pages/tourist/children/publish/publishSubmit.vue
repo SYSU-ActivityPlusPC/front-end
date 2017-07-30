@@ -11,7 +11,8 @@
 
 <script>
 import Icon from 'iview/src/components/icon';
-import { MyButton } from '@/components';
+// import { MyButton } from '@/components';
+import MyButton from '@/components/button';
 export default {
   components: {
     Icon,

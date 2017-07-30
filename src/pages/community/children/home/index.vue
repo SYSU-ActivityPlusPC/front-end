@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { BigCard } from '@/components';
+import BigCard from '@/components/bigCard';
 import Page from './page';
 // import { Card, iButton } from 'iview';
 import Card from 'iview/src/components/card';

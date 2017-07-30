@@ -14,7 +14,10 @@
 </template>
 
 <script>
-import { ListItem, Avatar, Status } from '@/components';
+// import { ListItem, Avatar, Status } from '@/components';
+import Status from '@/components/status';
+import Avatar from '@/components/avatar';
+import ListItem from '@/components/listItem';
 export default {
   data () {
     return {

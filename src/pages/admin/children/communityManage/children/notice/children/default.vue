@@ -26,13 +26,15 @@
 </template>
 
 <script>
-import { Form, FormItem, Input } from 'iview';
-import { SmallCard, MyButton } from '@/components';
+import SmallCard from '@/components/smallCard';
+import MyButton from '@/components/button';
+import Form from 'iview/src/components/form';
+import Input from 'iview/src/components/input';
 import sent from '@/assets/sent';
 export default {
   components: {
     iForm: Form,
-    FormItem,
+    FormItem: Form.Item,
     iInput: Input,
     SmallCard,
     MyButton

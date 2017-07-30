@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { BreadcrumbNav } from '@/components';
+import BreadcrumbNav from '@/components/breadcrumbNav';
 import { setConfig } from '@/utils';
 
 export default {

@@ -51,7 +51,7 @@
 
 <script>
 import Modal from 'iview/src/components/modal';
-import { MyButton } from '@/components';
+import MyButton from '@/components/button';
 export default {
   props: {
     open: {
