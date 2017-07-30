@@ -3,8 +3,8 @@
   <template v-for="(item, index) in config">
     <div class="step" :key="index">
       <img src="../assets/step-finish-0.png" alt="" v-if="index === 0" />
-      <img src="../assets/step-finish-1.png" alt="" v-if="index !== 0 && current === index" />
-      <img src="../assets/step-unfinish.png" alt="" v-if="index !== 0 && current !== index" />
+      <img src="../assets/step-finish-1.png" alt="" v-if="index !== 0 && current >= index" />
+      <img src="../assets/step-unfinish.png" alt="" v-if="index !== 0 && current < index" />
       <span class="step-text">{{item}}</span>
     </div>
   </template>

@@ -3,12 +3,12 @@
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" :current="currentStep" class="steps"/>
   <PublishForm v-if="currentStep === 0" @next="currentStep = 1" />
-  <publishSubmit v-else @continute="currentStep = 0" />
+  <publishSubmit v-else @continute="currentStep = 0" authority="tourist" />
 </div>
 </template>
 
 <script>
-import publishSubmit from './publishSubmit';
+import publishSubmit from '@/components/publishSubmit';
 import BreadcrumbNav from '@/components/breadcrumbNav';
 import Steps from '@/components/steps';
 import PublishForm from '@/components/publishForm';

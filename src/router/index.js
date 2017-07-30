@@ -26,12 +26,16 @@ const adminCommunityManageDetail = resolve => require(['../pages/admin/children/
 
 const adminDataManage = resolve => require(['../pages/admin/children/dataManage/index'], resolve);
 
+const adminPublish = resolve => require(['../pages/admin/children/publish/index'], resolve);
+
 const community = resolve => require(['../pages/community/index'], resolve);
 const communityHome = resolve => require(['../pages/community/children/home'], resolve);
+
 const communityActivityManage = resolve => require(['../pages/community/children/activityMange/index'], resolve);
 const communityActivityManageDefault = resolve => require(['../pages/community/children/activityMange/children/default'], resolve);
 const communityActivityManageSignup = resolve => require(['../pages/community/children/activityMange/children/signup'], resolve);
 const communityActivityManageDetail = resolve => require(['../pages/community/children/activityMange/children/detail'], resolve);
+const communityPublish = resolve => require(['../pages/community/children/publish/index'], resolve);
 
 const routes = [
   {
@@ -139,6 +143,13 @@ const routes = [
             component: adminCommunityManageDetail
           }
         ]
+      },
+      {
+        path: 'publish',
+        meta: {
+          name: '/首页/发布活动'
+        },
+        component: adminPublish
       }
     ]
   },
@@ -179,6 +190,13 @@ const routes = [
             }
           }
         ]
+      },
+      {
+        path: 'publish',
+        component: communityPublish,
+        meta: {
+          name: '/首页/发布活动'
+        }
       }
     ]
   }

@@ -1,12 +1,12 @@
 <template>
-<div>
+<div class="selectForm-wrapper">
   <div class="row-1">
     <img :src="warning" alt="警告" class="icon-warning" />
     如果不需要开启线上报名，请直接<a href="javascript:void(0)" class="strong">提交活动</a>
   </div>
   <div class="checkbox">
     <span class="color666666">请选择需要收集的信息</span>
-    <CheckboxGroup class="checkbox-group">
+    <CheckboxGroup class="checkbox-group" v-model="values">
       <Checkbox class="checkbox" label="姓名" />
       <Checkbox class="checkbox" label="手机号" />
       <Checkbox class="checkbox" label="邮箱" />
@@ -65,7 +65,8 @@ export default {
       add,
       why,
       eye,
-      limit: false
+      limit: false,
+      values: ['姓名', '手机号', '邮箱', '院系', '学号']
     };
   },
   methods: {
@@ -80,6 +81,10 @@ export default {
 </script>
 
 <style scoped>
+.selectForm-wrapper {
+  padding-bottom: 10px;
+}
+
 .icon-warning {
   height: 32px;
   width: 32px;
