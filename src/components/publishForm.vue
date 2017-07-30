@@ -42,7 +42,7 @@
         <iInput class="input-size" placeholder="活动审核结果将会发送到此邮箱!"/>
       </FormItem>
       <FormItem>
-        <myButton width="200" class="submit" @click="next">下一步</myButton>
+        <MyButton :width="200" class="submit" @click="next">下一步</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -65,20 +65,22 @@
       </FormItem>
       <FormItem label="宣传图">
         <Upload action="//jsonplaceholder.typicode.com/posts/">
-          <iButton type="ghost" style="width: 100px;" size="small">
-            <Icon type="ios-cloud-upload-outline" :size="25" color="#2d8cf0"></Icon>
-          </iButton>
+          <MyButton type="ghost" :width="110" :height="30" size="small">
+            <img :src="upload" class="icon-upload" slot="icon" />
+            点击上传
+          </MyButton>
         </Upload>
       </FormItem>
       <FormItem label="二维码">
         <Upload action="//jsonplaceholder.typicode.com/posts/">
-          <iButton type="ghost" style="width: 100px;" size="small">
-            <Icon type="ios-cloud-upload-outline" :size="25" color="#2d8cf0"></Icon>
-          </iButton>
+          <MyButton type="ghost" :width="110" :height="30" size="small">
+            <img :src="upload" class="icon-upload" slot="icon" />
+            点击上传
+          </MyButton>
         </Upload>
       </FormItem>
       <FormItem>
-        <myButton :width="200" class="submit" @click="next">下一步</myButton>
+        <MyButton :width="200" class="submit" @click="next">下一步</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -86,23 +88,30 @@
 </template>
 
 <script>
-import { Form, FormItem, Input, Select, Option, DatePicker, Upload, Button, Icon } from 'iview';
-import myButton from './button';
+// import { Upload, Button, Icon } from 'iview';
+import upload from '@/assets/upload';
+import iForm from 'iview/src/components/form';
+import iInput from 'iview/src/components/input';
+import { Select, Option } from 'iview/src/components/select';
+import DatePicker from 'iview/src/components/date-picker';
+import Icon from 'iview/src/components/icon';
+import Upload from 'iview/src/components/upload';
+import MyButton from './button';
 export default {
   components: {
-    iInput: Input,
-    iForm: Form,
-    FormItem,
+    iInput,
+    iForm,
+    FormItem: iForm.Item,
     iSelect: Select,
     iOption: Option,
     DatePicker,
-    myButton,
-    iButton: Button,
+    MyButton,
     Upload,
     Icon
   },
   data () {
     return {
+      upload,
       types: ['公益', '体育', '比赛', '讲座'],
       areas: ['东校区', '南校区', '珠海校区', '北校区'],
       currentTab: 'must'

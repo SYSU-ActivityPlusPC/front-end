@@ -57,5 +57,5 @@ export default {
 .name {
   margin-left: 12px;
   font-size: 16px;
-}  
+}
 </style>

@@ -10,6 +10,8 @@ import '@/style/common';
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$iview = 'iview/src/components';
+
 Vue.use(VueLazyload);
 
 /* eslint-disable no-new */

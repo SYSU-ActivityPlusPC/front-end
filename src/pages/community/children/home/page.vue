@@ -11,7 +11,9 @@
 </template>
 
 <script>
-import { Button, Icon } from 'iview';
+// import { Button, Icon } from 'iview';
+import iButton from 'iview/src/components/button';
+import Icon from 'iview/src/components/icon';
 export default {
   props: {
     current: {
@@ -26,7 +28,7 @@ export default {
     }
   },
   components: {
-    iButton: Button,
+    iButton,
     Icon
   },
   data () {

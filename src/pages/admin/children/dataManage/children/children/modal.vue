@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { Modal } from 'iview';
+import Modal from 'iview/src/components/modal';
 import { MyButton } from '@/components';
 export default {
   props: {

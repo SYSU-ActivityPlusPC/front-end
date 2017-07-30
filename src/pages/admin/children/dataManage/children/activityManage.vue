@@ -43,13 +43,14 @@
 
 <script>
 import { ListItem } from '@/components';
-import { Button } from 'iview';
-import remove from '@/assets/delete';
+import iButton from 'iview/src/components/button';
 import Modal from './children/modal';
+import remove from '@/assets/delete';
+
 export default {
   components: {
     ListItem,
-    IButton: Button,
+    iButton: iButton,
     Modal
   },
   data () {

@@ -8,6 +8,7 @@ function resolve (dir) {
 }
 
 module.exports = {
+  cache: true,
   entry: {
     app: './src/main.js'
   },
@@ -42,6 +43,10 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
+        test: /iview.src.*?js$/,
+        loader: 'babel-loader'
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
@@ -69,10 +74,6 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      },
-      {
-        test: /iview.src.*?js$/,
-        loader: 'babel-loader'
       }
     ]
   }

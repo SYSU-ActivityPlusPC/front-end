@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { Breadcrumb, BreadcrumbItem } from 'iview';
+import Breadcrumb from 'iview/src/components/breadcrumb';
 export default {
   props: {
     config: {
@@ -17,7 +17,7 @@ export default {
   },
   components: {
     Breadcrumb,
-    BreadcrumbItem
+    BreadcrumbItem: Breadcrumb.Item
   }
 };
 </script>

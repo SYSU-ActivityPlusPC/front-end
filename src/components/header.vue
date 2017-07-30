@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { Row, Col } from 'iview';
+import { Row, Col } from 'iview/src/components/grid';
 import avatar from '@/components/avatar';
 export default {
   props: {

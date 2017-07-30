@@ -53,16 +53,18 @@
 
 <script>
 import { TopBar, MyButton } from '@/components';
-import { Form, FormItem, Input, Upload } from 'iview';
 import upload from '@/assets/upload';
 import why from '@/assets/why';
+import iInput from 'iview/src/components/input';
+import Upload from 'iview/src/components/upload';
+import Form from 'iview/src/components/form';
 
 export default {
   components: {
     TopBar,
     iForm: Form,
-    FormItem,
-    iInput: Input,
+    FormItem: Form.Item,
+    iInput,
     MyButton,
     Upload
   },

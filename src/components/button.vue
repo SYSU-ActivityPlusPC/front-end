@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { Button } from 'iview';
+import Button from 'iview/src/components/button';
 export default {
   props: {
     type: {

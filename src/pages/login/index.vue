@@ -18,7 +18,7 @@
         <a href="javascript:void(0)" style="margin-left: 20px;">忘记密码</a>
       </div>
       <div>
-        <iButton :width="240" @click="login">登录</iButton>
+        <MyButton :width="240" @click="login">登录</MyButton>
         <a href="javascript:void(0)" style="margin-left: 20px;" @click="$router.push('/regist')">注册</a>
       </div>
     </form>
@@ -27,7 +27,10 @@
 </template>
 
 <script>
-import { Card, Row, Col, Input } from 'iview';
+// import { Card, Row, Col, Input } from 'iview';
+import { Row, Col } from 'iview/src/components/grid';
+import iInput from 'iview/src/components/input';
+import Card from 'iview/src/components/card';
 import { MyButton } from '@/components';
 export default {
   data () {
@@ -44,8 +47,8 @@ export default {
     Card,
     iRow: Row,
     iCol: Col,
-    iInput: Input,
-    iButton: MyButton
+    iInput,
+    MyButton
   },
   methods: {
     login () {

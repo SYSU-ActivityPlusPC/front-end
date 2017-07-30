@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { Icon } from 'iview';
+import Icon from 'iview/src/components/icon';
 import { MyButton } from '@/components';
 export default {
   components: {

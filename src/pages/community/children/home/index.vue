@@ -63,7 +63,9 @@
 <script>
 import { BigCard } from '@/components';
 import Page from './page';
-import { Card, iButton } from 'iview';
+// import { Card, iButton } from 'iview';
+import Card from 'iview/src/components/card';
+import iButton from 'iview/src/components/button';
 export default {
   data () {
     return {

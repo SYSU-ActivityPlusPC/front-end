@@ -42,7 +42,9 @@
 </template>
 
 <script>
-import { Checkbox, CheckboxGroup, iSwitch, iInput } from 'iview';
+import Checkbox from 'iview/src/components/checkbox';
+import iInput from 'iview/src/components/input';
+import iSwitch from 'iview/src/components/switch';
 import MyButton from './button';
 import warning from '@/assets/warning-1';
 import add from '@/assets/add';
@@ -52,7 +54,7 @@ import eye from '@/assets/eye';
 export default {
   components: {
     Checkbox,
-    CheckboxGroup,
+    CheckboxGroup: Checkbox.Group,
     MyButton,
     iSwitch,
     iInput
