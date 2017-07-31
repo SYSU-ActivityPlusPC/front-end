@@ -69,3 +69,7 @@ a:active {
   transform: translate(-50%, -50%);
   margin: 0 auto;
 }
+
+.flip-list-move {
+  transition: all 1s;
+}

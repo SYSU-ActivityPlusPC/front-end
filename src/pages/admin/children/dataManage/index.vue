@@ -68,6 +68,6 @@ export default {
   color: #f2f2f2;
 }
 .router-view {
-  width: 51.72%;
+  width: 56.6%;
 }
 </style>
