@@ -1,32 +1,13 @@
 <template>
 <div class="wrapper">
-  <div class="row1">
-    <span class="num">共3个</span>    
-    <iButton type="text" style="padding: 0 5px 0 0;">
-      <img :src="remove" alt="删除" class="delete"/>
-    </iButton>
-  </div>
+  <span class="num">共{{mock.length}}个</span>
   <div class="lists">
-    <template>
-      <ListItem @click="open=true">
-        <div slot="left">
-          <p class="title">三月义卖</p>
-          <p class="font-small">2017.3.3提交</p>
-        </div>
-        <div slot="right" class="right">
-          <div class="right-item">
-            <p class="font-small">来源</p>
-            <p style="color: #666666;">SDCS团委</p>
-          </div>
-          <div class="right-item">
-            <p class="font-small">活动对象</p>
-            <p style="color: #666666;">中山大学在校生</p>
-          </div>
-          <div class="right-item">
+    <template v-for="(item, index) in mock">
+      <ListItem @click="open=true" :key="item.time" :item="item">
+          <div class="right-item" slot="right">
             <a href="javascript:void(0)" class="accept">通过</a>
             <a href="javascript:void(0)" class="reject">拒绝</a>
           </div>
-        </div>
       </ListItem>
     </template>
   </div>
@@ -35,19 +16,43 @@
 </template>
 
 <script>
-import ListItem from '@/components/listItem';
-import iButton from 'iview/src/components/button';
+const mock = [
+  {
+    title: '三月义卖',
+    time: '30s',
+    src: 'sdcs',
+    tar: '中山大学在校生'
+  },
+  {
+    title: '三月义卖',
+    time: '1天',
+    src: 'sdcs',
+    tar: '中山大学在校生'
+  },
+  {
+    title: '三月义卖',
+    time: '2月',
+    src: 'sdcs',
+    tar: '中山大学在校生'
+  },
+  {
+    title: '三月义卖',
+    time: '3年',
+    src: 'sdcs',
+    tar: '中山大学在校生'
+  }
+];
+
+import ListItem from './children/listItem';
 import Modal from './children/modal';
-import remove from '@/assets/delete';
 export default {
   components: {
     ListItem,
-    iButton,
     Modal
   },
   data () {
     return {
-      remove,
+      mock,
       open: false
     };
   }
@@ -55,9 +60,11 @@ export default {
 </script>
 
 <style scoped>
-.row1 {
+.num {
   display: flex;
   justify-content: flex-end;
+  color: #666666;
+  margin-bottom: 0.647%;
 }
 
 .right {
@@ -79,10 +86,6 @@ export default {
   color: #f91c6f;
 }
 
-.num {
-  margin-right: 15px;
-  color: #666666;
-}
 
 .title {
   font-size: 16px;

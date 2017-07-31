@@ -11,7 +11,7 @@
     <form class="form">
       <div class="form-input">
         <iInput :style="inputStyle" size="large" placeholder="用户名" type="text"></iInput>
-        <a href="javascript:void(0)" style="margin-left: 20px;">校外社团登录 ></a>
+        <a href="javascript:void(0)" style="margin-left: 20px;" @click="$router.push('/tourist')">校外社团登录 ></a>
       </div>
       <div class="form-input">
         <iInput :style="inputStyle" size="large" placeholder="密码" type="password"></iInput>
@@ -60,7 +60,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  background-image: url("../../assets/bg.png");
+  background-image: url("http://okuww23ih.bkt.clouddn.com/bg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 100%;

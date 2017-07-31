@@ -42,6 +42,12 @@ export default {
   methods: {
     exit () {
       this.$emit('logout');
+      this.$router.push('/');
+    },
+    onResize () {
+      const height = document.getElementsByTagName('html')[0].clientHeight;
+      // 相应分辨率，对avatar大小做下改变
+      this.size = height * 0.09 * 48 / 60;
     }
   },
   data () {
@@ -50,9 +56,14 @@ export default {
     };
   },
   mounted () {
+    // 绑定监听屏幕大小改变事件
+    document.body.addEventListener('resize', this.onResize.bind(this));
     const height = document.getElementsByTagName('html')[0].clientHeight;
     // 相应分辨率，对avatar大小做下改变
     this.size = height * 0.09 * 48 / 60;
+  },
+  destroyed () {
+    document.removeEventListener('resize');
   }
 };
 </script>

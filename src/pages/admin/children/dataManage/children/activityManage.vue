@@ -1,61 +1,69 @@
 <template>
 <div class="wrapper">
-  <div class="row1">
+  <div class="wrapper-tabs">
     <ul>
       <template v-for="item in campus">
         <li :class="{'select': selectCampus === `${item}`}" :key="item" @click="selectCampus=item">{{item}}校区</li>
       </template>
     </ul>
-    <div class="row1-right">
-      <span class="num">共3个</span>
-      <iButton type="text" style="padding: 0 5px 0 0;">
-        <img :src="remove" alt="删除" class="delete"/>
-      </iButton>
-    </div>
+    <span class="num">共{{mock.length}}个</span>
   </div>
-  <div class="lists">
-    <template>
-      <ListItem @click="open=true">
-        <div slot="left">
-          <p class="title">三月义卖</p>
-          <p class="font-small">2017.3.3提交</p>
-        </div>
-        <div slot="right" class="right">
-          <div class="right-item">
-            <p class="font-small">来源</p>
-            <p style="color: #666666;">SDCS团委</p>
+  <transition-group name="flip-list" tag="div" class="lists">
+    <template v-for="(item, index) in mock">
+      <ListItem @click="open=true" 
+                @remove="remove(index)"
+                :key="item.time" 
+                :item="item">
+          <div class="list-right-item" slot="right">
+            <a href="javascript:void(0)" class="up" @click.stop="up(index)">上移</a>
+            <a href="javascript:void(0)" class="down" @click.stop="down(index)">下移</a>
           </div>
-          <div class="right-item">
-            <p class="font-small">活动对象</p>
-            <p style="color: #666666;">中山大学在校生</p>
-          </div>
-          <div class="right-item">
-            <a href="javascript:void(0)" class="up">上移</a>
-            <a href="javascript:void(0)" class="down">下移</a>
-          </div>
-        </div>
       </ListItem>
     </template>
-  </div>
+  </transition-group>
   <Modal :open="open" @close="open=false"/>
 </div>
 </template>
 
 <script>
-import ListItem from '@/components/listItem';
-import iButton from 'iview/src/components/button';
+import ListItem from './children/listItem';
 import Modal from './children/modal';
-import remove from '@/assets/delete';
+
+const mock = [
+  {
+    title: '三月义卖',
+    time: '30s',
+    src: 'sdcs',
+    tar: '中山大学在校生'
+  },
+  {
+    title: '三月义卖',
+    time: '1天',
+    src: 'sdcs',
+    tar: '中山大学在校生'
+  },
+  {
+    title: '三月义卖',
+    time: '2月',
+    src: 'sdcs',
+    tar: '中山大学在校生'
+  },
+  {
+    title: '三月义卖',
+    time: '3年',
+    src: 'sdcs',
+    tar: '中山大学在校生'
+  }
+];
 
 export default {
   components: {
     ListItem,
-    iButton: iButton,
     Modal
   },
   data () {
     return {
-      remove,
+      mock,
       open: false,
       selectCampus: '东',
       campus: [
@@ -65,14 +73,51 @@ export default {
         '珠海'
       ]
     };
+  },
+  methods: {
+    up (index) {
+      if (index) {
+        const temp = this.mock[index - 1];
+        this.mock[index - 1] = this.mock[index];
+        this.mock[index] = temp;
+        this.mock = JSON.parse(JSON.stringify(this.mock));
+      }
+    },
+    down (index) {
+      if (index < this.mock.length - 1) {
+        const temp = this.mock[index + 1];
+        this.mock[index + 1] = this.mock[index];
+        this.mock[index] = temp;
+        this.mock = JSON.parse(JSON.stringify(this.mock));
+      }
+    },
+    remove (index) {
+      this.mock.splice(index, 1);
+    }
   }
 };
 </script>
 
 <style scoped>
+.lists {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.wrapper-tabs {
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.647%;
+}
 
 ul {
-  width: 46.67%;
+  width: 40%;
   display: flex;
   justify-content: space-around;
 }
@@ -88,40 +133,18 @@ li {
   font-size: 16px;
 }
 
-.row1 {
-  height: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 0.647%;
-}
-.row1-right {
-  align-self: flex-end;
-}
+
 .num {
-  margin-right: 15px;
+  align-self: flex-end;
   color: #666666;
 }
 
-.title {
-  font-size: 16px;
-  color: #666666;
-}
 
-.right-item {
+.list-right-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-left: 40px;
-}
-
-.font-small {
-  color: #999999;
-  font-size: 10px;
-}
-
-.right {
-  display: flex;
 }
 
 .up {
@@ -131,4 +154,6 @@ li {
 .down {
   color: #5074d7;
 }
+
+
 </style>

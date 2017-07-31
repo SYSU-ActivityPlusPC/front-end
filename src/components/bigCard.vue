@@ -31,6 +31,7 @@ export default {
   height: 240px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
   overflow: hidden;
+  cursor: pointer;
 }
 img {
   height: 160px;

@@ -1,22 +1,22 @@
 <template>
 <div class="sent-wrapper">
-  <div class="row-1">
-    <span class="messagesNum">2条信息</span>
-    <iButton type="text" style="padding: 0 5px 0 0;">
-      <img :src="remove" alt="删除" class="delete"/>
-    </iButton>
-  </div>
+  <span class="messagesNum">2条信息</span>
   <template v-for="(item, index) in mock">
-    <ListItem :key="index" class="list-item">
-      <div slot="left" class="titleAndTime">
-        <p class="title">{{item.title}}</p>
-        <p class="font">{{item.time}}发布</p>
-      </div>
-      <div slot="right" class="sentTo">
-        <span class="font">发送至</span>
-        <span>{{item.to}}</span>
-      </div>
-    </ListItem>
+    <div :key="index" class="lists-wrapper">
+      <ListItem  class="list-item">
+        <div slot="left" class="titleAndTime">
+          <p class="title">{{item.title}}</p>
+          <p class="font">{{item.time}}发布</p>
+        </div>
+        <div slot="right" class="sentTo">
+          <span class="font">发送至</span>
+          <span>{{item.to}}</span>
+        </div>
+      </ListItem>
+      <iButton type="text" class="button-remove">
+        <img :src="remove" alt="删除" />
+      </iButton>
+    </div>
   </template>
 </div>  
 </template>
@@ -64,15 +64,14 @@ export default {
 
 <style scoped>
 .sent-wrapper {
-  width: 55.344%;  
+  width: 56.6%;  
 }
-.row-1 {
-  display: flex;
-  justify-content: flex-end;
-}
+
 .messagesNum {
   color: #666666;
-  margin-right: 20px;
+  display: block;
+  text-align: right;
+  margin-bottom: 0.667%;
 }
 .font {
   color: #999999;
@@ -93,5 +92,16 @@ export default {
 
 .list-item {
   margin-bottom: 3.389%;
+}
+
+.lists-wrapper {
+  position: relative;
+}
+
+.button-remove {
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>

@@ -53,12 +53,12 @@
         </div>
       </transition>      
       <span slot="text" >活动管理</span>
-      <img slot="image" alt="活动管理" :src="manage"/>
+      <img slot="image" alt="活动管理" src="http://okuww23ih.bkt.clouddn.com/manage.png"/>
     </BigCard>
     <BigCard style="display: inline-block; margin-right: 2px;"
              @click="$router.push('/community/publish')">
       <span slot="text">发布活动</span>
-      <img slot="image" alt="发布活动" :src="publish" />
+      <img slot="image" alt="发布活动" src="http://okuww23ih.bkt.clouddn.com/publish.png" />
     </BigCard>
   </div>
 </div>

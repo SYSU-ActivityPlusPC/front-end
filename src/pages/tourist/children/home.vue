@@ -8,7 +8,7 @@
     </div>
   </div>
   <BigCard @click="$router.push('/tourist/publish')" style="margin: 20px 0 0 56px;">
-    <img src="../../../assets/publish.png" alt='发布活动' slot="image"/>
+    <img src="http://okuww23ih.bkt.clouddn.com/publish.png" alt='发布活动' slot="image"/>
     <span slot="text">发布活动</span>
   </BigCard>
 </div>  
@@ -17,15 +17,14 @@
 <script>
 import BigCard from '@/components/bigCard';
 import warning from '@/assets/warning';
-import publish from '@/assets/publish';
+// import publish from '@/assets/publish';
 export default {
   components: {
     BigCard
   },
   data () {
     return {
-      warning,
-      publish
+      warning
     };
   }
 };
