@@ -10,8 +10,25 @@
       <FormItem label="活动名称">
         <iInput size="large" class="input-size" placeholder="请输入活动名称"/>
       </FormItem>
-      <FormItem label="时间">
-        <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
+      <FormItem label="时间" style="display: flex;">
+        <div style="margin-left: -110px;">
+          <div>
+            <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
+            <MyButton type="ghost" shape="circle" :width="32" :height="32"></MyButton>
+          </div>
+          <div>
+            <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
+            <MyButton type="ghost" shape="circle" :width="32" :height="32">
+              <Icon type="close-round" slot="icon" color="#5074d7" :size="16"></Icon>
+            </MyButton>
+          </div>
+          <div>
+            <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
+            <MyButton type="ghost" shape="circle" :width="32" :height="32">
+              <Icon type="close-round" slot="icon" color="#5074d7" :size="16"></Icon>
+            </MyButton>
+          </div>
+        </div>
       </FormItem>
       <FormItem label="活动地点">
         <iInput size="large" class="input-size" placeholder="请输入活动地点"/>

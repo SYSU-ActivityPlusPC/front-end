@@ -1,10 +1,10 @@
 <template>
 <div :style="style" class="parent" @click="onClick">
-  <iButton long 
-          :style="buttonStyle"
-          :type="type" 
-          :disabled="disabled" 
-          :size="size">
+  <iButton :style="buttonStyle"
+           :type="type" 
+           :disabled="disabled" 
+           :size="size"
+           :shape="shape">
     <div class="button-innerbox">
       <slot name="icon"></slot>
       <span class="text" :class="{'text-ghost': type === 'ghost', 'text-primary': type === 'primary'}">
@@ -38,6 +38,9 @@ export default {
     size: {
       type: String,
       default: 'large'
+    },
+    shape: {
+      type: String
     }
   },
   components: {
@@ -48,7 +51,7 @@ export default {
       return `width: ${this.width}px; height: ${this.height}px; display: inline-block;`;
     },
     buttonStyle () {
-      return `height: ${this.height}px;`;
+      return `width: ${this.width}px; height: ${this.height}px;`;
     }
   },
   methods: {
