@@ -13,14 +13,12 @@
       <FormItem label="时间" style="display: flex;">
         <div style="margin-left: -110px;">
           <div>
-            <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
-            <MyButton type="ghost" shape="circle" :width="32" :height="32"></MyButton>
+            <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px" size="large"></DatePicker>
+            <MyButton type="ghost" shape="circle" :height="32"></MyButton>
           </div>
           <div>
-            <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
-            <MyButton type="ghost" shape="circle" :width="32" :height="32">
-              <Icon type="close-round" slot="icon" color="#5074d7" :size="16"></Icon>
-            </MyButton>
+            <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px" size="large"></DatePicker>
+            <MyButton type="ghost" :width="50">删除</MyButton>
           </div>
           <div>
             <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
@@ -34,7 +32,7 @@
         <iInput size="large" class="input-size" placeholder="请输入活动地点"/>
       </FormItem>
       <FormItem label="校区">
-        <iSelect class="select">
+        <iSelect class="select" size="large">
           <iOption v-for="area in areas" :value="area" :key="area">{{area}}</iOption>
         </iSelect>
       </FormItem>
@@ -45,7 +43,7 @@
         <iInput size="large" class="input-size" placeholder="请输入活动主办方"/>
       </FormItem>
       <FormItem label="活动类型">
-        <iSelect class="select">
+        <iSelect class="select" size="large">
           <iOption v-for="type in types" :value="type" :key="type">{{type}}</iOption>
         </iSelect>
       </FormItem>
@@ -56,7 +54,7 @@
         <iInput class="textarea-size" type="textarea" :rows="6" placeholder="请输入活动详情，让大家更了解活动吧!"/>
       </FormItem>
       <FormItem label="邮箱" v-if="authority === 'tourist'">
-        <iInput class="input-size" placeholder="活动审核结果将会发送到此邮箱!"/>
+        <iInput class="input-size" placeholder="活动审核结果将会发送到此邮箱!" size="large" />
       </FormItem>
       <FormItem>
         <MyButton :width="200" class="submit" @click="next">{{authority !== 'tourist' ? '下一步' : '提交活动'}}</MyButton>
@@ -69,7 +67,7 @@
         <iInput size="large" class="input-size" placeholder="例如：短信"/>
       </FormItem>
       <FormItem label="报名截止日期">
-        <DatePicker type="datetime" placeholder="选择日期和时间" style="width: 300px"></DatePicker>
+        <DatePicker type="datetime" placeholder="选择日期和时间" style="width: 300px" size="large"></DatePicker>
       </FormItem>
       <FormItem label="活动奖励">
         <iInput size="large" class="input-size" placeholder="例如：3个体育章"/>
