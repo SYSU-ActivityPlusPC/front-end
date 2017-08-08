@@ -8,7 +8,7 @@
 # install dependencies232323123123谔谔谔谔谔谔谔谔谔谔谔谔谔谔
 npm install
 
-# serve with hot reload at localhost:8777 朱 test
+# serve with hot re1232313load at localhost:8777 朱 test
 npm run dev
 
 # build for production with minification23232
