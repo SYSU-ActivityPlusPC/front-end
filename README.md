@@ -8,13 +8,13 @@
 # install dependencies232323123123谔谔谔谔谔谔谔谔谔谔谔谔谔谔
 npm install
 
-# serve with hot reload at localhost:8777
+# serve with hot reload at localhost:8777 朱 test
 npm run dev
 
 # build for production with minification23232
 npm run build
 
-# build for production and view the bundle analyzer report
+# build for production and view the bundle analyzer report continute test
 npm run build --report
 
 # run unit tests
