@@ -8,7 +8,7 @@ const Regist = resolve => require(['../pages/regist'], resolve);
 
 const tourist = resolve => require(['../pages/tourist/index'], resolve);
 const touristHome = resolve => require(['../pages/tourist/children/home'], resolve);
-const touristPublish1 = resolve => require(['../pages/tourist/children/publish/index'], resolve);
+const touristPublish = resolve => require(['../pages/tourist/children/publish/index'], resolve);
 
 const admin = resolve => require(['../pages/admin/index'], resolve);
 const adminHome = resolve => require(['../pages/admin/children/home'], resolve);
