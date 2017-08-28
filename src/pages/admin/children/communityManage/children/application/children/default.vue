@@ -6,7 +6,7 @@
       <Status :status="getStatus(item.status)" />
       <ListItem class="list-item" @click="$router.push(`/admin/community/application/detail/${index}`)">
         <Avatar slot="left" :avatar="item.avatar" :name="item.name" />
-        <span slot="right" class="time">{{item.time}}申请</span>
+        <span slot="right" class="time">{{item.time}}</span>
       </ListItem>
     </div>
   </template>

@@ -10,15 +10,15 @@
     </div>
     <form class="form">
       <div class="form-input">
-        <iInput :style="inputStyle" size="large" placeholder="用户名" type="text"></iInput>
+        <iInput :style="inputStyle" size="large" placeholder="用户名" type="text" v-model="form.account"></iInput>
         <a href="javascript:void(0)" style="margin-left: 20px;" @click="$router.push('/tourist')">校外社团登录 ></a>
       </div>
       <div class="form-input">
-        <iInput :style="inputStyle" size="large" placeholder="密码" type="password"></iInput>
+        <iInput :style="inputStyle" size="large" placeholder="密码" type="password" v-model="form.password"></iInput>
         <a href="javascript:void(0)" style="margin-left: 20px;">忘记密码</a>
       </div>
       <div>
-        <MyButton :width="240" @click="login">登录</MyButton>
+        <MyButton :width="240" @click="login" :disabled="loading || disabled">登录</MyButton>
         <a href="javascript:void(0)" style="margin-left: 20px;" @click="$router.push('/regist')">注册</a>
       </div>
     </form>
@@ -40,7 +40,12 @@ export default {
                   position: absolute; 
                   right: 50px; 
                   top: 100px`,
-      inputStyle: `width: 240px;`
+      inputStyle: `width: 240px;`,
+      form: {
+        account: '',
+        password: ''
+      },
+      loading: false
     };
   },
   components: {
@@ -51,8 +56,15 @@ export default {
     MyButton
   },
   methods: {
-    login () {
-      console.log('on');
+    async login () {
+      this.loading = true;
+      await this.$http.post('/club/login', this.form);
+      this.loading = false;
+    }
+  },
+  computed: {
+    disabled () {
+      return this.form.account === '' || this.form.password === '';
     }
   }
 };

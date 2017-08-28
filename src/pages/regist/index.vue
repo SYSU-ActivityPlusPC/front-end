@@ -9,12 +9,12 @@
         <span class="slogan-2">让参与校园活动更简单</span>
       </div>
     </div>
-    <iForm :label-width="100" class="form">
-      <FormItem label="组织名称">
-        <iInput size="large" class="input-size" placeholder="请输入完整的社团名称"/>
+    <iForm :label-width="100" class="form" :model="form" :rules="rules">
+      <FormItem label="组织名称" prop="name">
+        <iInput size="large" class="input-size" placeholder="请输入完整的社团名称" v-model="form.name" />
       </FormItem>
-      <FormItem label="联系邮箱">
-        <iInput size="large" class="input-size" placeholder="系统通知将发送到本邮箱"/>
+      <FormItem label="联系邮箱" prop="email">
+        <iInput size="large" class="input-size" placeholder="系统通知将发送到本邮箱" v-model="form.email" />
       </FormItem>
       <FormItem label="组织logo">
         <Upload action="//jsonplaceholder.typicode.com/posts/">
@@ -40,11 +40,11 @@
             </div>
         </div>
       </FormItem>
-      <FormItem label="备注信息">
-        <iInput class="textarea-size" type="textarea" :rows="6" />
+      <FormItem label="备注信息" prop="info">
+        <iInput class="textarea-size" type="textarea" :rows="6" v-model="form.info" />
       </FormItem>
       <FormItem>
-        <MyButton :width="200" class="button-regist">注册</MyButton>
+        <MyButton :width="200" class="button-regist" @click="regist" :disabled="disabled">注册</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -74,12 +74,51 @@ export default {
       upload,
       why,
       style: '',
-      show: false
+      show: false,
+      form: {
+        name: '',
+        email: '',
+        info: ''
+      },
+      rules: {
+        name: {
+          trigger: 'blur',
+          validator (rule, value, callback) {
+            if (value === '') {
+              callback(new Error('不能为空'));
+            } else {
+              callback();
+            }
+          }
+        },
+        email: {
+          trigger: 'blur',
+          validator (rule, value, callback) {
+            if (value === '') {
+              callback(new Error('不能为空'));
+            } else if (/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value) === false) {
+              callback(new Error('请输入正确的邮箱地址'));
+            } else {
+              callback();
+            }
+          }
+        }
+      }
     };
   },
   mounted () {
     const paddingTop = document.getElementsByTagName('body')[0].clientHeight * 0.091;
     this.style = `padding-top: ${paddingTop}px`;
+  },
+  methods: {
+    async regist () {
+      await this.$http.post('/club/signUp', this.form);
+    }
+  },
+  computed: {
+    disabled () {
+      return this.form.name === '' || this.form.email === '' || !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.form.email);
+    }
   }
 };
 </script>

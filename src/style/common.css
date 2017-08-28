@@ -73,3 +73,8 @@ a:active {
 .flip-list-move {
   transition: all 1s;
 }
+
+
+.ivu-form-item-error-tip {
+  left: 30px !important;
+}

@@ -2,19 +2,19 @@
 <div class="detail-wrapper">
   <div class="item">
     <label class="label">社团名称</label>
-    <span>SDCS团委</span>
+    <span>{{info.name}}</span>
   </div>
   <div class="item">
     <label class="label">账号</label>
-    <span>1234566</span>
+    <span>{{info.account}}</span>
   </div>
   <div class="item">
     <label class="label">密码</label>
-    <span>1234566</span>
+    <span>{{info.password}}</span>
   </div>
   <div class="item">
     <label class="label">注册时间</label>
-    <span>2015.6.4</span>
+    <span>{{info.registrationTime}}</span>
   </div>
   <div class="item">
     <label class="label">证明材料</label>
@@ -43,6 +43,20 @@
 
 <script>
 export default {
+  data () {
+    return {
+      info: {}
+    };
+  },
+  async created () {
+    const { id } = this.$route.params;
+    await this.getInfo(id);
+  },
+  methods: {
+    async getInfo (id) {
+      this.info = (await this.$http.get(`/club/${id}`)).data;
+    }
+  }
 };
 </script>
 

@@ -7,9 +7,9 @@ import router from './router';
 import 'iview/dist/styles/iview';
 import '@/style/animate';
 import '@/style/common';
-
+import axios from 'axios';
 Vue.config.productionTip = false;
-
+Vue.prototype.$http = axios;
 Vue.prototype.$iview = 'iview/src/components';
 
 Vue.use(VueLazyload);
