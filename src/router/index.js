@@ -5,6 +5,7 @@ Vue.use(VueRouter);
 
 const Login = resolve => require(['../pages/login'], resolve);
 const Regist = resolve => require(['../pages/regist'], resolve);
+const registSuccess = resolve => require(['../pages/regist/success'], resolve);
 
 const tourist = resolve => require(['../pages/tourist/index'], resolve);
 const touristHome = resolve => require(['../pages/tourist/children/home'], resolve);
@@ -45,6 +46,10 @@ const routes = [
   {
     path: '/regist',
     component: Regist
+  },
+  {
+    path: '/regist-success',
+    component: registSuccess
   },
   {
     path: '/tourist',
