@@ -7,11 +7,18 @@ import router from './router';
 import 'iview/dist/styles/iview';
 import '@/style/animate';
 import '@/style/common';
+import Notice from 'iview/src/components/notice';
 import axios from 'axios';
 Vue.config.productionTip = false;
-Vue.prototype.$http = axios;
-Vue.prototype.$iview = 'iview/src/components';
+// 全局挂载公用变量或者函数或者工具
 
+Vue.prototype.$http = axios.create({
+  baseURL: process.env.NODE_ENV !== 'production' ? '/api' : null
+});
+
+// Vue.prototype.$http = axios;
+Vue.prototype.$iview = 'iview/src/components';
+Vue.prototype.$Notice = Notice;
 Vue.use(VueLazyload);
 
 /* eslint-disable no-new */

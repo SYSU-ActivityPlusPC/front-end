@@ -9,7 +9,7 @@
         <span class="slogan-2">让参与校园活动更简单</span>
       </div>
     </div>
-    <iForm :label-width="100" class="form" :model="form" :rules="rules">
+    <iForm :label-width="100" class="form" :model="form" :rules="rules" ref="form">
       <FormItem label="组织名称" prop="name">
         <iInput size="large" class="input-size" placeholder="请输入完整的社团名称" v-model="form.name" />
       </FormItem>

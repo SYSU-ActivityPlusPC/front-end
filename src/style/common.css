@@ -78,3 +78,7 @@ a:active {
 .ivu-form-item-error-tip {
   left: 30px !important;
 }
+
+.ivu-upload-list {
+  padding-left: 26px !important;
+}
