@@ -65,7 +65,15 @@
         <iInput size="large" class="input-size" placeholder="例如: 参与者身体健康，无重大疾病" v-model="form.requirement" />
       </FormItem>
       <FormItem label="宣传图">
-        <Upload action="//jsonplaceholder.typicode.com/posts/">
+        <Upload 
+          action="/api/img/upload/poster" 
+          accept="image/*"
+          :format="format"
+          :max-size="2048" 
+          :before-upload="onBeforePoster"
+          :on-remove="onPosterRemove"
+          :on-format-error="onFormatError"
+          :on-exceeded-size="onExceededSize">
           <MyButton type="ghost" :width="110" :height="30" size="small">
             <img :src="upload" class="icon-upload" slot="icon" />
             点击上传
@@ -73,7 +81,14 @@
         </Upload>
       </FormItem>
       <FormItem label="二维码">
-        <Upload action="//jsonplaceholder.typicode.com/posts/">
+        <Upload
+          action="/api/img/upload/qrCode" 
+          accept="image/*"
+          :max-size="2048"
+          :before-upload="onBeforeQrcode"
+          :on-remove="onQrcodeRemove"
+          :on-format-error="onFormatError"
+          :on-exceeded-size="onExceededSize">
           <MyButton type="ghost" :width="110" :height="30" size="small">
             <img :src="upload" class="icon-upload" slot="icon" />
             点击上传
@@ -122,12 +137,15 @@ export default {
       upload,
       types: ['公益', '体育', '比赛', '讲座'],
       areas: ['东校区', '南校区', '北校区', '珠海校区'],
+      format: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],
       currentTab: 'must',
       dynamicDatePicker: [
         {
           value: ''
         }
       ],
+      QRCode: null,
+      Poster: null,
       form: {
         name: '',
         time: ['', ''],
@@ -342,18 +360,70 @@ export default {
     async confirm () {
       if (this.authority === 'tourist') {
         // 游客就直接提交表单
-        const form = Object.assign({}, this.form);
+        let form = Object.assign({}, this.form);
         form.startTime = form.time[0];
         form.endTime = form.time[1];
         form.pubStartTime = form.pubTime[0];
         form.pubEndTime = form.pubTime[1];
         delete form.pubTime;
         delete form.time;
+        for (const key in form) {
+          if (form[key] === undefined) delete form[key];
+        }
         console.log(form);
-        // await this.$http.post('/act', this.form);
+        try {
+          await this.$http.post('/act', form);
+          this.$emit('next');
+        } catch (err) {
+          console.log(err.response);
+        }
       } else {
         this.$emit('next');
       }
+    },
+    onPosterRemove () {
+      this.form.poster = undefined;
+    },
+    onQrcodeRemove () {
+      this.form.QRCode = undefined;
+    },
+    async onBeforePoster (file) {
+      await this.upLoadPoster(file);
+      return false;
+    },
+    async onBeforeQrcode (file) {
+      await this.uploadQRcode(file);
+      return false;
+    },
+    async upLoadPoster (file) {
+      const formdata = new FormData();
+      formdata.append('file', file);
+      const { data } = await this.$http.post('/img/upload/poster', formdata, {
+        method: 'post',
+        headers: {'content-type': 'multipart/form-data'}
+      });
+      this.form.poster = data;
+    },
+    async uploadQRcode (file) {
+      const formdata = new FormData();
+      formdata.append('file', file);
+      const { data } = await this.$http.post('/img/upload/qrCode', formdata, {
+        method: 'post',
+        headers: {'content-type': 'multipart/form-data'}
+      });
+      this.form.QRCode = data;
+    },
+    onExceededSize (file) {
+      this.$Notice.warning({
+        title: '超出文件大小限制',
+        desc: `文件${file.name}太大，不能超过2M。`
+      });
+    },
+    onFormatError (file) {
+      this.$Notice.warning({
+        title: '文件格式错啦',
+        desc: `文件格式应该为图片的格式`
+      });
     }
   }
 };
