@@ -18,7 +18,7 @@
         <a href="javascript:void(0)" style="margin-left: 20px;">忘记密码</a>
       </div>
       <div>
-        <MyButton :width="240" @click="login" :disabled="loading || disabled">登录</MyButton>
+        <MyButton :width="240" @click="login" :disabled="loading || disabled">{{!loading ? '登录' : '请等待'}}</MyButton>
         <a href="javascript:void(0)" style="margin-left: 20px;" @click="$router.push('/regist')">注册</a>
       </div>
     </form>
@@ -58,8 +58,20 @@ export default {
   methods: {
     async login () {
       this.loading = true;
-      await this.$http.post('/club/login', this.form);
+      const {data} = await this.$http.post('/club/signIn', this.form);
+      if (data === 'not found') {
+        this.$Notice.open({
+          title: '用户不存在或者密码错误'
+        });
+        this.loading = false;
+        return;
+      } else {
+        this.$Notice.open({
+          title: '登录成功'
+        });
+      }
       this.loading = false;
+      this.$router.push(data === 'manage' ? '/admin' : '/community');
     }
   },
   computed: {
