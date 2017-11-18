@@ -71,7 +71,7 @@ export default {
         });
       }
       this.loading = false;
-      this.$router.push(data === 'manage' ? '/admin' : '/community');
+      this.$router.push(data === 'manager' ? '/admin' : '/community');
     }
   },
   computed: {

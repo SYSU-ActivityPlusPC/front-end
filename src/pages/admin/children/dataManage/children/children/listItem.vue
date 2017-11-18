@@ -2,17 +2,17 @@
 <div class="list-wrapper">
   <ListItem @click="onClick"  class="list-item">
     <div slot="left">
-      <p class="list-title">{{item.title}}</p>
+      <p class="list-title">{{item.name}}</p>
       <p class="font-small">{{item.time}}提交</p>
     </div>
     <div slot="right" class="right">
       <div class="list-right-item">
         <p class="font-small">来源</p>
-        <p style="color: #666666;">{{item.src}}</p>
+        <p style="color: #666666;">{{item.sponsor}}</p>
       </div>
       <div class="list-right-item">
         <p class="font-small">活动对象</p>
-        <p style="color: #666666;">{{item.tar}}</p>
+        <p style="color: #666666;">{{item.enrollCondition}}</p>
       </div>
       <slot name="right"></slot>
     </div>

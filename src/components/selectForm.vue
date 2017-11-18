@@ -59,6 +59,7 @@ export default {
     iSwitch,
     iInput
   },
+  props: ['form'],
   data () {
     return {
       warning,
@@ -73,8 +74,23 @@ export default {
     pre () {
       this.$emit('pre');
     },
-    next () {
-      this.$emit('next');
+    async next () {
+      let form = Object.assign({}, this.form);
+      form.startTime = form.time[0];
+      form.endTime = form.time[1];
+      form.pubStartTime = form.pubTime[0];
+      form.pubEndTime = form.pubTime[1];
+      delete form.pubTime;
+      delete form.time;
+      for (const key in form) {
+        if (form[key] === undefined) delete form[key];
+      }
+      try {
+        await this.$http.post('/act', form);
+        this.$emit('next');
+      } catch (err) {
+        console.log(err.response);
+      }
     }
   }
 };

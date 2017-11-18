@@ -4,47 +4,47 @@
   <div class="content">
     <div class="content-item">
       <span class="label">活动时间:</span>
-      <p class="value">7.9-7.12</p>
+      <p class="value">{{startTime}}-{{endTime}}</p>
     </div>
     <div class="content-item">
       <span class="label">活动地点:</span>
-      <p class="value">xxxx</p>
+      <p class="value">{{data.location}}</p>
     </div>
     <div class="content-item">
       <span class="label">活动对象:</span>
-      <p class="value">xxxxx</p>
+      <p class="value">{{data.enrollCondition}}</p>
     </div>
     <div class="content-item">
       <span class="label">活动简介:</span>
-      <p class="value">xxxx</p>
+      <p class="value">{{data.introduction || '略'}}</p>
     </div>
     <div class="content-item">
       <span class="label">主办方:</span>
-      <p class="value">xxxx</p>
+      <p class="value">{{data.sponsor}}</p>
     </div>
     <div class="content-item">
       <span class="label">报名方式:</span>
-      <p class="value">xxxx</p>
+      <p class="value">{{data.enrollWay || '略'}}</p>
     </div>
     <div class="content-item">
       <span class="label">报名截止日期:</span>
-      <p class="value">xxxx</p>
+      <p class="value">{{data.enrollEndTime}}</p>
     </div>
     <div class="content-item">
       <span class="label">奖励:</span>
-      <p class="value">xxxxx</p>
+      <p class="value">{{data.reward}}</p>
     </div>
     <div class="content-item">
       <span class="label">参加要求:</span>
-      <p class="value">xxxxx</p>
+      <p class="value">{{data.requirement}}</p>
     </div>
     <div class="content-item">
       <span class="label">活动详情:</span>
-      <p class="value">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+      <p class="value">{{data.detail}}</p>
     </div>
   </div>
   <div slot="footer" class="footer">
-    <MyButton :width="140">编辑活动信息</MyButton>
+    <MyButton :width="140" @click="edit">编辑活动信息</MyButton>
   </div>
 </Modal>  
 </template>
@@ -86,6 +86,22 @@ export default {
       if (!val) {
         this.$emit('close');
       }
+    }
+  },
+  methods: {
+    edit () {
+      let form = this.data;
+      form.time = [new Date(form.startTime), new Date(form.endTime)];
+      form.pubTime = [new Date(form.pubStartTime), new Date(form.pubEndTime)];
+      this.$emit('edit', this.data);
+    }
+  },
+  computed: {
+    startTime () {
+      return new Date(this.data.startTime).toLocaleDateString();
+    },
+    endTime () {
+      return new Date(this.data.endTime).toLocaleDateString();
     }
   }
 };

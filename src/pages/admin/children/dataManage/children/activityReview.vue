@@ -1,22 +1,21 @@
 <template>
 <div class="wrapper">
-  <span class="num">共{{mock.length}}个</span>
+  <span class="num">共{{length}}个</span>
   <div class="lists">
-    <template v-for="(item, index) in mock">
-      <ListItem @click="open=true" :key="item.time" :item="item">
+    <template v-for="(item, index) in actList">
+      <ListItem v-if="!item.verified" @click="$emit('clickItem', item)" :key="item.time" :item="item" @remove="remove(index)">
           <div class="right-item" slot="right">
-            <a href="javascript:void(0)" class="accept">通过</a>
-            <a href="javascript:void(0)" class="reject">拒绝</a>
+            <a href="javascript:void(0)" class="accept" @click.stop="verify(item)">通过</a>
+            <a href="javascript:void(0)" class="reject" @click.stop="remove(index)">拒绝</a>
           </div>
       </ListItem>
     </template>
   </div>
-  <Modal :open="open" @close="open=false"/>
 </div>
 </template>
 
 <script>
-const mock = [
+/* const mock = [
   {
     title: '三月义卖',
     time: '30s',
@@ -41,20 +40,40 @@ const mock = [
     src: 'sdcs',
     tar: '中山大学在校生'
   }
-];
+]; */
 
 import ListItem from './children/listItem';
-import Modal from './children/modal';
 export default {
   components: {
-    ListItem,
-    Modal
+    ListItem
   },
-  data () {
-    return {
-      mock,
-      open: false
-    };
+  props: ['actList'],
+  methods: {
+    async verify (item) {
+      let form = Object.assign({}, item);
+      form.verified = true;
+      try {
+        await this.$http.post('/act/' + form.id, form);
+        item.verified = true;
+      } catch (err) {
+        console.log(err.response);
+      }
+    },
+    async remove (index) {
+      await this.$http.delete('/act/' + this.actList[index].id);
+      this.actList.splice(index, 1);
+    }
+  },
+  computed: {
+    length () {
+      let count = 0;
+      this.actList.forEach((val) => {
+        if (!val.verified) {
+          count++;
+        }
+      });
+      return count;
+    }
   }
 };
 </script>

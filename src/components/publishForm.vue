@@ -6,7 +6,7 @@
     <div class="fill"></div>
   </div>
   <div class="right-wrapper" v-show="currentTab === 'must'">
-    <iForm :label-width="110" :rules="requiredRules" :model="form">
+    <iForm ref="requiredForm" :label-width="110" :rules="requiredRules" :model="form">
       <FormItem label="活动名称" prop="name">
         <iInput size="large" class="input-size" placeholder="请输入活动名称" v-model="form.name" />
       </FormItem>
@@ -43,12 +43,13 @@
         <iInput class="input-size" placeholder="活动审核结果将会发送到此邮箱!" size="large" v-model="form.email" />
       </FormItem>
       <FormItem>
-        <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' ? '下一步' : '提交活动'}}</MyButton>
+        <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' && !editAct ? '下一步' : '提交活动'}}</MyButton>
+        <MyButton v-if="editAct" :width="200" class="submit" @click="$emit('endEdit')">取消</MyButton>
       </FormItem>
     </iForm>
   </div>
   <div class="right-wrapper" v-show="currentTab === 'select'">
-    <iForm :label-width="110">
+    <iForm ref="optionalForm" :label-width="110">
       <FormItem label="通知方式">
         <iInput size="large" class="input-size" placeholder="例如：短信" v-model="form.enrollWay" />
       </FormItem>
@@ -96,7 +97,8 @@
         </Upload>
       </FormItem>
       <FormItem>
-        <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' ? '下一步' : '提交活动'}}</MyButton>
+        <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' && !editAct ? '下一步' : '提交活动'}}</MyButton>
+        <MyButton v-if="editAct" :width="200" class="submit" @click="$emit('endEdit')">取消</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -119,6 +121,47 @@ export default {
     authority: {
       type: String,
       required: true
+    },
+    form: {
+      type: Object,
+      default: () => ({
+        name: '',
+        time: ['', ''],
+        location: '',
+        campus: null,
+        enrollCondition: '',
+        sponsor: '',
+        type: null,
+        pubTime: ['', ''],
+        detail: '',
+        verified: false,
+        canEnrolled: false,
+
+        email: undefined,
+        enrollWay: undefined,
+        enrollEndTime: undefined,
+        reward: undefined,
+        introduction: undefined,
+        requirement: undefined,
+
+        poster: undefined,
+        QRCode: undefined
+      })
+    },
+    editAct: {
+      type: Boolean,
+      default: false
+    },
+    reset: {
+      type: Boolean
+    }
+  },
+  watch: {
+    reset (val) {
+      if (val) {
+        this.$refs['requiredForm'].resetFields();
+        this.$refs['optionalForm'].resetFields();
+      }
     }
   },
   components: {
@@ -146,29 +189,6 @@ export default {
       ],
       QRCode: null,
       Poster: null,
-      form: {
-        name: '',
-        time: ['', ''],
-        location: '',
-        campus: null,
-        enrollCondition: '',
-        sponsor: '',
-        type: null,
-        pubTime: ['', ''],
-        detail: '',
-        verified: false,
-        canEnrolled: false,
-
-        email: undefined,
-        enrollWay: undefined,
-        enrollEndTime: undefined,
-        reward: undefined,
-        introduction: undefined,
-        requirement: undefined,
-
-        poster: undefined,
-        QRCode: undefined
-      },
       requiredRules: {
         name: {
           trigger: 'change',
@@ -357,19 +377,23 @@ export default {
     }
   },
   methods: {
+    handleForm () {
+      let form = Object.assign({}, this.form);
+      form.startTime = form.time[0];
+      form.endTime = form.time[1];
+      form.pubStartTime = form.pubTime[0];
+      form.pubEndTime = form.pubTime[1];
+      delete form.pubTime;
+      delete form.time;
+      for (const key in form) {
+        if (form[key] === undefined) delete form[key];
+      }
+      return form;
+    },
     async confirm () {
       if (this.authority === 'tourist') {
         // 游客就直接提交表单
-        let form = Object.assign({}, this.form);
-        form.startTime = form.time[0];
-        form.endTime = form.time[1];
-        form.pubStartTime = form.pubTime[0];
-        form.pubEndTime = form.pubTime[1];
-        delete form.pubTime;
-        delete form.time;
-        for (const key in form) {
-          if (form[key] === undefined) delete form[key];
-        }
+        let form = this.handleForm();
         console.log(form);
         try {
           await this.$http.post('/act', form);
@@ -377,8 +401,21 @@ export default {
         } catch (err) {
           console.log(err.response);
         }
+      } else if (this.editAct) {
+        try {
+          let form = this.handleForm();
+          let id = form.id;
+          delete form.id;
+          await this.$http.post('/act/' + id, form);
+          this.$Notice.open({
+            title: '修改活动成功'
+          });
+          this.$emit('endEdit');
+        } catch (err) {
+          console.log(err.response);
+        }
       } else {
-        this.$emit('next');
+        this.$emit('next', this.form);
       }
     },
     onPosterRemove () {
@@ -387,12 +424,12 @@ export default {
     onQrcodeRemove () {
       this.form.QRCode = undefined;
     },
-    async onBeforePoster (file) {
-      await this.upLoadPoster(file);
+    onBeforePoster (file) {
+      this.upLoadPoster(file);
       return false;
     },
-    async onBeforeQrcode (file) {
-      await this.uploadQRcode(file);
+    onBeforeQrcode (file) {
+      this.uploadQRcode(file);
       return false;
     },
     async upLoadPoster (file) {
@@ -402,6 +439,7 @@ export default {
         method: 'post',
         headers: {'content-type': 'multipart/form-data'}
       });
+      console.log(data);
       this.form.poster = data;
     },
     async uploadQRcode (file) {
@@ -411,6 +449,7 @@ export default {
         method: 'post',
         headers: {'content-type': 'multipart/form-data'}
       });
+      console.log(data);
       this.form.QRCode = data;
     },
     onExceededSize (file) {

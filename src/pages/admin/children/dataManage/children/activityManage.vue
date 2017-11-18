@@ -6,13 +6,13 @@
         <li :class="{'select': selectCampus === `${item}`}" :key="item" @click="selectCampus=item">{{item}}校区</li>
       </template>
     </ul>
-    <span class="num">共{{mock.length}}个</span>
+    <span class="num">共{{length}}个</span>
   </div>
   <transition-group name="flip-list" tag="div" class="lists">
-    <template v-for="(item, index) in mock">
-      <ListItem @click="open=true" 
+    <template v-for="(item, index) in actList">
+      <ListItem v-if="item.verified" @click="$emit('clickItem', item)" 
                 @remove="remove(index)"
-                :key="item.time" 
+                :key="item.id" 
                 :item="item">
           <div class="list-right-item" slot="right">
             <a href="javascript:void(0)" class="up" @click.stop="up(index)">上移</a>
@@ -21,15 +21,13 @@
       </ListItem>
     </template>
   </transition-group>
-  <Modal :open="open" @close="open=false"/>
 </div>
 </template>
 
 <script>
 import ListItem from './children/listItem';
-import Modal from './children/modal';
 
-const mock = [
+/* const mock = [
   {
     title: '三月义卖',
     time: '30s',
@@ -54,16 +52,15 @@ const mock = [
     src: 'sdcs',
     tar: '中山大学在校生'
   }
-];
+]; */
 
 export default {
   components: {
-    ListItem,
-    Modal
+    ListItem
   },
+  props: ['actList'],
   data () {
     return {
-      mock,
       open: false,
       selectCampus: '东',
       campus: [
@@ -71,28 +68,44 @@ export default {
         '南',
         '北',
         '珠海'
-      ]
+      ],
+      curItem: {
+        startTime: '',
+        endTime: ''
+      }
     };
   },
   methods: {
     up (index) {
       if (index) {
-        const temp = this.mock[index - 1];
-        this.mock[index - 1] = this.mock[index];
-        this.mock[index] = temp;
-        this.mock = JSON.parse(JSON.stringify(this.mock));
+        const temp = this.actList[index - 1];
+        this.actList[index - 1] = this.actList[index];
+        this.actList[index] = temp;
+        this.actList = JSON.parse(JSON.stringify(this.actList));
       }
     },
     down (index) {
-      if (index < this.mock.length - 1) {
-        const temp = this.mock[index + 1];
-        this.mock[index + 1] = this.mock[index];
-        this.mock[index] = temp;
-        this.mock = JSON.parse(JSON.stringify(this.mock));
+      if (index < this.actList.length - 1) {
+        const temp = this.actList[index + 1];
+        this.actList[index + 1] = this.actList[index];
+        this.actList[index] = temp;
+        this.actList = JSON.parse(JSON.stringify(this.actList));
       }
     },
-    remove (index) {
-      this.mock.splice(index, 1);
+    async remove (index) {
+      await this.$http.delete('/act/' + this.actList[index].id);
+      this.actList.splice(index, 1);
+    }
+  },
+  computed: {
+    length () {
+      let count = 0;
+      this.actList.forEach((val) => {
+        if (val.verified) {
+          count++;
+        }
+      });
+      return count;
     }
   }
 };
