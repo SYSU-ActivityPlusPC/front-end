@@ -25,8 +25,14 @@ import Modal from './children/modal';
 export default {
   async created () {
     this.config = setConfig.bind(this)();
-    const {data} = await this.$http.get('/act?page=0');
-    this.actList = data.content;
+    let last = false;
+    let page = 0;
+    while (!last) {
+      const {data} = await this.$http.get('/act?page=' + page);
+      this.actList = this.actList.concat(data.content);
+      last = data.last;
+      page++;
+    }
   },
   data () {
     return {

@@ -26,34 +26,6 @@
 
 <script>
 import ListItem from './children/listItem';
-
-/* const mock = [
-  {
-    title: '三月义卖',
-    time: '30s',
-    src: 'sdcs',
-    tar: '中山大学在校生'
-  },
-  {
-    title: '三月义卖',
-    time: '1天',
-    src: 'sdcs',
-    tar: '中山大学在校生'
-  },
-  {
-    title: '三月义卖',
-    time: '2月',
-    src: 'sdcs',
-    tar: '中山大学在校生'
-  },
-  {
-    title: '三月义卖',
-    time: '3年',
-    src: 'sdcs',
-    tar: '中山大学在校生'
-  }
-]; */
-
 export default {
   components: {
     ListItem
