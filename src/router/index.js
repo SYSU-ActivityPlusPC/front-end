@@ -26,6 +26,8 @@ const adminCommunityManageApplicationDetail = resolve => require(['../pages/admi
 const adminCommunityManageDetail = resolve => require(['../pages/admin/children/communityManage/children/detail'], resolve);
 
 const adminDataManage = resolve => require(['../pages/admin/children/dataManage/index'], resolve);
+const adminDataManageHome = resolve => require(['../pages/admin/children/dataManage/children/home'], resolve);
+const collection = resolve => require(['../pages/admin/children/dataManage/children/children/collection'], resolve);
 
 const adminPublish = resolve => require(['../pages/admin/children/publish/index'], resolve);
 
@@ -84,9 +86,22 @@ const routes = [
       },
       {
         path: 'data',
-        meta: {
-          name: '/首页/数据管理'
-        },
+        children: [
+          {
+            path: '',
+            meta: {
+              name: '/首页/数据管理'
+            },
+            component: adminDataManageHome
+          },
+          {
+            path: 'collection',
+            meta: {
+              name: '/首页/数据管理/推送'
+            },
+            component: collection
+          }
+        ],
         component: adminDataManage
       },
       {

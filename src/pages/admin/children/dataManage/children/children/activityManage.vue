@@ -2,15 +2,16 @@
 <div class="wrapper">
   <div class="wrapper-tabs">
     <ul>
-      <template v-for="item in campus">
-        <li :class="{'select': selectCampus === `${item}`}" :key="item" @click="selectCampus=item">{{item}}校区</li>
+      <template v-for="(item, index) in campus">
+        <li :class="{'select': selectCampus === index}" :key="item" @click="selectCampus=index">{{item}}校区</li>
       </template>
     </ul>
+    <MyButton @click="generateCollection">生成推送</MyButton>
     <span class="num">共{{length}}个</span>
   </div>
   <transition-group name="flip-list" tag="div" class="lists">
     <template v-for="(item, index) in actList">
-      <ListItem v-if="item.verified" @click="$emit('clickItem', item)" 
+      <ListItem v-if="item.campus === selectCampus && item.verified" @click="$emit('clickItem', item)"
                 @remove="remove(index)"
                 :key="item.id" 
                 :item="item">
@@ -26,15 +27,17 @@
 
 <script>
 import ListItem from './children/listItem';
+import MyButton from '@/components/button';
 export default {
   components: {
-    ListItem
+    ListItem,
+    MyButton
   },
   props: ['actList'],
   data () {
     return {
       open: false,
-      selectCampus: '东',
+      selectCampus: 0,
       campus: [
         '东',
         '南',
@@ -67,6 +70,14 @@ export default {
     async remove (index) {
       await this.$http.delete('/act/' + this.actList[index].id);
       this.actList.splice(index, 1);
+    },
+    generateCollection () {
+      const len = this.actList.filter(val => val.verified && val.campus === this.selectCampus).length;
+      if (!len) {
+        alert('当前校区的活动列表为空。');
+      } else {
+        this.$emit('generateCollection', this.selectCampus);
+      }
     }
   },
   computed: {
