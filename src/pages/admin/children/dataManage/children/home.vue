@@ -72,7 +72,6 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-    console.log(to.path);
     if (to.path === '/admin/data/collection') {
       const actsOfCampus = this.actList.filter(val => val.verified && val.campus === this.selectCampus);
       const temp = [];
@@ -80,7 +79,6 @@ export default {
         const acts = actsOfCampus.filter(val => val.type === i);
         temp.push(acts);
       }
-      console.log(temp);
       to.params.acts = temp;
     }
     next();

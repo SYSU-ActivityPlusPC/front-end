@@ -44,7 +44,7 @@
       </FormItem>
       <FormItem>
         <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' && !editAct ? '下一步' : '提交活动'}}</MyButton>
-        <MyButton v-if="editAct" :width="200" class="submit" @click="$emit('endEdit')">取消</MyButton>
+        <MyButton v-if="editAct" :width="200" class="submit" @click="endEdit">取消</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -98,7 +98,7 @@
       </FormItem>
       <FormItem>
         <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' && !editAct ? '下一步' : '提交活动'}}</MyButton>
-        <MyButton v-if="editAct" :width="200" class="submit" @click="$emit('endEdit')">取消</MyButton>
+        <MyButton v-if="editAct" :width="200" class="submit" @click="endEdit">取消</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -117,6 +117,11 @@ import MyButton from './button';
 import { rules, errorText } from '@/utils/validate';
 
 export default {
+  created () {
+    if (this.editAct) {
+      this.originForm = Object.assign({}, this.form);
+    }
+  },
   props: {
     authority: {
       type: String,
@@ -394,8 +399,13 @@ export default {
       if (this.authority === 'tourist') {
         // 游客就直接提交表单
         let form = this.handleForm();
-        console.log(form);
         try {
+          if (form.poster && typeof form.poster !== 'string') {
+            await this.uploadFile(form.poster, 'poster', form);
+          }
+          if (form.qrcode && typeof form.qrcode !== 'string') {
+            await this.uploadFile(form.qrcode, 'qrCode', form);
+          }
           await this.$http.post('/act', form);
           this.$emit('next');
         } catch (err) {
@@ -406,6 +416,12 @@ export default {
           let form = this.handleForm();
           let id = form.id;
           delete form.id;
+          if (form.poster && typeof form.poster !== 'string') {
+            await this.uploadFile(form.poster, 'poster', form);
+          }
+          if (form.qrcode && typeof form.qrcode !== 'string') {
+            await this.uploadFile(form.qrcode, 'qrCode', form);
+          }
           await this.$http.post('/act/' + id, form);
           this.$Notice.open({
             title: '修改活动成功'
@@ -418,6 +434,15 @@ export default {
         this.$emit('next', this.form);
       }
     },
+    endEdit () {
+      for (let key in this.form) {
+        this.form[key] = this.originForm[key];
+      }
+      this.originForm = null;
+      delete this.form.pubTime;
+      delete this.form.time;
+      this.$emit('endEdit');
+    },
     onPosterRemove () {
       this.form.poster = undefined;
     },
@@ -425,32 +450,21 @@ export default {
       this.form.QRCode = undefined;
     },
     onBeforePoster (file) {
-      this.upLoadPoster(file);
+      this.form.poster = file;
       return false;
     },
     onBeforeQrcode (file) {
-      this.uploadQRcode(file);
+      this.form.qrcode = file;
       return false;
     },
-    async upLoadPoster (file) {
+    async uploadFile (file, type, form) {
       const formdata = new FormData();
       formdata.append('file', file);
-      const { data } = await this.$http.post('/img/upload/poster', formdata, {
+      const { data } = await this.$http.post('/img/upload/' + type, formdata, {
         method: 'post',
         headers: {'content-type': 'multipart/form-data'}
       });
-      console.log(data);
-      this.form.poster = data;
-    },
-    async uploadQRcode (file) {
-      const formdata = new FormData();
-      formdata.append('file', file);
-      const { data } = await this.$http.post('/img/upload/qrCode', formdata, {
-        method: 'post',
-        headers: {'content-type': 'multipart/form-data'}
-      });
-      console.log(data);
-      this.form.QRCode = data;
+      this.form[type.toLowerCase()] = form[type.toLowerCase()] = data;
     },
     onExceededSize (file) {
       this.$Notice.warning({

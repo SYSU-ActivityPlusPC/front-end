@@ -53,6 +53,14 @@
               <p v-if="!!act.reward" style="color:#1EA8EE;"><strong style="color:black;">活动奖励：</strong>{{act.reward}}</p>
               <p v-if="!!act.requirement"><strong>活动要求：{{act.requirement}}</strong></p>
               <p><strong>活动详情：</strong>{{act.detail}}</p>
+              <p v-if="!!act.poster" style="text-align: center;">
+                <strong style="display: block;">海报：</strong>
+                <img style="max-width: 100%; margin-top: 10px;" :src="imgBase + act.poster + '?type=poster'" />
+              </p>
+              <p v-if="!!act.qrcode" style="text-align: center;">
+                <strong style="display: block;">二维码：</strong>
+                <img style="max-width: 100%; margin-top: 10px;" :src="imgBase + act.qrcode + '?type=qrCode'" />
+              </p>
             </article>
           </section>
         </div>
@@ -112,7 +120,8 @@ export default {
       north,
       zhuhai,
       qrcode,
-      activities: []
+      activities: [],
+      imgBase: 'http://119.29.155.194:8080/img/download/'
     };
   },
   mounted () {

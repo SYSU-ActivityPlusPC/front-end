@@ -86,11 +86,26 @@ export default {
         if (form[key] === undefined) delete form[key];
       }
       try {
+        if (form.qrcode && typeof form.qrcode !== 'string') {
+          await this.uploadFile(form.qrcode, 'qrCode', form);
+        }
+        if (form.poster && typeof form.poster !== 'string') {
+          await this.uploadFile(form.poster, 'poster', form);
+        }
         await this.$http.post('/act', form);
         this.$emit('next');
       } catch (err) {
         console.log(err.response);
       }
+    },
+    async uploadFile (file, type, form) {
+      const formdata = new FormData();
+      formdata.append('file', file);
+      const { data } = await this.$http.post('/img/upload/' + type, formdata, {
+        method: 'post',
+        headers: {'content-type': 'multipart/form-data'}
+      });
+      this.form[type.toLowerCase()] = form[type.toLowerCase()] = data;
     }
   }
 };
