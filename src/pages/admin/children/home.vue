@@ -19,18 +19,8 @@
 </template>
 
 <script>
-import data from '@/assets/data';
-import publish from '@/assets/publish';
-import manage from '@/assets/manage';
 import BigCard from '@/components/bigCard';
 export default {
-  data () {
-    return {
-      data,
-      publish,
-      manage
-    };
-  },
   components: {
     BigCard
   }
