@@ -11,7 +11,7 @@
   </div>
   <transition-group name="flip-list" tag="div" class="lists">
     <template v-for="(item, index) in actList">
-      <ListItem v-if="item.campus === selectCampus && item.verified" @click="$emit('clickItem', item)"
+      <ListItem v-if="item.campus & Math.pow(2,selectCampus) !== 0 && item.verified === 1" @click="$emit('clickItem', item)"
                 @remove="remove(index)"
                 :key="item.id" 
                 :item="item">
@@ -72,7 +72,7 @@ export default {
       this.actList.splice(index, 1);
     },
     generateCollection () {
-      const len = this.actList.filter(val => val.verified && val.campus === this.selectCampus).length;
+      const len = this.actList.filter(val => val.verified === 1 && val.campus & Math.pow(2, this.selectCampus) !== 0).length;
       if (!len) {
         alert('当前校区的活动列表为空。');
       } else {

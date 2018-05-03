@@ -3,7 +3,7 @@
   <span class="num">共{{length}}个</span>
   <div class="lists">
     <template v-for="(item, index) in actList">
-      <ListItem v-if="!item.verified" @click="$emit('clickItem', item)" :key="item.time" :item="item" @remove="remove(index)">
+      <ListItem v-if="item.verified === 0" @click="$emit('clickItem', item)" :key="item.time" :item="item" @remove="remove(index)">
           <div class="right-item" slot="right">
             <a href="javascript:void(0)" class="accept" @click.stop="verify(item)">通过</a>
             <a href="javascript:void(0)" class="reject" @click.stop="remove(index)">拒绝</a>
@@ -24,10 +24,10 @@ export default {
   methods: {
     async verify (item) {
       let form = Object.assign({}, item);
-      form.verified = true;
+      form.verified = 1;
       try {
         await this.$http.post('/act/' + form.id, form);
-        item.verified = true;
+        item.verified = 1;
       } catch (err) {
         console.log(err.response);
       }
@@ -41,7 +41,7 @@ export default {
     length () {
       let count = 0;
       this.actList.forEach((val) => {
-        if (!val.verified) {
+        if (val.verified === 1) {
           count++;
         }
       });

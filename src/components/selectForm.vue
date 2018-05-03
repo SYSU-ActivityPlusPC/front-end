@@ -82,6 +82,11 @@ export default {
       form.pubEndTime = form.pubTime[1];
       delete form.pubTime;
       delete form.time;
+      let campus = 0;
+      for (let index of form.campus) {
+        campus |= index;
+      }
+      form.campus = campus;
       for (const key in form) {
         if (form[key] === undefined) delete form[key];
       }

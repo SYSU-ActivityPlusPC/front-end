@@ -18,8 +18,8 @@
         <iInput size="large" class="input-size" placeholder="请输入活动地点" v-model="form.location" />
       </FormItem>
       <FormItem label="校区" prop="campus">
-        <iSelect class="select" size="large" v-model="form.campus">
-          <iOption v-for="(area, index) in areas" :value="index" :key="area">{{area}}</iOption>
+        <iSelect class="select" size="large" multiple v-model="form.campus">
+          <iOption v-for="(area, index) in areas" :value="Math.pow(2, index)" :key="area">{{area}}</iOption>
         </iSelect>
       </FormItem>
       <FormItem label="报名条件" prop="enrollCondition">
@@ -133,7 +133,7 @@ export default {
         name: '',
         time: ['', ''],
         location: '',
-        campus: null,
+        campus: [],
         enrollCondition: '',
         sponsor: '',
         type: null,
@@ -388,6 +388,11 @@ export default {
       form.endTime = form.time[1];
       form.pubStartTime = form.pubTime[0];
       form.pubEndTime = form.pubTime[1];
+      let campus = 0;
+      for (let index of form.campus) {
+        campus |= index;
+      }
+      form.campus = campus;
       delete form.pubTime;
       delete form.time;
       for (const key in form) {
@@ -439,6 +444,11 @@ export default {
         this.form[key] = this.originForm[key];
       }
       this.originForm = null;
+      let campus = 0;
+      for (let index of this.form.campus) {
+        campus |= index;
+      }
+      this.form.campus = campus;
       delete this.form.pubTime;
       delete this.form.time;
       this.$emit('endEdit');
