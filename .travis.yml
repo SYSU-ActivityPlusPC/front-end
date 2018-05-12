@@ -1,0 +1,19 @@
+sudo: required
+services:
+  - docker
+
+language: node_js
+node_js:
+  - "8"
+
+before_install:
+  - npm install
+  - npm run build
+  - docker build -t txzdream/sysu-activityplus-pc:dev .
+
+script:
+  - true
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+  - docker push txzdream/sysu-activityplus-pc:dev

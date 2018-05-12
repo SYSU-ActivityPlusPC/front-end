@@ -2,7 +2,7 @@
 
 ####  启动
 
-+ ` git clone git@github.com:Juliiii/sysu-activity.git `
++ ` git clone git@github.com:Juliiii/sysu-activity.git`
 
 + ` npm install`
 
