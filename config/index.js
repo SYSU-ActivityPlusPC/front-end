@@ -29,10 +29,12 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://119.29.155.194:8080',
+        target: 'https://sysuactivity.com',
         pathRewrite: {
           '^/api': ''
-        }
+        },
+        secure: false,
+        changeOrigin: true
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
