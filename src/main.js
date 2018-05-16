@@ -10,10 +10,15 @@ import '@/style/common';
 import Notice from 'iview/src/components/notice';
 import axios from 'axios';
 Vue.config.productionTip = false;
-// 全局挂载公用变量或者函数或者工具
+// 全局挂载公用变量或者函数或者工具 
+
+let base = 'https://sysuactivity.com/api';
+if (process && process.env.NODE_ENV !== 'production') {
+	base = '/api';
+}
 
 Vue.prototype.$http = axios.create({
-  baseURL: process.env.NODE_ENV !== 'production' ? '/api' : 'https://sysuactivity.com/api'
+  baseURL: base
 });
 
 // Vue.prototype.$http = axios;
