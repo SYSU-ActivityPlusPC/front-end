@@ -7,8 +7,12 @@
   </div>
   <div class="router-view">
     <PublishForm v-if="editing" authority="admin" :editAct="editing" :form="form" @endEdit="form = null; editing = false;"></PublishForm>
-    <Manage :actList="actList" v-show="curTab === '活动管理' && !editing" @clickItem="clickItem" @generateCollection="generateCollection"/>
-    <Review :actList="actList" v-show="curTab === '活动审核' && !editing" @clickItem="clickItem"/>
+    <Manage :actList="verifiedList"
+            v-show="curTab === '活动管理' && !editing" @clickItem="clickItem"
+            @generateCollection="generateCollection"/>
+    <Review :actList="unverifiedList"
+            v-show="curTab === '活动审核' && !editing" @clickItem="clickItem"
+            @verify="verify"/>
     <Modal :data="curItem" :open="open" @close="open=false" @edit="editAct"/>
   </div>
 </div>
@@ -25,13 +29,21 @@ import Modal from './children/modal';
 export default {
   async created () {
     this.config = setConfig.bind(this)();
-    let last = false;
-    let page = 0;
-    while (!last) {
-      const {data} = await this.$http.get('/act?page=' + page);
-      this.actList = this.actList.concat(data.content);
-      last = data.last;
-      page++;
+    let pageNum = 1;
+    let stat = 200;
+    while(stat === 200) {
+      const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=1');
+      stat = status;
+      this.verifiedList = this.verifiedList.concat(data.content);
+      pageNum++;
+    }
+    stat = 200;
+    pageNum = 1;
+    while(stat === 200) {
+      const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=0');
+      stat = status;
+      this.unverifiedList = this.unverifiedList.concat(data.content);
+      pageNum++;
     }
   },
   data () {
@@ -40,7 +52,8 @@ export default {
       curTab: '活动管理',
       editing: false,
       form: null,
-      actList: [],
+      verifiedList: [],
+      unverifiedList: [],
       curItem: {},
       open: false
     };
@@ -69,11 +82,14 @@ export default {
     generateCollection (id) {
       this.selectCampus = id;
       this.$router.push('/admin/data/collection?schoolID=' + id);
+    },
+    verify (item) {
+      this.verifiedList.unshift(item);
     }
   },
   beforeRouteLeave (to, from, next) {
     if (to.path === '/admin/data/collection') {
-      const actsOfCampus = this.actList.filter(val => val.verified && val.campus === this.selectCampus);
+      const actsOfCampus = this.verifiedList.filter(val.campus & Math.pow(2, this.selectCampus) !== 0);
       const temp = [];
       for (let i = 0; i < 4; i++) {
         const acts = actsOfCampus.filter(val => val.type === i);

@@ -53,18 +53,18 @@ export default {
   methods: {
     up (index) {
       if (index) {
-        const temp = this.actList[index - 1];
-        this.actList[index - 1] = this.actList[index];
-        this.actList[index] = temp;
-        this.actList = JSON.parse(JSON.stringify(this.actList));
+        const item = this.actList[index];
+        const preItem = this.actList[index - 1];
+        this.actList.splice(index - 1, 1, item);
+        this.actList.splice(index, 1, preItem);
       }
     },
     down (index) {
       if (index < this.actList.length - 1) {
-        const temp = this.actList[index + 1];
-        this.actList[index + 1] = this.actList[index];
-        this.actList[index] = temp;
-        this.actList = JSON.parse(JSON.stringify(this.actList));
+        const postItem = this.actList[index + 1];
+        const item = this.actList[index];
+        this.actList.splice(index, 1, postItem);
+        this.actList.splice(index + 1, 1, item);
       }
     },
     async remove (index) {
@@ -72,7 +72,7 @@ export default {
       this.actList.splice(index, 1);
     },
     generateCollection () {
-      const len = this.actList.filter(val => val.verified === 1 && val.campus & Math.pow(2, this.selectCampus) !== 0).length;
+      const len = this.actList.filter(val.campus & Math.pow(2, this.selectCampus) !== 0).length;
       if (!len) {
         alert('当前校区的活动列表为空。');
       } else {
@@ -82,13 +82,7 @@ export default {
   },
   computed: {
     length () {
-      let count = 0;
-      this.actList.forEach((val) => {
-        if (val.verified) {
-          count++;
-        }
-      });
-      return count;
+      return this.actList.length;
     }
   }
 };

@@ -5,7 +5,7 @@
     <template v-for="(item, index) in actList">
       <ListItem v-if="item.verified === 0" @click="$emit('clickItem', item)" :key="item.time" :item="item" @remove="remove(index)">
           <div class="right-item" slot="right">
-            <a href="javascript:void(0)" class="accept" @click.stop="verify(item)">通过</a>
+            <a href="javascript:void(0)" class="accept" @click.stop="verify(index)">通过</a>
             <a href="javascript:void(0)" class="reject" @click.stop="remove(index)">拒绝</a>
           </div>
       </ListItem>
@@ -22,12 +22,13 @@ export default {
   },
   props: ['actList'],
   methods: {
-    async verify (item) {
-      let form = Object.assign({}, item);
-      form.verified = 1;
+    async verify (index) {
+      const item = this.actList[index];
       try {
-        await this.$http.post('/act/' + form.id, form);
+        await this.$http.put('/act?act=' + item.id + '&verify=1');
         item.verified = 1;
+        this.actList.splice(index, 1);
+        this.$emit('verify', item);
       } catch (err) {
         console.log(err.response);
       }
@@ -39,13 +40,7 @@ export default {
   },
   computed: {
     length () {
-      let count = 0;
-      this.actList.forEach((val) => {
-        if (val.verified === 1) {
-          count++;
-        }
-      });
-      return count;
+      return this.actList.length;
     }
   }
 };
