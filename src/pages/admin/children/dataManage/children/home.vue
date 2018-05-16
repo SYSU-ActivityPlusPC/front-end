@@ -31,7 +31,7 @@ export default {
     this.config = setConfig.bind(this)();
     let pageNum = 1;
     let stat = 200;
-    while(stat === 200) {
+    while (stat === 200) {
       const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=1');
       stat = status;
       this.verifiedList = this.verifiedList.concat(data.content);
@@ -39,7 +39,7 @@ export default {
     }
     stat = 200;
     pageNum = 1;
-    while(stat === 200) {
+    while (stat === 200) {
       const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=0');
       stat = status;
       this.unverifiedList = this.unverifiedList.concat(data.content);
@@ -89,7 +89,7 @@ export default {
   },
   beforeRouteLeave (to, from, next) {
     if (to.path === '/admin/data/collection') {
-      const actsOfCampus = this.verifiedList.filter(val.campus & Math.pow(2, this.selectCampus) !== 0);
+      const actsOfCampus = this.verifiedList.filter(val => val.campus & Math.pow(2, this.selectCampus) !== 0);
       const temp = [];
       for (let i = 0; i < 4; i++) {
         const acts = actsOfCampus.filter(val => val.type === i);

@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'https://sysuactivity.com',
+        target: 'https://sysuactivity.com/api',
         pathRewrite: {
           '^/api': ''
         },

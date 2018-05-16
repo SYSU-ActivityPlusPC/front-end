@@ -13,7 +13,7 @@ Vue.config.productionTip = false;
 // 全局挂载公用变量或者函数或者工具
 
 Vue.prototype.$http = axios.create({
-  baseURL: process.env.NODE_ENV !== 'production' ? '/api' : 'https://sysuactivity.com'
+  baseURL: process.env.NODE_ENV !== 'production' ? '/api' : 'https://sysuactivity.com/api'
 });
 
 // Vue.prototype.$http = axios;

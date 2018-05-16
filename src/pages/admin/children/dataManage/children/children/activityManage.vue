@@ -72,7 +72,7 @@ export default {
       this.actList.splice(index, 1);
     },
     generateCollection () {
-      const len = this.actList.filter(val.campus & Math.pow(2, this.selectCampus) !== 0).length;
+      const len = this.actList.filter(val => val.campus & Math.pow(2, this.selectCampus) !== 0).length;
       if (!len) {
         alert('当前校区的活动列表为空。');
       } else {
