@@ -384,10 +384,10 @@ export default {
   methods: {
     handleForm () {
       let form = Object.assign({}, this.form);
-      form.startTime = form.time[0];
-      form.endTime = form.time[1];
-      form.pubStartTime = form.pubTime[0];
-      form.pubEndTime = form.pubTime[1];
+      form.startTime = +new Date(form.time[0]);
+      form.endTime = +new Date(form.time[1]);
+      form.pubStartTime = +new Date(form.pubTime[0]);
+      form.pubEndTime = +new Date(form.pubTime[1]);
       let campus = 0;
       for (let index of form.campus) {
         campus |= index;
