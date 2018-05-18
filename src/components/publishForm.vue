@@ -11,8 +11,9 @@
         <iInput size="large" class="input-size" placeholder="请输入活动名称" v-model="form.name" />
       </FormItem>
       <FormItem label="时间" prop="time">
-        <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px" size="large" v-model="form.time" :editable="false" />
-        <!-- <MyButton type="ghost" :width="70" class="button-removeTime">删除</MyButton> -->
+        <DatePicker type="datetimerange" placeholder="选择日期和时间"
+                    style="width: 300px" size="large" v-model="form.time"
+                    :editable="false" format="yyyy-MM-dd HH:mm"/>
       </FormItem>
       <FormItem label="活动地点" prop="location">
         <iInput size="large" class="input-size" placeholder="请输入活动地点" v-model="form.location" />
@@ -34,7 +35,9 @@
         </iSelect>
       </FormItem>
       <FormItem label="宣传时间" prop="pubTime">
-        <DatePicker type="datetimerange" placeholder="选择日期和时间" style="width: 300px" v-model="form.pubTime" :editable="false" />
+        <DatePicker type="datetimerange" placeholder="选择日期和时间"
+                    style="width: 300px" v-model="form.pubTime"
+                    :editable="false" format="yyyy-MM-dd HH:mm"/>
       </FormItem>
       <FormItem label="活动详情" prop="detail">
         <iInput class="textarea-size" type="textarea" :rows="6" placeholder="请输入活动详情，让大家更了解活动吧!" v-model="form.detail" />
@@ -54,7 +57,9 @@
         <iInput size="large" class="input-size" placeholder="例如：短信" v-model="form.enrollWay" />
       </FormItem>
       <FormItem label="报名截止日期">
-        <DatePicker type="datetime" placeholder="选择日期和时间" style="width: 300px" size="large" v-model="form.enrollEndTime" :editable="false" />
+        <DatePicker type="datetime" placeholder="选择日期和时间"
+                    style="width: 300px" size="large" v-model="form.enrollEndTime"
+                    :editable="false" format="yyyy-MM-dd HH:mm"/>
       </FormItem>
       <FormItem label="活动奖励">
         <iInput size="large" class="input-size" placeholder="例如：3个体育章" v-model="form.reward" />
