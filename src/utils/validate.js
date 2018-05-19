@@ -10,7 +10,7 @@ export const rules = {
     return value === '' || value === null || value === undefined;
   },
   istooLong (value, length) {
-    return value instanceof String && value.length > length;
+    return typeof value === 'string' && value.length > length;
   },
   isEmail (value) {
     return /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value);

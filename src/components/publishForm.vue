@@ -1,33 +1,33 @@
 <template>
 <div class="form-wrapper">
   <div class="left-wrapper">
-    <div class="tab tab-must" :class="{'curTab': currentTab !== 'must'}" @click="currentTab='must'">必填</div>
-    <div class="tab tab-select" :class="{'curTab': currentTab === 'must'}" @click="currentTab='select'">选填</div>
+    <div class="tab tab-must" :class="{'curTab': currentTab === 'must'}" @click="currentTab='must'">必填</div>
+    <div class="tab tab-select" :class="{'curTab': currentTab !== 'must'}" @click="currentTab='select'">选填</div>
     <div class="fill"></div>
   </div>
   <div class="right-wrapper" v-show="currentTab === 'must'">
     <iForm ref="requiredForm" :label-width="110" :rules="requiredRules" :model="form">
       <FormItem label="活动名称" prop="name">
-        <iInput size="large" class="input-size" placeholder="请输入活动名称" v-model="form.name" />
+        <iInput size="large" class="input-size" placeholder="请输入活动名称(30字以内)" v-model="form.name" />
       </FormItem>
-      <FormItem label="时间" prop="time">
+      <FormItem label="活动时间" prop="time">
         <DatePicker type="datetimerange" placeholder="选择日期和时间"
                     style="width: 300px" size="large" v-model="form.time"
                     :editable="false" format="yyyy-MM-dd HH:mm"/>
       </FormItem>
       <FormItem label="活动地点" prop="location">
-        <iInput size="large" class="input-size" placeholder="请输入活动地点" v-model="form.location" />
+        <iInput class="textarea-size" type="textarea" :rows="3" placeholder="请输入活动地点(100字以内)" v-model="form.location" />
       </FormItem>
       <FormItem label="校区" prop="campus">
         <iSelect class="select" size="large" multiple v-model="form.campus">
           <iOption v-for="(area, index) in areas" :value="Math.pow(2, index)" :key="area">{{area}}</iOption>
         </iSelect>
       </FormItem>
-      <FormItem label="报名条件" prop="enrollCondition">
-        <iInput size="large" class="input-size" placeholder="例如: 中山大学全体在校学生" v-model="form.enrollCondition" />
+      <FormItem label="活动对象" prop="enrollCondition">
+        <iInput class="textarea-size" type="textarea" :rows="3" placeholder="例如: 中山大学全体在校学生" v-model="form.enrollCondition" />
       </FormItem>
       <FormItem label="主办方" prop="sponsor">
-        <iInput size="large" class="input-size" placeholder="请输入活动主办方" v-model="form.sponsor" />
+        <iInput class="textarea-size" type="textarea" :rows="3" placeholder="请输入活动主办方" v-model="form.sponsor" />
       </FormItem>
       <FormItem label="活动类型" prop="type">
         <iSelect class="select" size="large" v-model="form.type" >
@@ -52,8 +52,8 @@
     </iForm>
   </div>
   <div class="right-wrapper" v-show="currentTab === 'select'">
-    <iForm ref="optionalForm" :label-width="110">
-      <FormItem label="通知方式">
+    <iForm ref="optionalForm" :label-width="110" :rules="requiredRules" :model="form">
+      <FormItem label="报名方式">
         <iInput size="large" class="input-size" placeholder="例如：短信" v-model="form.enrollWay" />
       </FormItem>
       <FormItem label="报名截止日期">
@@ -62,13 +62,13 @@
                     :editable="false" format="yyyy-MM-dd HH:mm"/>
       </FormItem>
       <FormItem label="活动奖励">
-        <iInput size="large" class="input-size" placeholder="例如：3个体育章" v-model="form.reward" />
+        <iInput class="textarea-size" type="textarea" :rows="3" placeholder="例如：3个体育章" v-model="form.reward" />
       </FormItem>
-      <FormItem label="活动简介">
-        <iInput size="large" class="input-size" placeholder="请输入活动简介" v-model="form.introduction" />
+      <FormItem label="活动简介" prop="introduction">
+        <iInput class="textarea-size" type="textarea" :rows="3" placeholder="请输入活动简介(50个字以内)" v-model="form.introduction" />
       </FormItem>
-      <FormItem label="活动需求">
-        <iInput size="large" class="input-size" placeholder="例如: 参与者身体健康，无重大疾病" v-model="form.requirement" />
+      <FormItem label="活动要求">
+        <iInput class="textarea-size" type="textarea" :rows="3" placeholder="例如: 参与者身体健康，无重大疾病" v-model="form.requirement" />
       </FormItem>
       <FormItem label="宣传图">
         <Upload 
@@ -188,7 +188,7 @@ export default {
   data () {
     return {
       upload,
-      types: ['公益', '体育', '比赛', '讲座'],
+      types: ['公益', '体育', '比赛', '讲座', '户外', '休闲', '演出'],
       areas: ['东校区', '南校区', '北校区', '珠海校区'],
       format: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],
       currentTab: 'must',
@@ -516,7 +516,9 @@ export default {
   text-align: center;
   border-left: 2px solid #2d8cf0;
   box-sizing: border-box;
-  color: #2d8cf0;
+  /* color: #2d8cf0; */
+  color: white;
+  background-color: #f2f2f2;
   cursor: pointer;
 }
 .tab-must {
