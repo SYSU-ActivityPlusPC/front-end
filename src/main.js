@@ -31,5 +31,21 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  created () {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const expires = parseInt(localStorage.getItem('expires'));
+      if (expires > +new Date()) {
+        this.token = token;
+        this.name = localStorage.getItem('name');
+        this.logo = localStorage.getItem('logo');
+      } else {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expires');
+        localStorage.removeItem('name');
+        localStorage.removeItem('logo');
+      }
+    }
+  }
 });

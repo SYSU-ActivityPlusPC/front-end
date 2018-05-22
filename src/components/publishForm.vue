@@ -47,7 +47,7 @@
       </FormItem>
       <FormItem>
         <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' && !editAct ? '下一步' : '提交活动'}}</MyButton>
-        <MyButton v-if="editAct" :width="200" class="submit" @click="endEdit">取消</MyButton>
+        <MyButton v-if="editAct" :width="200" class="submit" @click="$emit('endEdit')">取消</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -72,7 +72,7 @@
       </FormItem>
       <FormItem label="宣传图">
         <Upload 
-          action="/api/img/upload/poster" 
+          action="/api/images" 
           accept="image/*"
           :format="format"
           :max-size="2048" 
@@ -88,7 +88,7 @@
       </FormItem>
       <FormItem label="二维码">
         <Upload
-          action="/api/img/upload/qrCode" 
+          action="/api/images" 
           accept="image/*"
           :max-size="2048"
           :before-upload="onBeforeQrcode"
@@ -103,7 +103,7 @@
       </FormItem>
       <FormItem>
         <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' && !editAct ? '下一步' : '提交活动'}}</MyButton>
-        <MyButton v-if="editAct" :width="200" class="submit" @click="endEdit">取消</MyButton>
+        <MyButton v-if="editAct" :width="200" class="submit" @click="$emit('endEdit')">取消</MyButton>
       </FormItem>
     </iForm>
   </div>
@@ -120,6 +120,16 @@ import Icon from 'iview/src/components/icon';
 import Upload from 'iview/src/components/upload';
 import MyButton from './button';
 import { rules, errorText } from '@/utils/validate';
+
+function formattedDate (time) {
+  const date = new Date(time);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const hour = date.getHours().toString().padStart(2, '0');
+  const minute = date.getMinutes().toString().padStart(2, '0');
+  return `${year}-${month}-${day} ${hour}:${minute}`;
+}
 
 export default {
   created () {
@@ -144,8 +154,7 @@ export default {
         type: null,
         pubTime: ['', ''],
         detail: '',
-        verified: false,
-        canEnrolled: false,
+        can_enrolled: 0,
 
         email: undefined,
         enrollWay: undefined,
@@ -389,10 +398,16 @@ export default {
   methods: {
     handleForm () {
       let form = Object.assign({}, this.form);
-      form.startTime = +new Date(form.time[0]);
-      form.endTime = +new Date(form.time[1]);
-      form.pubStartTime = +new Date(form.pubTime[0]);
-      form.pubEndTime = +new Date(form.pubTime[1]);
+      form.startTime = formattedDate(form.time[0]);
+      form.endTime = formattedDate(form.time[1]);
+      form.pubStartTime = formattedDate(form.pubTime[0]);
+      form.pubEndTime = formattedDate(form.pubTime[1]);
+      const enrollEndTime = form.enrollEndTime;
+      if (enrollEndTime) {
+        form.enrollEndTime = formattedDate(enrollEndTime);
+      } else {
+        delete form.enrollEndTime;
+      }
       let campus = 0;
       for (let index of form.campus) {
         campus |= index;
@@ -406,9 +421,9 @@ export default {
       return form;
     },
     async confirm () {
+      const form = this.handleForm();
       if (this.authority === 'tourist') {
         // 游客就直接提交表单
-        let form = this.handleForm();
         try {
           if (form.poster && typeof form.poster !== 'string') {
             await this.uploadFile(form.poster, 'poster', form);
@@ -416,15 +431,16 @@ export default {
           if (form.qrcode && typeof form.qrcode !== 'string') {
             await this.uploadFile(form.qrcode, 'qrCode', form);
           }
-          await this.$http.post('/act', form);
+          await this.$http.post('/act', form, {
+            headers: {'Authorization': null}
+          });
           this.$emit('next');
         } catch (err) {
           console.log(err.response);
         }
       } else if (this.editAct) {
         try {
-          let form = this.handleForm();
-          let id = form.id;
+          const id = form.id;
           delete form.id;
           if (form.poster && typeof form.poster !== 'string') {
             await this.uploadFile(form.poster, 'poster', form);
@@ -432,31 +448,20 @@ export default {
           if (form.qrcode && typeof form.qrcode !== 'string') {
             await this.uploadFile(form.qrcode, 'qrCode', form);
           }
-          await this.$http.post('/act/' + id, form);
+          await this.$http.post('/act/' + id, form, {
+            headers: {'Authorization': this.$root.token}
+          });
+          form.id = id;
           this.$Notice.open({
             title: '修改活动成功'
           });
-          this.$emit('endEdit');
+          this.$emit('endEdit', form);
         } catch (err) {
           console.log(err.response);
         }
       } else {
-        this.$emit('next', this.form);
+        this.$emit('next', form);
       }
-    },
-    endEdit () {
-      for (let key in this.form) {
-        this.form[key] = this.originForm[key];
-      }
-      this.originForm = null;
-      let campus = 0;
-      for (let index of this.form.campus) {
-        campus |= index;
-      }
-      this.form.campus = campus;
-      delete this.form.pubTime;
-      delete this.form.time;
-      this.$emit('endEdit');
     },
     onPosterRemove () {
       this.form.poster = undefined;
@@ -475,11 +480,11 @@ export default {
     async uploadFile (file, type, form) {
       const formdata = new FormData();
       formdata.append('file', file);
-      const { data } = await this.$http.post('/img/upload/' + type, formdata, {
+      const { data } = await this.$http.post('/images', formdata, {
         method: 'post',
         headers: {'content-type': 'multipart/form-data'}
       });
-      this.form[type.toLowerCase()] = form[type.toLowerCase()] = data;
+      this.form[type.toLowerCase()] = form[type.toLowerCase()] = data.filename;
     },
     onExceededSize (file) {
       this.$Notice.warning({

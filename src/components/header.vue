@@ -1,15 +1,15 @@
 <template>
 <iRow class-name="wrapper">
-  <iCol class-name="col" span="21">
+  <iCol class-name="col" span="20">
     <div class="logo-wrapper">
       <img src="../assets/logo.png" class="logo" alt="中大活动LOGO" />
     </div>
     <span class="title">活动PLUS管理平台</span>
   </iCol>
-  <iCol class-name="col" span="3">
+  <iCol class-name="col" span="4">
     <avatar labelColor="#f2f2f2" 
-            name="fish" 
-            avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk1PG-_WjPvp6EIlu24xTzgQ-W3dNj9NooaAGTJQ3zZa3_KGVp"
+            :name="name" 
+            :avatar="avatarUrl"
             :size="size" />
     <a href="javascript:void(0)" v-if="showExit" @click="exit">退出</a>
   </iCol>
@@ -41,7 +41,11 @@ export default {
   },
   methods: {
     exit () {
-      this.$emit('logout');
+      // this.$emit('logout');
+      localStorage.removeItem('token');
+      localStorage.removeItem('expires');
+      localStorage.removeItem('name');
+      localStorage.removeItem('logo');
       this.$router.push('/');
     },
     onResize () {
@@ -64,6 +68,14 @@ export default {
   },
   beforeDestroy () {
     window.onresize = null;
+  },
+  computed: {
+    avatarUrl () {
+      if (this.avatar) {
+        return 'https://sysuactivity.com/static/' + this.avatar;
+      }
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLDuMzNb49vsxj0jZvYrJnJz8zk3pebawHiwBh7SzV7G_fTpDRwg';
+    }
   }
 };
 </script>

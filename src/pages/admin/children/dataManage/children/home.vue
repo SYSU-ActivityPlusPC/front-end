@@ -6,7 +6,8 @@
     <div class="tab" :class="{'tab-select': curTab === '活动审核'}" @click="toggleCurTab">活动审核</div>
   </div>
   <div class="router-view">
-    <PublishForm v-if="editing" authority="admin" :editAct="editing" :form="form" @endEdit="form = null; editing = false;"></PublishForm>
+    <PublishForm v-if="editing" authority="admin" :editAct="editing" :form="form"
+                 @endEdit="endEdit" />
     <Manage :actList="verifiedList"
             v-show="curTab === '活动管理' && !editing" @clickItem="clickItem"
             @generateCollection="generateCollection"/>
@@ -32,16 +33,22 @@ export default {
     let pageNum = 1;
     let stat = 200;
     while (stat === 200) {
-      const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=1');
+      const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=1', {
+        headers: {'Authorization': this.$root.token}
+      });
       stat = status;
+      if (stat !== 200) break;
       this.verifiedList = this.verifiedList.concat(data.content);
       pageNum++;
     }
     stat = 200;
     pageNum = 1;
     while (stat === 200) {
-      const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=0');
+      const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=0', {
+        headers: {'Authorization': this.$root.token}
+      });
       stat = status;
+      if (stat !== 200) break;
       this.unverifiedList = this.unverifiedList.concat(data.content);
       pageNum++;
     }
@@ -85,6 +92,17 @@ export default {
     },
     verify (item) {
       this.verifiedList.unshift(item);
+    },
+    endEdit (form) {
+      if (form) {
+        const curItem = this.curItem;
+        for (let key of Object.keys(curItem)) {
+          curItem[key] = form[key];
+        }
+      }
+      this.form = null;
+      this.editing = false;
+      this.curItem = {};
     }
   },
   beforeRouteLeave (to, from, next) {

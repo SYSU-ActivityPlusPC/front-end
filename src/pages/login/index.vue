@@ -27,12 +27,27 @@
 </template>
 
 <script>
-// import { Card, Row, Col, Input } from 'iview';
 import { Row, Col } from 'iview/src/components/grid';
 import iInput from 'iview/src/components/input';
 import Card from 'iview/src/components/card';
 import MyButton from '@/components/button';
 export default {
+  async created () {
+    const token = this.$root.token;
+    if (token) {
+      const {status} = await this.$http.post('/session', null, {
+        headers: {'Authorization': token}
+      });
+      if (status === 200) {
+        const payloadString = decodeURIComponent(escape(atob(token.split('.')[1])));
+        const payload = JSON.parse(payloadString);
+        this.$router.replace(payload.sub === 'sysuactivity2018' ? '/admin' : '/community');
+      } else {
+        localStorage.removeItem('name');
+        localStorage.removeItem('logo');
+      }
+    }
+  },
   data () {
     return {
       cardStyle: `padding: 7px 19px;
@@ -58,8 +73,8 @@ export default {
   methods: {
     async login () {
       this.loading = true;
-      const {data} = await this.$http.post('/club/signIn', this.form);
-      if (data === 'not found') {
+      const {data, status} = await this.$http.post('/session', this.form);
+      if (status === 204) {
         this.$Notice.open({
           title: '用户不存在或者密码错误'
         });
@@ -71,7 +86,18 @@ export default {
         });
       }
       this.loading = false;
-      this.$router.push(data === 'manager' ? '/admin' : '/community');
+      const token = data.token;
+      const payloadString = decodeURIComponent(escape(atob(token.split('.')[1])));
+      const payload = JSON.parse(payloadString);
+      localStorage.setItem('token', token);
+      localStorage.setItem('expires', payload.exp * 1000);
+      localStorage.setItem('name', data.name);
+      localStorage.setItem('logo', data.logo);
+      const root = this.$root;
+      root.token = token;
+      root.name = data.name;
+      root.logo = data.logo;
+      this.$router.replace(payload.sub === 'sysuactivity2018' ? '/admin' : '/community');
     }
   },
   computed: {

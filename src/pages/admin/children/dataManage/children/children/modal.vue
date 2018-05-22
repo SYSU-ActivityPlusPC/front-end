@@ -89,17 +89,19 @@ export default {
     }
   },
   methods: {
-    edit () {
-      let form = this.data;
-      form.time = [new Date(form.startTime), new Date(form.endTime)];
-      form.pubTime = [new Date(form.pubStartTime), new Date(form.pubEndTime)];
+    async edit () {
+      const {data} = await this.$http.get('/act/' + this.data.id, {
+        headers: {'Authorization': this.$root.token}
+      });
+      data.time = [new Date(data.startTime), new Date(data.endTime)];
+      data.pubTime = [new Date(data.pubStartTime), new Date(data.pubEndTime)];
       let campus = [];
       for (let i = 0; i < 4; i++) {
-        let index = Math.pow(2, i);
-        if (form.campus & index !== 0) campus.push(index);
+        const index = Math.pow(2, i);
+        if (data.campus & index) campus.push(index);
       }
-      form.campus = campus;
-      this.$emit('edit', form);
+      data.campus = campus;
+      this.$emit('edit', data);
     }
   },
   computed: {

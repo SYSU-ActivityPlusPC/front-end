@@ -75,42 +75,30 @@ export default {
       this.$emit('pre');
     },
     async next () {
-      let form = Object.assign({}, this.form);
-      form.startTime = +new Date(form.time[0]);
-      form.endTime = +new Date(form.time[1]);
-      form.pubStartTime = +new Date(form.pubTime[0]);
-      form.pubEndTime = +new Date(form.pubTime[1]);
-      delete form.pubTime;
-      delete form.time;
-      let campus = 0;
-      for (let index of form.campus) {
-        campus |= index;
-      }
-      form.campus = campus;
-      for (const key in form) {
-        if (form[key] === undefined) delete form[key];
-      }
+      const form = this.form;
       try {
         if (form.qrcode && typeof form.qrcode !== 'string') {
-          await this.uploadFile(form.qrcode, 'qrCode', form);
+          await this.uploadFile(form.qrcode, 'qrCode');
         }
         if (form.poster && typeof form.poster !== 'string') {
-          await this.uploadFile(form.poster, 'poster', form);
+          await this.uploadFile(form.poster, 'poster');
         }
-        await this.$http.post('/act', form);
+        await this.$http.post('/act', form, {
+          headers: {'Authorization': this.$root.token}
+        });
         this.$emit('next');
       } catch (err) {
         console.log(err.response);
       }
     },
-    async uploadFile (file, type, form) {
+    async uploadFile (file, type) {
       const formdata = new FormData();
       formdata.append('file', file);
-      const { data } = await this.$http.post('/img/upload/' + type, formdata, {
+      const { data } = await this.$http.post('/images', formdata, {
         method: 'post',
         headers: {'content-type': 'multipart/form-data'}
       });
-      this.form[type.toLowerCase()] = form[type.toLowerCase()] = data;
+      this.form[type.toLowerCase()] = data.filename;
     }
   }
 };

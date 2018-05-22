@@ -1,6 +1,6 @@
 <template>
 <div class="wrapper">
-  <span class="num">共{{length}}个</span>
+  <span class="num">共{{actList.length}}个</span>
   <div class="lists">
     <template v-for="(item, index) in actList">
       <ListItem v-if="item.verified === 0" @click="$emit('clickItem', item)" :key="item.time" :item="item" @remove="remove(index)">
@@ -25,7 +25,9 @@ export default {
     async verify (index) {
       const item = this.actList[index];
       try {
-        await this.$http.put('/act?act=' + item.id + '&verify=1');
+        await this.$http.put('/act?act=' + item.id + '&verify=1', {
+          headers: {'Authorization': this.$root.token}
+        });
         item.verified = 1;
         this.actList.splice(index, 1);
         this.$emit('verify', item);
@@ -34,13 +36,10 @@ export default {
       }
     },
     async remove (index) {
-      await this.$http.delete('/act/' + this.actList[index].id);
+      await this.$http.delete('/act/' + this.actList[index].id, {
+        headers: {'Authorization': this.$root.token}
+      });
       this.actList.splice(index, 1);
-    }
-  },
-  computed: {
-    length () {
-      return this.actList.length;
     }
   }
 };

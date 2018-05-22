@@ -1,6 +1,6 @@
 <template>
 <div class="wrapper">
-  <TopBar :showExit="true" />
+  <TopBar :showExit="true" :name="$root.name" :avatar="$root.logo"/>
   <div :style="style">
     <router-view />
   </div>

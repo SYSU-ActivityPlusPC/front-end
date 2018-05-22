@@ -17,16 +17,30 @@
         <iInput size="large" class="input-size" placeholder="系统通知将发送到本邮箱" v-model="form.email" />
       </FormItem>
       <FormItem label="组织logo">
-        <Upload action="//jsonplaceholder.typicode.com/posts/">
-          <MyButton type="ghost" :width="110" :height="30" size="small">
+        <Upload
+          action="/api/images"
+          accept="image/*"
+          :max-size="2048"
+          :before-upload="onBeforeLogo"
+          :on-format-error="onFormatError"
+          :on-exceeded-size="onExceededSize"
+          class="upload">
+          <MyButton :disabled="logoUploaded" type="ghost" :width="110" :height="30" size="small">
             <img :src="upload" class="icon-upload" slot="icon" />
             点击上传
           </MyButton>
         </Upload>
       </FormItem>
       <FormItem label="身份证明" class="formitem">
-        <Upload action="//jsonplaceholder.typicode.com/posts/" class="upload">
-          <MyButton type="ghost" :width="110" :height="30" size="small">
+        <Upload
+          action="/api/images"
+          accept="image/*"
+          :max-size="2048"
+          :before-upload="onBeforeEvidence"
+          :on-format-error="onFormatError"
+          :on-exceeded-size="onExceededSize"
+          class="upload">
+          <MyButton :disabled="evidenceUploaded" type="ghost" :width="110" :height="30" size="small">
             <img :src="upload" class="icon-upload" slot="icon" />
             点击上传
           </MyButton>
@@ -78,8 +92,12 @@ export default {
       form: {
         name: '',
         email: '',
-        info: ''
+        info: '',
+        logo: null,
+        evidence: null
       },
+      logoUploaded: false,
+      evidenceUploaded: false,
       rules: {
         name: {
           trigger: 'blur',
@@ -111,13 +129,59 @@ export default {
     this.style = `padding-top: ${paddingTop}px`;
   },
   methods: {
-    async regist () {
-      await this.$http.post('/club/signUp', this.form);
+    regist () {
+      const form = this.form;
+      const logoPromise = this.uploadFile(form.logo, 'logo');
+      const evidencePromise = this.uploadFile(form.evidence, 'evidence');
+      Promise.all([logoPromise, evidencePromise]).then(async () => {
+        await this.$http.post('/pcusers', form);
+        this.$router.replace('/regist-success');
+      });
+      /* await this.uploadFile(form.evidence, 'evidence');
+      await this.uploadFile(form.logo, 'logo');
+      await this.$http.post('/pcusers', this.form);
+      this.$router.replace('/regist-success'); */
+    },
+    onBeforeLogo (file) {
+      this.form.logo = file;
+      // this.uploadFile(file, 'logo', this.form);
+      return false;
+    },
+    onBeforeEvidence (file) {
+      this.form.evidence = file;
+      // this.uploadFile(file, 'evidence', this.form);
+      return false;
+    },
+    onFormatError (file) {
+      this.$Notice.warning({
+        title: '文件格式错啦',
+        desc: `文件格式应该为图片的格式`
+      });
+    },
+    onExceededSize (file) {
+      this.$Notice.warning({
+        title: '超出文件大小限制',
+        desc: `文件${file.name}太大，不能超过2M。`
+      });
+    },
+    async uploadFile (file, type) {
+      const formdata = new FormData();
+      formdata.append('file', file);
+      const { data } = await this.$http.post('/images', formdata, {
+        method: 'post',
+        headers: {'content-type': 'multipart/form-data'}
+      });
+      this.form[type] = data.filename;
+      this[type + 'Uploaded'] = true;
     }
   },
   computed: {
     disabled () {
-      return this.form.name === '' || this.form.email === '' || !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.form.email);
+      return this.form.name === '' ||
+            this.form.email === '' ||
+            !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.form.email) ||
+            !this.form.logo ||
+            !this.form.evidence;
     }
   }
 };

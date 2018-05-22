@@ -1,6 +1,6 @@
 <template>
 <div class="wrapper">
-  <TopBar />
+  <TopBar name="游客"/>
   <div :style="style">
     <router-view />
   </div>
