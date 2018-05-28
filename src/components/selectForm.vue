@@ -88,7 +88,7 @@ export default {
         });
         this.$emit('next');
       } catch (err) {
-        console.log(err.response);
+        console.log(err);
       }
     },
     async uploadFile (file, type) {

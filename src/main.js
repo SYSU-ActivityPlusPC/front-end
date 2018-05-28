@@ -12,16 +12,27 @@ import axios from 'axios';
 Vue.config.productionTip = false;
 // 全局挂载公用变量或者函数或者工具
 
-let base = 'https://sysuactivity.com/api';
-if (process && process.env.NODE_ENV !== 'production') {
-  base = '/api';
-}
-
-Vue.prototype.$http = axios.create({
-  baseURL: base
+const axiosInstance = axios.create({
+  baseURL: process.env.NODE_ENV !== 'production' ? '/api' : 'https://sysuactivity.com/api'
 });
 
-// Vue.prototype.$http = axios;
+// 给axois的实例添加响应拦截器，用于判断发生的错误，如果是401说明失去权限，进行页面跳转。
+axiosInstance.interceptors.response.use(
+  response => response,
+  error => {
+    const res = error.response;
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('expires');
+      localStorage.removeItem('name');
+      localStorage.removeItem('logo');
+      router.replace({path: '/', query: {redirect: router.currentRoute.fullPath}});
+    }
+    return Promise.reject(res);
+  }
+);
+
+Vue.prototype.$http = axiosInstance;
 Vue.prototype.$iview = 'iview/src/components';
 Vue.prototype.$Notice = Notice;
 Vue.use(VueLazyload);

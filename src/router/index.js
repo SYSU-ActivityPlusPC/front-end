@@ -43,31 +43,45 @@ const communityPublish = resolve => require(['../pages/community/children/publis
 const routes = [
   {
     path: '/',
+    meta: {
+      noAuth: true
+    },
     component: Login
   },
   {
     path: '/regist',
+    meta: {
+      noAuth: true
+    },
     component: Regist
   },
   {
     path: '/regist-success',
+    meta: {
+      noAuth: true
+    },
     component: registSuccess
   },
   {
     path: '/tourist',
+    meta: {
+      noAuth: true
+    },
     component: tourist,
     children: [
       {
         path: '',
         meta: {
-          name: '/首页'
+          name: '/首页',
+          noAuth: true
         },
         component: touristHome
       },
       {
         path: 'publish',
         meta: {
-          name: '/首页/发布活动'
+          name: '/首页/发布活动',
+          noAuth: true
         },
         component: touristPublish
       }
@@ -222,8 +236,39 @@ const routes = [
   }
 ];
 
-export default new VueRouter({
+const router = new VueRouter({
   routes,
   mode: 'history',
   base: '/admin/'
 });
+
+router.beforeEach((to, from, next) => {
+  // 需要登录的页面需要在每次进入时进行登录验证
+  if (!to.meta.noAuth) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const expires = parseInt(localStorage.getItem('expires'));
+      if (expires > +new Date()) {
+        next();
+      } else {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expires');
+        localStorage.removeItem('name');
+        localStorage.removeItem('logo');
+        next({
+          path: '/',
+          query: {redirect: to.fullPath}  // 将进入的页面的路由path作为参数，登录成功后跳转回原页面
+        });
+      }
+    } else {
+      next({
+        path: '/',
+        query: {redirect: to.fullPath}
+      });
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;

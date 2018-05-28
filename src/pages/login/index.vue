@@ -97,6 +97,12 @@ export default {
       root.token = token;
       root.name = data.name;
       root.logo = data.logo;
+      const redirect = this.$route.query.redirect;
+      if (redirect) {
+        // 若redirect的值有效，说明是从某页面由于失去权限而跳转而来
+        this.$router.replace(redirect);
+        return;
+      }
       this.$router.replace(payload.sub === 'sysuactivity2018' ? '/admin' : '/community');
     }
   },

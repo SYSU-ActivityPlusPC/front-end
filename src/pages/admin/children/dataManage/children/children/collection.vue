@@ -11,17 +11,17 @@
             <p class="title"><strong>今日活动</strong></p>
             <section style="padding: 20px 8px;">
               <section style="background-color: #F4F4F4;">
-                <section v-for="(item, i) of types" v-if="activities[i].length > 0">
+                <section v-for="(item, i) of types" v-if="activities[i].length > 0" :key="i">
                   <p class="act-type small">{{item}}</p>
                   <article class="act-list">
-                    <p v-for="(act, index) of activities[i]">{{index + 1}}.　{{act.name}}</p>
+                    <p v-for="(act, index) of activities[i]" :key="index">{{index + 1}}.　{{act.name}}</p>
                   </article>
                 </section>
               </section>
             </section>
           </section>
         </div>
-        <div v-for="(item, i) of types" v-if="activities[i].length > 0">
+        <div v-for="(item, i) of types" v-if="activities[i].length > 0" :key="i">
           <section style="text-align: center;">
             <section class="act-type-header">
               <section>
@@ -35,7 +35,7 @@
               </section>
             </section>
           </section>
-          <section class="activity" v-for="(act, index) of activities[i]">
+          <section class="activity" v-for="(act, index) of activities[i]" :key="index">
             <section class="act-index">
               <section class="point" style="float: left"></section>
               <section class="index-area">{{index + 1}}</section>
@@ -114,7 +114,7 @@ export default {
   data () {
     return {
       collection: '',
-      types: ['公益', '体育', '比赛', '讲座'],
+      types: ['公益', '体育', '比赛', '讲座', '户外', '休闲', '演出'],
       east,
       south,
       north,
@@ -236,6 +236,7 @@ export default {
 
 .activity {
   border: 1px solid #1EA8EE;
+  margin-bottom: 40px;
 }
 
 .act-index {

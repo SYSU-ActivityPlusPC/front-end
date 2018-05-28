@@ -25,21 +25,25 @@ export default {
     async verify (index) {
       const item = this.actList[index];
       try {
-        await this.$http.put('/act?act=' + item.id + '&verify=1', {
+        await this.$http.put('/act?act=' + item.id + '&verify=1', null, {
           headers: {'Authorization': this.$root.token}
         });
         item.verified = 1;
         this.actList.splice(index, 1);
         this.$emit('verify', item);
       } catch (err) {
-        console.log(err.response);
+        console.log(err);
       }
     },
     async remove (index) {
-      await this.$http.delete('/act/' + this.actList[index].id, {
-        headers: {'Authorization': this.$root.token}
-      });
-      this.actList.splice(index, 1);
+      try {
+        await this.$http.delete('/act/' + this.actList[index].id, {
+          headers: {'Authorization': this.$root.token}
+        });
+        this.actList.splice(index, 1);
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 };

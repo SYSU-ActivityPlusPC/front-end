@@ -68,10 +68,14 @@ export default {
       }
     },
     async remove (index) {
-      await this.$http.delete('/act/' + this.actList[index].id, {
-        headers: {'Authorization': this.$root.token}
-      });
-      this.actList.splice(index, 1);
+      try {
+        await this.$http.delete('/act/' + this.actList[index].id, {
+          headers: {'Authorization': this.$root.token}
+        });
+        this.actList.splice(index, 1);
+      } catch (err) {
+        console.log(err);
+      }
     },
     generateCollection () {
       const len = this.actList.filter(val => val.campus & Math.pow(2, this.selectCampus)).length;

@@ -436,7 +436,7 @@ export default {
           });
           this.$emit('next');
         } catch (err) {
-          console.log(err.response);
+          console.log(err);
         }
       } else if (this.editAct) {
         try {
@@ -457,7 +457,7 @@ export default {
           });
           this.$emit('endEdit', form);
         } catch (err) {
-          console.log(err.response);
+          console.log(err);
         }
       } else {
         this.$emit('next', form);

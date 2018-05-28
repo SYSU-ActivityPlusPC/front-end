@@ -32,25 +32,30 @@ export default {
     this.config = setConfig.bind(this)();
     let pageNum = 1;
     let stat = 200;
-    while (stat === 200) {
-      const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=1', {
-        headers: {'Authorization': this.$root.token}
-      });
-      stat = status;
-      if (stat !== 200) break;
-      this.verifiedList = this.verifiedList.concat(data.content);
-      pageNum++;
-    }
-    stat = 200;
-    pageNum = 1;
-    while (stat === 200) {
-      const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=0', {
-        headers: {'Authorization': this.$root.token}
-      });
-      stat = status;
-      if (stat !== 200) break;
-      this.unverifiedList = this.unverifiedList.concat(data.content);
-      pageNum++;
+    try {
+      while (stat === 200) {
+        const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=1', {
+          headers: {'Authorization': this.$root.token}
+        });
+        stat = status;
+        if (stat !== 200) break;
+        this.verifiedList = this.verifiedList.concat(data.content);
+        pageNum++;
+      }
+      stat = 200;
+      pageNum = 1;
+      while (stat === 200) {
+        const {data, status} = await this.$http.get('/act?page=' + pageNum + '&verify=0', {
+          headers: {'Authorization': this.$root.token}
+        });
+        stat = status;
+        if (stat !== 200) break;
+        this.unverifiedList = this.unverifiedList.concat(data.content);
+        pageNum++;
+      }
+    } catch (err) {
+      console.log(err);
+      return;
     }
   },
   data () {
@@ -109,7 +114,7 @@ export default {
     if (to.path === '/admin/data/collection') {
       const actsOfCampus = this.verifiedList.filter(val => val.campus & Math.pow(2, this.selectCampus) !== 0);
       const temp = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 7; i++) {
         const acts = actsOfCampus.filter(val => val.type === i);
         temp.push(acts);
       }
