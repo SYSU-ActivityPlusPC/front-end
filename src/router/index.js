@@ -210,14 +210,14 @@ const routes = [
             }
           },
           {
-            path: 'signup',
+            path: 'signup/:actId',
             component: communityActivityManageSignup,
             meta: {
               name: '/首页/活动管理/报名管理'
             }
           },
           {
-            path: 'detail',
+            path: 'detail/:actId',
             component: communityActivityManageDetail,
             meta: {
               name: '/首页/活动管理/活动详情'

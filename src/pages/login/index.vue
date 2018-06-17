@@ -23,7 +23,7 @@
       </div>
     </form>
   </Card>
-</div>  
+</div>
 </template>
 
 <script>
@@ -51,9 +51,9 @@ export default {
   data () {
     return {
       cardStyle: `padding: 7px 19px;
-                  width: 438px; 
-                  position: absolute; 
-                  right: 50px; 
+                  width: 438px;
+                  position: absolute;
+                  right: 50px;
                   top: 100px`,
       inputStyle: `width: 240px;`,
       form: {
@@ -93,10 +93,12 @@ export default {
       localStorage.setItem('expires', payload.exp * 1000);
       localStorage.setItem('name', data.name);
       localStorage.setItem('logo', data.logo);
+      localStorage.setItem('id', data.id);
       const root = this.$root;
       root.token = token;
       root.name = data.name;
       root.logo = data.logo;
+      root.id = data.id;
       const redirect = this.$route.query.redirect;
       if (redirect) {
         // 若redirect的值有效，说明是从某页面由于失去权限而跳转而来

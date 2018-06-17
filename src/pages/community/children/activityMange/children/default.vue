@@ -1,35 +1,49 @@
 <template>
 <div class="default-wrapper">
-  <template v-for="(item, index) in mock">
+  <template v-for="(item, index) in list">
     <div class="list-wrapper" :key="index">
-      <Status :status="getStatus(item.status)" />
-      <ListItem class="list-item" @click="$router.push('/community/activity/detail')">
+      <Status :status="getStatus(item.type)" />
+      <ListItem class="list-item" @click="$router.push(`/community/activity/detail/${item.id}`)">
         <div slot="left" class="left-wrapper">
           <span class="name">{{item.name}}</span>
-          <span class="time">{{item.time}}发布</span>
+          <span class="time">{{item.pubStartTime}}发布</span>
         </div>
         <div slot="right" class="right-wrapper">
           <span class="list-right-text">浏览数</span>
-          <span class="view">{{item.view}}</span>
+          <span class="view">{{item.pageViews}}</span>
         </div>
       </ListItem>
-      <SmallCard class="small-card" @click="$router.push('/community/activity/signup')">
+      <SmallCard class="small-card" @click="$router.push(`/community/activity/signup/${item.id}`)">
         <div class="card-content">
-          <span class="card-num" v-if="item.num">{{item.num}}</span>
+          <span class="card-num" v-if="item.registerNum">{{item.registerNum}}</span>
           <span class="card-num" style="font-weight: bold;" v-else>—</span>
           <span class="card-text">报名数</span>
         </div>
       </SmallCard>
     </div>
   </template>
-</div>  
+</div>
 </template>
 
 <script>
 import ListItem from '@/components/listItem';
 import Status from '@/components/status';
 import SmallCard from '@/components/smallCard';
+// import Page from 'iview/src/components/page';
 export default {
+  components: {
+    ListItem,
+    Status,
+    SmallCard
+  },
+  async created () {
+    await this.getAllActList();
+  },
+  data () {
+    return {
+      list: []
+    };
+  },
   methods: {
     getStatus (status) {
       switch (status) {
@@ -37,39 +51,33 @@ export default {
         case 1: return 'continuting';
         case 2: return 'end';
       }
-    }
-  },
-  components: {
-    ListItem,
-    Status,
-    SmallCard
-  },
-  data () {
-    return {
-      mock: [
-        {
-          status: 0,
-          name: '三月义卖',
-          time: '2017.3.3',
-          view: 77,
-          num: 0
-        },
-        {
-          status: 1,
-          name: '三月义卖',
-          time: '2017.3.3',
-          view: 77,
-          num: 177
-        },
-        {
-          status: 2,
-          name: '三月义卖',
-          time: '2017.3.3',
-          view: 77,
-          num: 277
+    },
+    async getAllActList () {
+      let page = 1;
+      while (1) {
+        const data = await this.getActList(page++);
+        if (!data) {
+          break;
         }
-      ]
-    };
+        this.list = [...this.list, ...data.content];
+      }
+    },
+    // async getFirstList () {
+    //   const data = await this.getActList(1);
+    //   this.list = data.content;
+    // },
+    async getActList (pageNum) {
+      const { id, token } = this.$root;
+
+      const { data } = await this.$http({
+        method: 'get',
+        url: `/act/${id}/list?page=${pageNum}`,
+        headers: {
+          'Authorization': token
+        }
+      });
+      return data;
+    }
   }
 };
 </script>

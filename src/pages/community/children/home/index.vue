@@ -14,7 +14,7 @@
       <div class="messages-wrapper">
         <div class="messagesList">
           <template v-for="(message, index) in messages">
-            <div class="messages-item" 
+            <div class="messages-item"
                 :class="{'messages-item-hover': hoverIndex === index || clickIndex === index}"
                 @mouseover="hoverIndex = index"
                 @mouseleave="hoverIndex = -1"
@@ -37,8 +37,8 @@
     </Card>
   </div>
   <div class="card">
-    <BigCard style="display: inline-block;" 
-             @mouseover="onHover" 
+    <BigCard style="display: inline-block;"
+             @mouseover="onHover"
              @mouseleave="onLeave"
              @click="$router.push('/community/activity')">
       <transition enter-active-class="animated fadeInDown"
@@ -47,11 +47,11 @@
       >
         <div class="floatingLayer" v-show="floatingLayerShow">
           <ul>
-            <li class="li" id="li-1">1个活动审核中</li>
-            <li class="li" id="li-2">2个活动进行中</li>
+            <li class="li" id="li-1">{{num.aduit}}个活动审核中</li>
+            <li class="li" id="li-2">{{num.ongoing}}个活动进行中</li>
           </ul>
         </div>
-      </transition>      
+      </transition>
       <span slot="text" >活动管理</span>
       <img slot="image" alt="活动管理" src="http://okuww23ih.bkt.clouddn.com/manage.png"/>
     </BigCard>
@@ -82,6 +82,10 @@ export default {
       clickIndex: -1,
       current: 1,
       floatingLayerShow: false,
+      num: {
+        ongoing: 0,
+        aduit: 0
+      },
       messages: [
         {
           time: '刚刚',
@@ -124,6 +128,9 @@ export default {
       return value.length > 14 ? value.slice(0, 14) + '...' : value;
     }
   },
+  async created () {
+    await this.getActStatusNum();
+  },
   methods: {
     pageChange (newPage) {
       console.log(newPage);
@@ -137,6 +144,22 @@ export default {
     }, 500),
     onLeave () {
       this.floatingLayerShow = false;
+    },
+    async getActStatusNum () {
+      const { id, token } = this.$root;
+      console.log(token);
+      if (!id) this.$router.push('/login');
+
+      const { data } = await this.$http({
+        method: 'get',
+        url: `/act/${id}/status`,
+        headers: {
+          'Authorization': token
+        }
+      });
+
+      this.num.ongoing = data.ongoingNum;
+      this.num.aduit = data.auditNum;
     }
   }
 };

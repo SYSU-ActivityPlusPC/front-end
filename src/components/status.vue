@@ -6,7 +6,7 @@
   </div>
   <div class="status" v-if="status === 'reviewing'">
     <img class="icon" :src="reviewing">
-    <span class="text-reviewing">待审核</span>
+    <span class="text-reviewing">审核中</span>
   </div>
   <div class="status" v-if="status === 'end'">
     <img class="icon" :src="end">
