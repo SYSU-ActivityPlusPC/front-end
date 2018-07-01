@@ -6,11 +6,11 @@
   </div>
   <div class="status" v-if="status === 'reviewing'">
     <img class="icon" :src="reviewing">
-    <span class="text-reviewing">审核中</span>
+    <span class="text-reviewing">待审核</span>
   </div>
   <div class="status" v-if="status === 'end'">
     <img class="icon" :src="end">
-    <span class="text-red">已结束</span>
+    <span class="text-red">已拒绝</span>
   </div>
   <div class="status" v-if="status === 'continuting'">
     <img class="icon" :src="continuting">

@@ -60,5 +60,6 @@ new Vue({
         localStorage.removeItem('logo');
       }
     }
+    this.imgBase = 'https://www.sysuactivity.com/static/';
   }
 });

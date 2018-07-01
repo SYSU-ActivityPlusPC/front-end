@@ -55,11 +55,11 @@
               <p><strong>活动详情：</strong>{{act.detail}}</p>
               <p v-if="!!act.poster" style="text-align: center;">
                 <strong style="display: block;">海报：</strong>
-                <img style="max-width: 100%; margin-top: 10px;" :src="imgBase + act.poster + '?type=poster'" />
+                <img style="max-width: 100%; margin-top: 10px;" :src="imgBase + act.poster" alt="加载图片失败" />
               </p>
               <p v-if="!!act.qrcode" style="text-align: center;">
                 <strong style="display: block;">二维码：</strong>
-                <img style="max-width: 100%; margin-top: 10px;" :src="imgBase + act.qrcode + '?type=qrCode'" />
+                <img style="max-width: 100%; margin-top: 10px;" :src="imgBase + act.qrcode" alt="加载图片失败" />
               </p>
             </article>
           </section>
@@ -102,10 +102,21 @@ import north from '@/assets/beixiaoqu.png';
 import zhuhai from '@/assets/zhuhaixiaoqu.png';
 import qrcode from '@/assets/qrcode.png';
 export default {
-  created () {
+  async created () {
     this.config = setConfig.bind(this)();
     this.id = parseInt(this.$route.query.schoolID);
-    this.activities = this.$route.params.acts;
+    const acts = this.$route.params.acts;
+    for (let i = 0, len = acts.length; i < len; i++) {
+      const actGroup = acts[i];
+      const temp = [];
+      for (let j = 0, subLen = actGroup.length; j < subLen; j++) {
+        const { data } = await this.$http.get(`/act/${actGroup[j].id}`, {
+          headers: {'Authorization': this.$root.token}
+        });
+        temp.push(data);
+      }
+      this.activities.push(temp);
+    }
   },
   components: {
     BreadcrumbNav,
@@ -121,7 +132,7 @@ export default {
       zhuhai,
       qrcode,
       activities: [],
-      imgBase: 'http://119.29.155.194:8080/img/download/'
+      imgBase: 'https://sysuactivity.com/static/'
     };
   },
   mounted () {

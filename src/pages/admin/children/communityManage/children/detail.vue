@@ -6,36 +6,22 @@
   </div>
   <div class="item">
     <label class="label">账号</label>
-    <span>{{info.account}}</span>
-  </div>
-  <div class="item">
-    <label class="label">密码</label>
-    <span>{{info.password}}</span>
+    <span>{{info.email}}</span>
   </div>
   <div class="item">
     <label class="label">注册时间</label>
-    <span>{{info.registrationTime}}</span>
+    <span>{{info.registerTime}}</span>
+  </div>
+  <div class="item">
+    <label class="label">组织logo</label>
+    <div>
+      <img style="max-width: 800px" :src="$root.imgBase + info.logo" alt="加载图片失败">
+    </div>
   </div>
   <div class="item">
     <label class="label">证明材料</label>
     <div>
-      <p>活动1</p>
-      <p>活动2</p>
-      <p>活动3</p>
-      <p>活动1</p>
-      <p>活动2</p>
-      <p>活动3</p>
-      <p>活动1</p>
-      <p>活动2</p>
-      <p>活动3</p>
-    </div>
-  </div>
-  <div class="item">
-    <label class="label">已发布活动</label>
-    <div>
-      <p>活动1</p>
-      <p>活动2</p>
-      <p>活动3</p>
+      <img style="max-width: 800px" :src="$root.imgBase + info.evidence" alt="加载图片失败">
     </div>
   </div>
 </div>  
@@ -54,7 +40,10 @@ export default {
   },
   methods: {
     async getInfo (id) {
-      this.info = (await this.$http.get(`/club/${id}`)).data;
+      const { data } = await this.$http.get(`/pcusers/${id}`, {
+        headers: {'Authorization': this.$root.token}
+      });
+      this.info = data;
     }
   }
 };
