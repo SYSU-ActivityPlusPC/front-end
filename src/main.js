@@ -14,7 +14,7 @@ Vue.config.productionTip = false;
 // 全局挂载公用变量或者函数或者工具
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NODE_ENV !== 'production' ? '/api' : 'https://sysuactivity.com/api'
+  baseURL: process.env.NODE_ENV !== 'production' ? '/api' : 'https://www.sysuactivity.com/api'
 });
 
 // 给axois的实例添加响应拦截器，用于判断发生的错误，如果是401说明失去权限，进行页面跳转。
