@@ -76,6 +76,7 @@ export default {
         headers: {'Authorization': this.$root.token}
       });
       alert('审核通过！');
+      this.$router.replace('/admin/community');
     },
     async rejectUser () {
       await this.$http.put(`/pcusers?id=${this.pcuser.id}&verify=1`, {
@@ -84,6 +85,7 @@ export default {
         headers: {'Authorization': this.$root.token}
       });
       alert('已拒绝！');
+      this.$router.replace('/admin/community');
     },
     lastUser () {
       if (this.index === 0) return;

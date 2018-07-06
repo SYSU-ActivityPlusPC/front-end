@@ -9,10 +9,10 @@
     </template>
   </div>
   <div class="right-box">
-    <SmallCard class="small-card-1" backgroundColor="#5074d7" @click="$router.push('/admin/community/notice')">
+    <!--SmallCard class="small-card-1" backgroundColor="#5074d7" @click="$router.push('/admin/community/notice')">
       <img :src="notice" alt="通知社团" name="icon" />
       通知社团
-    </SmallCard>
+    </SmallCard-->
     <SmallCard class="small-card-2" backgroundColor="#28bf96" @click="$router.push('/admin/community/application')">
       <img :src="application" alt="注册申请" name="icon" />
       注册申请

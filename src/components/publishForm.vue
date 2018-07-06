@@ -46,7 +46,7 @@
         <iInput class="input-size" placeholder="活动审核结果将会发送到此邮箱!" size="large" v-model="form.email" />
       </FormItem>
       <FormItem>
-        <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' && !editAct ? '下一步' : '提交活动'}}</MyButton>
+        <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">提交活动</MyButton>
         <MyButton v-if="editAct" :width="200" class="submit" @click="$emit('endEdit')">取消</MyButton>
       </FormItem>
     </iForm>
@@ -102,7 +102,7 @@
         </Upload>
       </FormItem>
       <FormItem>
-        <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">{{authority !== 'tourist' && !editAct ? '下一步' : '提交活动'}}</MyButton>
+        <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">提交活动</MyButton>
         <MyButton v-if="editAct" :width="200" class="submit" @click="$emit('endEdit')">取消</MyButton>
       </FormItem>
     </iForm>
@@ -422,23 +422,8 @@ export default {
     },
     async confirm () {
       const form = this.handleForm();
-      if (this.authority === 'tourist') {
+      if (this.editAct) {
         // 游客就直接提交表单
-        try {
-          if (form.poster && typeof form.poster !== 'string') {
-            await this.uploadFile(form.poster, 'poster', form);
-          }
-          if (form.qrcode && typeof form.qrcode !== 'string') {
-            await this.uploadFile(form.qrcode, 'qrCode', form);
-          }
-          await this.$http.post('/act', form, {
-            headers: {'Authorization': null}
-          });
-          this.$emit('next');
-        } catch (err) {
-          console.log(err);
-        }
-      } else if (this.editAct) {
         try {
           const id = form.id;
           delete form.id;
@@ -460,7 +445,20 @@ export default {
           console.log(err);
         }
       } else {
-        this.$emit('next', form);
+        try {
+          if (form.poster && typeof form.poster !== 'string') {
+            await this.uploadFile(form.poster, 'poster', form);
+          }
+          if (form.qrcode && typeof form.qrcode !== 'string') {
+            await this.uploadFile(form.qrcode, 'qrCode', form);
+          }
+          await this.$http.post('/act', form, {
+            headers: {'Authorization': null}
+          });
+          this.$emit('next');
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     onPosterRemove () {

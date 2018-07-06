@@ -1,6 +1,6 @@
 <template>
 <div class="wrapper">
-  <div class="messages">
+  <!--div class="messages">
     <div class="messages-firstRow">
       <div class="title">
         <span>系统消息</span>
@@ -35,7 +35,7 @@
         </div>
       </div>
     </Card>
-  </div>
+  </div-->
   <div class="card">
     <BigCard style="display: inline-block;"
              @mouseover="onHover"

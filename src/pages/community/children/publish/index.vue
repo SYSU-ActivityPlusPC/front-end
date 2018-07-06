@@ -2,9 +2,9 @@
 <div class="publish-wrapper">
   <BreadcrumbNav :config="breadcrumbNavConfig" />
   <Steps :config="stepsConfig" class="steps" :current="curStep"/>
-  <PublishForm  v-show="curStep === 0" :authority="community" />
-  <SelectForm v-show="curStep === 1" />
-  <PublishSubmit authority="community" v-show="curStep === 2" @continute="onContinute" @manage="onManage"/>
+  <PublishForm  v-show="curStep === 0" :authority="community" @next="curStep = 1;"/>
+  <!--SelectForm v-show="curStep === 1" /-->
+  <PublishSubmit authority="community" v-show="curStep === 1" @continute="onContinute" @manage="onManage"/>
 </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
       breadcrumbNavConfig: [],
       stepsConfig: [
         '填写活动信息',
-        '选择报名信息',
+        // '选择报名信息',
         '等待审核'
       ]
     };

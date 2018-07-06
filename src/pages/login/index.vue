@@ -15,7 +15,7 @@
       </div>
       <div class="form-input">
         <iInput :style="inputStyle" size="large" placeholder="密码" type="password" v-model="form.password"></iInput>
-        <a href="javascript:void(0)" style="margin-left: 20px;">忘记密码</a>
+        <!--a href="javascript:void(0)" style="margin-left: 20px;">忘记密码</a-->
       </div>
       <div>
         <MyButton :width="240" @click="login" :disabled="loading || disabled">{{!loading ? '登录' : '请等待'}}</MyButton>

@@ -13,13 +13,13 @@
           <span class="view">{{item.pageViews}}</span>
         </div>
       </ListItem>
-      <SmallCard class="small-card" @click="$router.push(`/community/activity/signup/${item.id}`)">
+      <!--SmallCard class="small-card" @click="$router.push(`/community/activity/signup/${item.id}`)">
         <div class="card-content">
           <span class="card-num" v-if="item.registerNum">{{item.registerNum}}</span>
           <span class="card-num" style="font-weight: bold;" v-else>—</span>
           <span class="card-text">报名数</span>
         </div>
-      </SmallCard>
+      </SmallCard-->
     </div>
   </template>
 </div>
