@@ -72,40 +72,43 @@ export default {
   },
   methods: {
     async login () {
-      this.loading = true;
-      const {data, status} = await this.$http.post('/session', this.form);
-      if (status === 204) {
-        this.$Notice.open({
-          title: '用户不存在或者密码错误'
-        });
+      try {
+        this.loading = true;
+        const {data, status} = await this.$http.post('/session', this.form);
+        if (status === 204) {
+          this.$Notice.open({
+            title: '用户不存在或者密码错误'
+          });
+          this.loading = false;
+          return;
+        } else {
+          this.$Notice.open({
+            title: '登录成功'
+          });
+        }
+        const token = data.token;
+        const payloadString = decodeURIComponent(escape(atob(token.split('.')[1])));
+        const payload = JSON.parse(payloadString);
+        localStorage.setItem('token', token);
+        localStorage.setItem('expires', payload.exp * 1000);
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('logo', data.logo);
+        localStorage.setItem('id', data.id);
+        const root = this.$root;
+        root.token = token;
+        root.name = data.name;
+        root.logo = data.logo;
+        root.id = data.id;
+        const redirect = this.$route.query.redirect;
+        if (redirect) {
+          // 若redirect的值有效，说明是从某页面由于失去权限而跳转而来
+          this.$router.replace(redirect);
+          return;
+        }
+        this.$router.replace(payload.sub === 'sysuactivity2018' ? '/admin' : '/community');
+      } finally {
         this.loading = false;
-        return;
-      } else {
-        this.$Notice.open({
-          title: '登录成功'
-        });
       }
-      this.loading = false;
-      const token = data.token;
-      const payloadString = decodeURIComponent(escape(atob(token.split('.')[1])));
-      const payload = JSON.parse(payloadString);
-      localStorage.setItem('token', token);
-      localStorage.setItem('expires', payload.exp * 1000);
-      localStorage.setItem('name', data.name);
-      localStorage.setItem('logo', data.logo);
-      localStorage.setItem('id', data.id);
-      const root = this.$root;
-      root.token = token;
-      root.name = data.name;
-      root.logo = data.logo;
-      root.id = data.id;
-      const redirect = this.$route.query.redirect;
-      if (redirect) {
-        // 若redirect的值有效，说明是从某页面由于失去权限而跳转而来
-        this.$router.replace(redirect);
-        return;
-      }
-      this.$router.replace(payload.sub === 'sysuactivity2018' ? '/admin' : '/community');
     }
   },
   computed: {
