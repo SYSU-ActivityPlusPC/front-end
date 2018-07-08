@@ -10,10 +10,10 @@
     <span class="num">共{{actList.length}}个</span>
   </div>
   <transition-group name="flip-list" tag="div" class="lists">
-    <template v-for="(item, index) in actList">
-      <ListItem v-if="item.campus & Math.pow(2, selectCampus)" @click="$emit('clickItem', item)"
-                @remove="remove(index)"
-                :key="item.id" 
+    <template v-for="(item, index) in currentList">
+      <ListItem @click="$emit('clickItem', item)"
+                @remove="remove(item)"
+                :key="index"
                 :item="item">
           <div class="list-right-item" slot="right">
             <a href="javascript:void(0)" class="up" @click.stop="up(index)">上移</a>
@@ -50,35 +50,42 @@ export default {
       }
     };
   },
+  computed: {
+    currentList () {
+      const selectCampus = this.selectCampus;
+      return this.actList.filter(item => (item.campus & Math.pow(2, selectCampus)) !== 0);
+    }
+  },
   methods: {
     up (index) {
-      if (index) {
-        const item = this.actList[index];
-        const preItem = this.actList[index - 1];
-        this.actList.splice(index - 1, 1, item);
-        this.actList.splice(index, 1, preItem);
+      if (index > 0) {
+        const item = this.currentList[index];
+        const preItem = this.currentList[index - 1];
+        this.currentList.splice(index - 1, 1, item);
+        this.currentList.splice(index, 1, preItem);
       }
     },
     down (index) {
-      if (index < this.actList.length - 1) {
-        const postItem = this.actList[index + 1];
-        const item = this.actList[index];
-        this.actList.splice(index, 1, postItem);
-        this.actList.splice(index + 1, 1, item);
+      if (index < this.currentList.length - 1) {
+        const postItem = this.currentList[index + 1];
+        const item = this.currentList[index];
+        this.currentList.splice(index, 1, postItem);
+        this.currentList.splice(index + 1, 1, item);
       }
     },
-    async remove (index) {
+    async remove (item) {
       try {
-        await this.$http.delete('/act/' + this.actList[index].id, {
+        await this.$http.delete('/act/' + item.id, {
           headers: {'Authorization': this.$root.token}
         });
+        const index = this.actList.findIndex(ele => ele.id === item.id);
         this.actList.splice(index, 1);
       } catch (err) {
         console.log(err);
       }
     },
     generateCollection () {
-      const len = this.actList.filter(val => val.campus & Math.pow(2, this.selectCampus)).length;
+      const len = this.currentList.length;
       if (!len) {
         alert('当前校区的活动列表为空。');
       } else {

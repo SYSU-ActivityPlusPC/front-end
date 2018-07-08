@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      curStep: 2,
+      curStep: 0,
       breadcrumbNavConfig: [],
       stepsConfig: [
         '填写活动信息',

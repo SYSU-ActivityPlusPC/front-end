@@ -112,7 +112,7 @@ export default {
   },
   beforeRouteLeave (to, from, next) {
     if (to.path === '/admin/data/collection') {
-      const actsOfCampus = this.verifiedList.filter(val => val.campus & Math.pow(2, this.selectCampus) !== 0);
+      const actsOfCampus = this.verifiedList.filter(val => (val.campus & Math.pow(2, this.selectCampus)) !== 0);
       const temp = [];
       for (let i = 0; i < 7; i++) {
         const acts = actsOfCampus.filter(val => val.type === i);
