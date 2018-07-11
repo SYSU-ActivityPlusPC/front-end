@@ -51,9 +51,11 @@ export default {
     };
   },
   computed: {
-    currentList () {
-      const selectCampus = this.selectCampus;
-      return this.actList.filter(item => (item.campus & Math.pow(2, selectCampus)) !== 0);
+    currentList: {
+      get: function () {
+        const selectCampus = this.selectCampus;
+        return this.actList.filter(item => (item.campus & Math.pow(2, selectCampus)) !== 0);
+      }
     }
   },
   methods: {
@@ -61,16 +63,20 @@ export default {
       if (index > 0) {
         const item = this.currentList[index];
         const preItem = this.currentList[index - 1];
-        this.currentList.splice(index - 1, 1, item);
-        this.currentList.splice(index, 1, preItem);
+        const itemIndex = this.actList.findIndex(el => el.id === item.id);
+        const preIndex = this.actList.findIndex(el => el.id === preItem.id);
+        this.actList.splice(itemIndex, 1, preItem);
+        this.actList.splice(preIndex, 1, item);
       }
     },
     down (index) {
       if (index < this.currentList.length - 1) {
         const postItem = this.currentList[index + 1];
         const item = this.currentList[index];
-        this.currentList.splice(index, 1, postItem);
-        this.currentList.splice(index + 1, 1, item);
+        const itemIndex = this.actList.findIndex(el => el.id === item.id);
+        const postIndex = this.actList.findIndex(el => el.id === postItem.id);
+        this.actList.splice(itemIndex, 1, postItem);
+        this.actList.splice(postIndex, 1, item);
       }
     },
     async remove (item) {

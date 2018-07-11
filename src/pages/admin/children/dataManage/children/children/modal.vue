@@ -1,6 +1,6 @@
 <template>
 <Modal scrollable v-model="privateOpen" :transition-names="['fade', 'fade']" :width="width">
-  <div slot="header" class="header">三月义卖</div>
+  <div slot="header" class="header">{{data.name}}</div>
   <div class="content">
     <div class="content-item">
       <span class="label">活动时间:</span>
