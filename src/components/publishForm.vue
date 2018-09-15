@@ -71,35 +71,70 @@
         <iInput class="textarea-size" type="textarea" :rows="3" placeholder="例如: 参与者身体健康，无重大疾病" v-model="form.requirement" />
       </FormItem>
       <FormItem label="宣传图">
-        <Upload 
-          action="/api/images" 
-          accept="image/*"
-          :format="format"
-          :max-size="2048" 
-          :before-upload="onBeforePoster"
-          :on-remove="onPosterRemove"
-          :on-format-error="onFormatError"
-          :on-exceeded-size="onExceededSize">
-          <MyButton type="ghost" :width="110" :height="30" size="small">
-            <img :src="upload" class="icon-upload" slot="icon" />
-            点击上传
-          </MyButton>
-        </Upload>
+        <div>
+          <div class="demo-upload-list" v-for="item in posterUploadList"  :key="item.url">
+            <template>
+                <img :src="item.url" style="width: 58px;height:58px;line-height: 58px;">
+                <div class="demo-upload-list-cover">
+                    <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
+                    <Icon type="ios-trash-outline" @click.native="onPosterRemove()"></Icon>
+                </div>
+            </template>
+          </div>
+          <Upload 
+            action="/api/images" 
+            accept="image/*"
+            :format="format"
+            :max-size="2048" 
+            :before-upload="onBeforePoster"
+            :show-upload-list="false"
+            :on-remove="onPosterRemove"
+            :on-format-error="onFormatError"
+            style="display: inline-block;width:58px;"
+            type="drag"
+            :on-exceeded-size="onExceededSize">
+            <!-- <MyButton type="ghost" :width="110" :height="30" size="small">
+              <img :src="upload" class="icon-upload" slot="icon" />
+              点击上传
+            </MyButton> -->
+              <div style="width: 58px;height:58px;line-height: 58px;">
+                <Icon type="ios-cloud-upload-outline" :size="20" />
+              </div>
+          </Upload>
+        </div>
       </FormItem>
       <FormItem label="二维码">
-        <Upload
-          action="/api/images" 
-          accept="image/*"
-          :max-size="2048"
-          :before-upload="onBeforeQrcode"
-          :on-remove="onQrcodeRemove"
-          :on-format-error="onFormatError"
-          :on-exceeded-size="onExceededSize">
-          <MyButton type="ghost" :width="110" :height="30" size="small">
-            <img :src="upload" class="icon-upload" slot="icon" />
-            点击上传
-          </MyButton>
-        </Upload>
+        <div>
+          <div class="demo-upload-list" v-for="item in qrcodeUploadList"  :key="item.url">
+            <template>
+                <img :src="item.url" style="width: 58px;height:58px;line-height: 58px;">
+                <div class="demo-upload-list-cover">
+                    <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
+                    <Icon type="ios-trash-outline" @click.native="onQrcodeRemove()"></Icon>
+                </div>
+            </template>
+          </div>
+          <Upload
+            action="/api/images"
+            accept="image/*"
+            :format="format"
+            :show-upload-list="false"
+            :max-size="2048"
+            :before-upload="onBeforeQrcode"
+            :on-remove="onQrcodeRemove"
+            :on-format-error="onFormatError"
+            style="display: inline-block;width:58px;"
+            type="drag"
+            :on-exceeded-size="onExceededSize">
+            <!-- <MyButton type="ghost" :width="110" :height="30" size="small">
+              <img :src="upload" class="icon-upload" slot="icon" />
+              点击上传
+            </MyButton> -->
+            <div style="width: 58px;height:58px;line-height: 58px;">
+              <Icon type="ios-cloud-upload-outline" :size="20" />
+            </div>
+          </Upload>
+        </div>
       </FormItem>
       <FormItem>
         <MyButton :width="200" class="submit" @click="confirm" :disabled="disabled">提交活动</MyButton>
@@ -107,6 +142,9 @@
       </FormItem>
     </iForm>
   </div>
+  <Modal title="View Image" v-model="preview.visible">
+    <img :src="preview.url" v-if="preview.visible" style="width: 100%">
+  </Modal>
 </div>
 </template>
 
@@ -117,6 +155,7 @@ import iInput from 'iview/src/components/input';
 import { Select, Option } from 'iview/src/components/select';
 import DatePicker from 'iview/src/components/date-picker';
 import Icon from 'iview/src/components/icon';
+import Modal from 'iview/src/components/modal';
 import Upload from 'iview/src/components/upload';
 import MyButton from './button';
 import { rules, errorText } from '@/utils/validate';
@@ -130,6 +169,16 @@ function formattedDate (time) {
   const minute = date.getMinutes().toString().padStart(2, '0');
   return `${year}-${month}-${day} ${hour}:${minute}`;
 }
+
+const getImgUrl = file => new Promise(resolve => {
+  if (window.FileReader) {
+    const fr = new FileReader();
+    fr.onloadend = function (e) {
+      resolve(e.target.result);
+    };
+    fr.readAsDataURL(file);
+  }
+});
 
 export default {
   created () {
@@ -192,11 +241,18 @@ export default {
     DatePicker,
     MyButton,
     Upload,
-    Icon
+    Icon,
+    Modal
   },
   data () {
     return {
       upload,
+      preview: {
+        visible: false,
+        url: null
+      },
+      qrcodeUploadList: [],
+      posterUploadList: [],
       types: ['公益', '体育', '比赛', '讲座', '户外', '休闲', '演出'],
       areas: ['东校区', '南校区', '北校区', '珠海校区'],
       format: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],
@@ -396,6 +452,10 @@ export default {
     }
   },
   methods: {
+    handleView (url) {
+      this.preview.visible = true;
+      this.preview.url = url;
+    },
     handleForm () {
       let form = Object.assign({}, this.form);
       form.startTime = formattedDate(form.time[0]);
@@ -463,17 +523,29 @@ export default {
     },
     onPosterRemove () {
       this.form.poster = undefined;
+      this.posterUploadList = [];
     },
     onQrcodeRemove () {
       this.form.QRCode = undefined;
+      this.qrcodeUploadList = [];
     },
-    onBeforePoster (file) {
+    async onBeforePoster (file) {
       this.form.poster = file;
-      return false;
+      this.posterUploadList = [];
+      this.posterUploadList.push({
+        url: await getImgUrl(file),
+        name: file.name
+      });
+      return Promise.reject();
     },
-    onBeforeQrcode (file) {
+    async onBeforeQrcode (file) {
       this.form.qrcode = file;
-      return false;
+      this.qrcodeUploadList = [];
+      this.qrcodeUploadList.push({
+        url: await getImgUrl(file),
+        name: file.name
+      });
+      return Promise.reject();
     },
     async uploadFile (file, type, form) {
       const formdata = new FormData();
@@ -562,5 +634,42 @@ export default {
 
 .button-removeTime {
   margin-left: 20px;
+}
+
+.demo-upload-list{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0,0,0,.2);
+    margin-right: 4px;
+}
+.demo-upload-list img{
+    width: 100%;
+    height: 100%;
+}
+.demo-upload-list-cover{
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,.6);
+}
+.demo-upload-list:hover .demo-upload-list-cover{
+    display: block;
+}
+.demo-upload-list-cover i{
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0 2px;
 }
 </style>
