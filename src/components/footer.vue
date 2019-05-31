@@ -1,5 +1,6 @@
 <template>
 <div class="footer">
+  <p>备案号：粤ICP备17076034号-1 版权所有：中大活动</p>
   <ul>
     <li>了解平台</li>
     <li>了解我们</li>
